@@ -24,9 +24,9 @@ const Footer=({ className } : Footerprops)=> {
             <nav>
                 <div className="grid grid-flow-col gap-4">
                     <Link href="https://www.facebook.com/share/16wnRmhYcd" target="_blank"><Facebook /></Link>
-                    <Link href="#"><Instagram /></Link>
+                    <Link href=""><Instagram /></Link>
                     {/* <a href="#"><X /></a> */}
-                    <Link href="#"><Youtube /></Link>
+                    <Link href=""><Youtube /></Link>
                     <Link href="whatsapp://send?phone=237652509674" target="_blank" className="">
                         <img src={Whatsapp.src} alt="" className="w-6 h-6 rounded-full mr-2" />
                     </Link>
