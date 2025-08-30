@@ -56,7 +56,7 @@ const Hero = () => {
                     />
                 </div>
                 
-                <div className=" flex flex-col md:flex-row items-center    mb-10 md:my-0 h-screen md:w-1/2" >
+                <div className=" flex flex-col md:flex-row items-center  justify-center  md:mb-10 md:my-0 h-screen md:w-1/2" >
 
                     <div className=" rounded-xl h-auto border border-transparent shadow-sm backdrop-blur-lg flex flex-col items-center md:items-start mt-20 md:mt-0  md:ml-20 p-9" data-aos="fade-up" >
 

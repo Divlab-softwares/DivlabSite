@@ -1,8 +1,8 @@
 import Title from "./Title";
 import Carousel3D, { type Carousel3DItem } from "./lightswind/carousel-3d";
-import {  DotBackground } from "@/app/Components/lightswind/grid-dot-background"
+import { DotBackground } from "@/app/Components/lightswind/grid-dot-background"
 
-const items :Carousel3DItem[] = [
+const items: Carousel3DItem[] = [
     {
         id: 1,
         title: "Site vitrine",
@@ -30,7 +30,7 @@ const items :Carousel3DItem[] = [
         imageUrl: "/assets/projects/5.png",
         link: "/projects/firecat"
     },
-     {
+    {
         id: 4,
         title: "Site web deal flow",
         brand: "Developpement web",
@@ -39,7 +39,7 @@ const items :Carousel3DItem[] = [
         imageUrl: "/assets/projects/6.png",
         link: "/projects/firecat"
     },
-     {
+    {
         id: 5,
         title: "DIVLAB Client Dashboard",
         brand: "Developpement web",
@@ -55,7 +55,7 @@ const Realisations = () => {
         <div className="h-auto " data-theme="night" id="realisations">
             <div className="flex flex-col items-center justify-center p-4 h-100% relative " >
                 <Title className="z-50 my-10" title="Nos Réalisations" />
-                <p className="my-4" data-aos="slide-left">Voici quelques exemples de nos projets récents.</p>
+                <p className="my-4" data-aos="fade-right">Voici quelques exemples de nos projets récents.</p>
                 <DotBackground
                     dotSize={1}
                     dotColor="#d4d4d4"
@@ -65,11 +65,11 @@ const Realisations = () => {
                     fadeIntensity={30}
                     className="h-full"
                 />
-                
-                   
-               
-                
-                    {/* <ParticlesBackground
+
+
+
+
+                {/* <ParticlesBackground
                         colors={['#00ffff', '#ff00ff', '#ffaa00']}
                         size={4}
                         countDesktop={80}
@@ -78,10 +78,10 @@ const Realisations = () => {
                         zIndex={0}
                         height="100%"
                     /> */}
-               
-                   
-               
-               
+
+
+
+
                 <div className="w-full">
                     <Carousel3D
                         items={items}
@@ -92,7 +92,7 @@ const Realisations = () => {
                     />
                 </div>
 
-                
+
                 {/* <Carousel >
                     <CarouselContent>
                         {items.map((item) => (
