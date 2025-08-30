@@ -41,7 +41,7 @@ const Services = () => {
                 className="transform rotate-180"
             />
             <Title title="Nos Services" dataAos="fade-down" />
-            <p data-aos="slide-right">Voici un aperçu des services que nous proposons.</p>
+            <p data-aos="fade-right">Voici un aperçu des services que nous proposons.</p>
 
 
             <div className="flex flex-row justify-center gap-5 m-5 mt-10 w-full  flex-wrap md:flex-nowrap  ">
@@ -200,7 +200,7 @@ const Services = () => {
                 </InteractiveGradient>
 
                 <InteractiveGradient
-                    dataAos="fade-left"
+                    dataAos="fade-up"
                     color="#1890ff"
                     glowColor="#8f0f4459"
                     followMouse={true}

@@ -4,7 +4,7 @@ import Hero from "@/app/Components/Hero";
 import Realisations from "@/app/Components/Realisations";
 import About from "@/app/Components/About";
 import Navbar from "./Components/Navbar";
-import ContactForm from "./Components/ContactForm";
+// import ContactForm from "./Components/ContactForm";
 import { useEffect,useRef, useState } from "react";
 
 import Services from "./Components/Services";
@@ -74,7 +74,7 @@ export default function Home() {
 
         <Services />
         <Realisations />
-<ContactForm/>
+{/* <ContactForm/> */}
         <Footer />
       </div>
     </>

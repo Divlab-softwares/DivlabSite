@@ -204,14 +204,14 @@ function FAQ({ questions, questionHome }: AboutQuestionsProps) {
 
 
                             ))}
-                            <div className="flex  rounded-4xl border-4 border-info text-black  text-md  bg-white hover:bg-gray-100 flex justify-between w-full items-center  font-medium ">
+                            {/* <div className="flex  rounded-4xl border-4 border-info text-black  text-md  bg-white hover:bg-gray-100 flex justify-between w-full items-center  font-medium ">
                                 <input type="text" placeholder="Ajoutez votre question/preocupation" className="w-full pl-4 py-3  h-full bg-transparent outline-none" />
 
                                 <button className=" btn bg-gray-100 rounded-r-full hover:bg-gray-300 text-black border-0 h-full  pl-5">
                                     <ChevronDown className="h-4 w-4 rotate-270" />
                                     <span className="sr-only">Toggle</span>
                                 </button>
-                            </div>
+                            </div> */}
 
 
 
