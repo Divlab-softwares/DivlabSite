@@ -1,0 +1,30 @@
+from pydub import AudioSegment
+from pydub.generators import Sine
+
+# Durée totale de la vidéo (ici 5,12 secondes)
+duration = 5.12  # en secondes
+total_ms = int(duration * 1000)
+
+# Créer une piste audio vide
+audio = AudioSegment.silent(duration=total_ms)
+
+# === Création des sons ===
+# Ambiance grave
+ambiance = Sine(100).to_audio_segment(duration=5000, volume=-25)
+
+# Whoosh (mouvement rapide)
+whoosh = Sine(800).to_audio_segment(duration=300, volume=-10).fade_in(100).fade_out(200)
+
+# Impact (court et grave)
+impact = Sine(60).to_audio_segment(duration=150, volume=-5).fade_out(100)
+
+# === Placement des sons dans la timeline ===
+audio = audio.overlay(ambiance, position=0)          # ambiance au début
+audio = audio.overlay(whoosh, position=1000)         # whoosh à 1s
+audio = audio.overlay(impact, position=2500)         # impact à 2,5s
+audio = audio.overlay(whoosh, position=4000)         # whoosh final à 4s
+
+# === Export de l'audio ===
+audio.export("animation_sons_demo.wav", format="wav")
+
+print("✅ Piste audio générée : animation_sons_demo.wav")
