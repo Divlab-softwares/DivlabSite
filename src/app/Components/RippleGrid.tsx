@@ -245,7 +245,6 @@ void main() {
         };
 
         requestAnimationFrame(render);
-        console.log("RippleGrid reset sur:", pathname)
 
         return () => {
             window.removeEventListener("resize", resize);
@@ -263,7 +262,7 @@ void main() {
             renderer.gl.getExtension("WEBGL_lose_context")?.loseContext();
             containerRef.current?.removeChild(gl.canvas);
         };
-    }, [pathname]);
+    }, []);
 
     useEffect(() => {
         if (!uniformsRef.current) return;
@@ -271,7 +270,6 @@ void main() {
         const hexToRgb = (hex: string): [number, number, number] => {
             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
-            console.log("RippleGrid reset sur:", pathname)
             return result
                 ? [
                     parseInt(result[1], 16) / 255,
@@ -306,13 +304,12 @@ void main() {
         gridRotation,
         mouseInteraction,
         mouseInteractionRadius,
-        pathname
+        
     ]);
 
     return (
         <div
             ref={containerRef}
-            key={pathname}
             className="w-full h-full relative overflow-hidden [&_canvas]:block"
         />
     );

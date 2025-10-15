@@ -1,5 +1,5 @@
 import Title from "./Title";
-import Carousel3D, { type Carousel3DItem } from "./lightswind/carousel-3d";
+import Carousel3D, { type Carousel3DItem } from "@/app/Components/lightswind/carousel-3d";
 import { DotBackground } from "@/app/Components/lightswind/grid-dot-background"
 
 const items: Carousel3DItem[] = [
@@ -43,16 +43,23 @@ const items: Carousel3DItem[] = [
         id: 5,
         title: "DIVLAB Client Dashboard",
         brand: "Developpement web",
-        description: "ERP concu pour la gestion complete des activites de DIVLAB.",
+        description: "ERP concu pour la gestion complete des activites de DIVLAB. Il possede tous les elements neccessaires au bon fonctionnement de l'entreprise.",
         tags: ["React", "JSX", "Vs code"],
         imageUrl: "/assets/projects/1.png",
         link: "/projects/firecat"
     }
 ];
 
-const Realisations = () => {
+type realisationsProps = {
+
+   themeRealisations: string;
+   cardColor : string ;
+
+}
+
+const Realisations = ({ themeRealisations, cardColor }: realisationsProps) => {
     return (
-        <div className="h-auto " data-theme="night" id="realisations">
+        <div className="h-auto " data-theme={themeRealisations} id="realisations">
             <div className="flex flex-col items-center justify-center p-4 h-100% relative " >
                 <Title className="z-50 my-10" title="Nos Réalisations" />
                 <p className="my-4" data-aos="fade-right">Voici quelques exemples de nos projets récents.</p>
@@ -89,6 +96,7 @@ const Realisations = () => {
                         rotateInterval={4000}
                         cardHeight={500}
                         isMobileSwipe={true}
+                        cardColor={cardColor}
                     />
                 </div>
 

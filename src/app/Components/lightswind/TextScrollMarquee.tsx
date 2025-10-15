@@ -78,7 +78,7 @@ export default function TextScrollMarquee({
   });
 
   return (
-    <div className="overflow-hidden whitespace-nowrap flex flex-nowrap">
+    <div className="overflow-hidden whitespace-nowrap flex flex-nowrap rounded-t-xl">
       <motion.div
         className="flex whitespace-nowrap gap-10 flex-nowrap"
         style={{ x }}
@@ -87,6 +87,7 @@ export default function TextScrollMarquee({
           <span key={index} className={cn('block text-[5vw]', className)}>
             {children}
           </span>
+          
         ))}
       </motion.div>
     </div>

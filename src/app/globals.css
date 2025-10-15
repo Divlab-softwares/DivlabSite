@@ -1,7 +1,43 @@
 @import "tailwindcss";
+/* @plugin 'lightswind/plugin'; */
 @plugin "daisyui" {
   themes: all;
 }
+
+
+@theme {
+
+  --animate-marquee: "marquee 40s linear infinite";
+  --animate-zoom: "zoom 1.5s ease-in-out infinite";
+    
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(-200%);
+    }
+
+  }
+
+
+
+ @keyframes zoom {
+
+   0%,
+   100% {
+     transform: scale(1);
+   }
+
+   50% {
+     transform: scale(1.2);
+   }
+ }
+}
+
+
 
 .scroll-smooth {
   scroll-behavior: smooth;
@@ -21,8 +57,9 @@ html {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+} */
 
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -30,11 +67,11 @@ html {
   }
 }
 
+*/
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-} */
+} 
+
 @keyframes zoom {
 
   0%,
@@ -50,4 +87,3 @@ body {
 .animate-zoom {
   animation: zoom 1.5s ease-in-out infinite;
 }
-

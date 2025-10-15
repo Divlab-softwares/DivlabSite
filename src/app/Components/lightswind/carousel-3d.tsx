@@ -36,6 +36,7 @@ interface Carousel3DProps {
   subtitle?: string;
   tagline?: string;
   isMobileSwipe?: boolean;
+  cardColor: string;
 }
 
 const Carousel3D = ({
@@ -43,6 +44,7 @@ const Carousel3D = ({
   autoRotate = true,
   rotateInterval = 4000,
   cardHeight = 500,
+  cardColor,
   title = "From Textile to Intelligence",
   subtitle = "Customer Cases",
   tagline = "Explore how our textile sensor technology is revolutionizing multiple industries with intelligent fabric solutions tailored to specific needs.",
@@ -150,7 +152,7 @@ const Carousel3D = ({
                
                 
                 <Card
-                  className={`bg-background h-[${cardHeight}px] border border-info shadow-sm rounded-xl
+                  className={`bg-background h-[${cardHeight}px] border border-info rounded-xl
                                 shadow-[0_5px_20px_rgba(0,200,255,0.6)] hover:shadow-4xl flex flex-col ${
                                   index === active
                                     ? "transform transition-transform duration-500 hover:scale-105 hover:rotate-1"
@@ -160,7 +162,7 @@ const Carousel3D = ({
                                 } `}
                 >
                   <div
-                    className="relative bg-gray-400 p-6 flex rounded-xl  items-center justify-center h-48 overflow-hidden"
+                    className="relative bg-gray-400 p-6 flex rounded-t-xl  items-center justify-center h-48 overflow-hidden"
                     style={{
                       backgroundImage: `url(${item.imageUrl})`,
                       backgroundSize: "cover",
@@ -179,14 +181,14 @@ const Carousel3D = ({
                     </div>
                   </div>
 
-                  <CardContent className="p-6 flex flex-col bg-black/90 flex-grow shadow-lg backdrop-blur-md">
+                  <CardContent className={`p-6 flex flex-col ${cardColor} rounded-b-xl flex-grow shadow-lg overflow-hidden backdrop-blur-md`}>
                     <h3 className="text-xl font-bold mb-1 text-foreground">
                       {item.title}
                     </h3>
-                    <p className="text-gray-500 text-sm font-medium mb-2">
+                    <p className="text-gray-300 text-sm font-medium mb-2">
                       {item.brand}
                     </p>
-                    <p className="text-gray-600 text-sm flex-grow">
+                    <p className="text-gray-400 text-sm flex-grow">
                       {item.description}
                     </p>
 

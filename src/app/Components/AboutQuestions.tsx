@@ -27,13 +27,14 @@ interface Question {
 interface AboutQuestionsProps {
     questions: Question[];
     questionHome: Question;
+    textCol: string;
 }
 
 
 
 
 
-function FAQ({ questions, questionHome }: AboutQuestionsProps) {
+function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
     useEffect(() => {
         Aos.init({
             duration: 800,
@@ -103,7 +104,7 @@ function FAQ({ questions, questionHome }: AboutQuestionsProps) {
                                 <Collapsible className=" " open={openId === item.id.toString()} onOpenChange={() => handleToggle(item.id.toString())}>
 
                                     <CollapsibleTrigger asChild className="">
-                                        <div className={` flex justify-between shadow-lg  hover:shadow-lg items-center  font-medium rounded-4xl w-full  text-md  ${selected == index ? "bg-gradient-to-br  from-blue-600 to-blue-500 to-gray-900 transform transition-transform duration-300 scale-98 " : "bg-gradient-to-br  from-gray-600 to-gray-900 transform transition-transform duration-300 hover:scale-106"}   `} >
+                                        <div className={` flex justify-between shadow-lg  hover:shadow-lg items-center  font-medium rounded-3xl w-full  text-md  ${selected == index ? "bg-gradient-to-br  from-blue-600 via-blue-500 to-gray-900 transform transition-transform duration-300 scale-98 " : "bg-gradient-to-br  from-gray-600 to-gray-900 transform transition-transform duration-300 hover:scale-106"}   `} >
                                             <div className={`  hover:bg-white/10   w-full rounded-4xl px-4 py-2 `}>
                                                 {item.value}
                                                 <Button variant="perso" size="sm" >
@@ -129,7 +130,7 @@ function FAQ({ questions, questionHome }: AboutQuestionsProps) {
                                         >
                                             <SpotlightCard className="custom-spotlight-card whitespace-normal h-full rounded-2xl w-auto" spotlightColor="rgba(0, 17, 255, 0.2)">
                                                 <h2 className="text-xl font-bold mb-2">{selected == -1 ? questionHome.value : questions[selected].value}</h2>
-                                                <p className="text-gray-200 text-md whitespace-pre-line">{selected == -1 ? questionHome.answer : questions[selected].answer}</p>
+                                                <p className=" text-md whitespace-pre-line">{selected == -1 ? questionHome.answer : questions[selected].answer}</p>
                                             </SpotlightCard>
                                         </motion.div>
                                     </CollapsibleContent>
@@ -169,7 +170,7 @@ function FAQ({ questions, questionHome }: AboutQuestionsProps) {
                                     <Collapsible className="w-full " open={openId === item.id.toString()} onOpenChange={() => handleToggle(item.id.toString())}>
 
                                         <CollapsibleTrigger asChild className="">
-                                            <div className={` flex justify-between   shadow-lg  hover:shadow-lg items-center  font-medium rounded-4xl text-md  ${selected == index ? "bg-gradient-to-br  from-blue-600 to-blue-500 to-gray-900 transform transition-transform duration-300 scale-98 " : "bg-gradient-to-br  from-gray-600 to-gray-900 transform transition-transform duration-300 hover:scale-106"}   `} >
+                                            <div className={` flex justify-between   shadow-lg  hover:shadow-lg items-center  font-medium rounded-4xl text-md  ${selected == index ? "bg-gradient-to-br  from-blue-600 via-blue-500 to-gray-900 transform transition-transform duration-300 scale-98 " : "bg-gradient-to-br  from-gray-600 to-gray-900 transform transition-transform duration-300 hover:scale-106"}   `} >
                                                 <div className={`   flex justify-between hover:bg-white/10 items-center pl-4 py-3 w-full h-full rounded-4xl `}>
                                                     {item.value}
                                                     <Button variant="perso" size="sm" >
@@ -195,7 +196,7 @@ function FAQ({ questions, questionHome }: AboutQuestionsProps) {
                                             >
                                                 <SpotlightCard className="custom-spotlight-card  h-full rounded-2xl " spotlightColor="rgba(0, 17, 255, 0.2)">
                                                     <h2 className="text-xl font-bold mb-2">{selected == -1 ? questionHome.value : questions[selected].value}</h2>
-                                                    <p className="text-gray-300">{selected == -1 ? questionHome.answer : questions[selected].answer}</p>
+                                                    <p className="">{selected == -1 ? questionHome.answer : questions[selected].answer}</p>
                                                 </SpotlightCard>
                                             </motion.div>
                                         </CollapsibleContent>
@@ -249,13 +250,13 @@ function FAQ({ questions, questionHome }: AboutQuestionsProps) {
                                             exit={{ opacity: 0, x: "-10%" }}
                                             transition={{ type: "spring", stiffness: 70, damping: 15 }}
 
-                                            className={`w-full h-50   rounded-2xl  absolute `}
+                                            className={`w-full h-50   rounded-2xl  absolute ${textCol}`}
                                         >
                                             {/* <InteractiveCard > */}
                                             <div className="h-full relative  p-4">
                                                 <h2 className="text-2xl font-bold ml-2 mb-3">{selected == -1 ? questionHome.value : questions[selected].value}</h2>
                                                 <hr />
-                                                <p className={`text-gray-200 text-md p-2 whitespace-pre-wrap `}>{selected == -1 ? questionHome.answer : questions[selected].answer} </p>
+                                                <p className={` text-md p-2 whitespace-pre-wrap `}>{selected == -1 ? questionHome.answer : questions[selected].answer} </p>
 
                                             </div>
 

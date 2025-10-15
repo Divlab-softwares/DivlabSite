@@ -86,7 +86,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
   return (
     <HoverCardContext.Provider value={{ open, setOpen }}>
       <div
-        className={`relative inline-block ${NewClassName}`}
+        className={`relative inline-block  ${NewClassName}`}
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}
         onFocusCapture={handleOpen} // Use capture phase to ensure it fires before child's onFocus
@@ -139,7 +139,7 @@ const HoverCardContent = React.forwardRef<HTMLDivElement, HoverCardContentProps>
         {open && ( // Conditionally render the motion.div based on `open` state
           <motion.div
             ref={ref}
-            initial={{ opacity: 0, scale: 0.95, y: -5 }} // Start invisible, slightly smaller, and slightly up
+            initial={{ opacity: 0, scale: 0.95, y: -5}} // Start invisible, slightly smaller, and slightly up
             animate={{ opacity: 1, scale: 1, y: 0 }}       // Fade in, grow to full size, move to natural position
             exit={{ opacity: 0, scale: 0.95, y: -5 }}      // Fade out, shrink, and move up on exit
             transition={{ duration: 0.2, ease: "easeOut" }} // Smooth transition

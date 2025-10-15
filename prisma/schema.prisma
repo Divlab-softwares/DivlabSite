@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Signup {
+  id        Int      @id @default(autoincrement())
+  name      String
+  password  String
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  name         String
+  password     String
+  email        String         @unique
+  createdAt    DateTime       @default(now())
+  conversation Conversation[] @relation("UserConversation")
+  receiverConversation  Conversation[] @relation("ReceiverConversation")
+  connected     Boolean     @default(false)
+}
+
+model Client {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Files {
+  id        Int      @id @default(autoincrement())
+  file      Bytes
+  messageId Int
+  message   Message  @relation("MessageFile", fields: [messageId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id           Int          @id @default(autoincrement())
+  user         String
+  receiver      String    @default("chatbot")
+  message      String
+  answer       String
+  files        Files[]      @relation("MessageFile")
+  conversation Conversation @relation("ConversationMessage", fields: [ConversationId], references: [id])
+  ConversationId    Int
+  score        Int
+  createdAt    DateTime     @default(now())
+}
+
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  input     String
+  request   Message[] @relation("ConversationMessage")
+  reqScore  Int
+  archived  Boolean
+  deleted   Boolean
+  warned    Boolean
+  ephemeral Boolean
+  createdAt DateTime  @default(now())
+  user      User      @relation("UserConversation", fields: [userId], references: [email])
+  receiver      User   @relation("ReceiverConversation", fields: [receiverId], references: [email])
+  receiverId    String   @default("chatBot") 
+  userId    String
+  convId    Int    @default(0) 
+
+}

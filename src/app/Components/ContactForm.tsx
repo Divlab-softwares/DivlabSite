@@ -9,7 +9,7 @@ import { useState, useRef, useEffect } from "react";
 const ContactForm = () => {
 
     const [state, handleSubmit] = useForm("mvgbzjer");
-    const [MessageColor, setMessageColor] = useState("");
+    const [MessageColor, setMessageColor] = useState("bg-transparent");
     const [succeed, setSucceed] = useState("")
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -23,21 +23,25 @@ const ContactForm = () => {
         message: "",
     });
 
-   useEffect(() => {
+   const handleClick = () => {
            if (state.succeeded) {
-               setSucceed("Message envoyé ✅");
                setMessageColor ("bg-green-200");
+               setSucceed("Message envoye");
            }else if(state.submitting){
-            setSucceed("Message non envoyee, veuillez verifier votre connexion");
                setMessageColor("bg-gray-300");
+               setSucceed("Veuillez patienter, operation en cours");
+           } else {
+               setMessageColor("bg-red-500 ");
+               setSucceed("Veuillez reessayer, probleme de connexion ou champs requis");
            }
-       }, [state.succeeded]);
+
+       }
     
 
 
 
     return (
-        <div className="flex flex-col justify-center  items-align m-10 md:px-[30%] px-[5%]  ">
+        <div className="flex flex-col justify-center  items-align m-10 md:px-[30%] px-[5%]  " id="contact">
             <Title title="Vos avis et messages" />
 
             <form onSubmit={handleSubmit} method="POST" className="relative flex flex-col justify-between  w-full h-fit p-10 m-2 border border-info rounded-xl bg-black/80 shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
@@ -99,9 +103,9 @@ const ContactForm = () => {
                 </div>
                
                 <div className='flex justify-center w-full mt-5'>
-                    <Button type="submit" disabled={state.submitting} onClick={() => state.succeeded? setSucceed("reussi"): state.submitting ? setSucceed("Veuillez patienter") : setSucceed("Veuillez verifier votre connexion et les champs requis")} size="lg" className='w-full'> Soumettre</Button>
+                    <Button type="submit" variant='form' disabled={state.submitting} onClick={() => handleClick()} size="lg" className='form w-full'> Soumettre</Button>
                 </div>
-                <div className={`w-full p-2 bg-gray-100  h-5 ${MessageColor} text-center text-black absolute bottom-0 left-0 rounded-b-xl flex flex-col justify-center items-center`}>  {succeed && <p>{succeed}</p>}</div>
+                <div className={`w-full p-2  h-5 ${MessageColor} text-center text-black absolute bottom-0 left-0 rounded-b-xl flex flex-col justify-center items-center font-bold`}>  {succeed && <p>{succeed}</p>}</div>
             </form>
         </div>
     );

@@ -1,0 +1,30 @@
+-- CreateTable
+CREATE TABLE "Files" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "file" BLOB NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Files_id_fkey" FOREIGN KEY ("id") REFERENCES "Message" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Message" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "user" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "answer" TEXT NOT NULL,
+    "score" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Message_id_fkey" FOREIGN KEY ("id") REFERENCES "Conversation" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Conversation" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "input" TEXT NOT NULL,
+    "reqScore" INTEGER NOT NULL,
+    "archived" BOOLEAN NOT NULL,
+    "deleted" BOOLEAN NOT NULL,
+    "warned" BOOLEAN NOT NULL,
+    "ephemeral" BOOLEAN NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

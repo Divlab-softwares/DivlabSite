@@ -12,7 +12,8 @@ const buttonStyles = {
     ghost: "hover:bg-accent hover:text-accent-foreground",
     link: "text-primary underline-offset-4 hover:underline",
     github: "bg-white text-black hover:bg-gray-100 border   flex items-center gap-2 font-medium",
-    perso: "text-white "
+    perso: "text-white ",
+    form: "bg-primary text-primary-foreground hover:bg-primary/50"
   },
   size: {
     default: "h-10 px-4 py-2",
