@@ -39,7 +39,9 @@
     "react-wavify": "^1.11.1",
     "sass": "^1.90.0",
     "tailwind-merge": "^3.3.1",
-    "three": "^0.179.1"
+    "tailwindcss": "^4.1.14",
+    "three": "^0.179.1",
+    "vercel": "^48.3.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -70,8 +72,5 @@
   },
   "plugins": [
     "prettier-plugin-tailwindcss"
-  ],
-  "overrides": {
-    "tailwindcss": "4.1.14"
-  }
+  ]
 }
