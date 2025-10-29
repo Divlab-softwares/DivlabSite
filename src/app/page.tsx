@@ -74,7 +74,7 @@ export default function Home() {
 
 const setThemes = () => {
 
-  if (theme === "business") {
+  if (theme === "business") { 
     setThemeAbout("corporate")
     setTheme("garden")
     setSepColor("bg-gradient-to-b  to-rgba(255,255,255,0.7)   from-[#0074D9]/30")

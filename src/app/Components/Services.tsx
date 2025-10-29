@@ -210,7 +210,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                         </Card>
                     </InteractiveGradient>
                 </div>
-                <div data-aos="fade-left" className="h-100% ">
+                <div data-aos="fade-up" className="h-100% ">
                     <InteractiveGradient
 
                         color="#1890ff"

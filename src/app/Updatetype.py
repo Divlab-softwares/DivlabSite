@@ -22,7 +22,7 @@ formations = json.loads(formations_str)
 for item in formations_str:
     location = item.get("location", "")
     m = re.search(r'_([^_]+)\.pdf$', location)
-    if m:
+    if m: 
         # filename = os.path.basename(location)
 
         # basename, _ =os.path.splitext(filename)
