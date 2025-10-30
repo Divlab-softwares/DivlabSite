@@ -1,10 +1,9 @@
-
+import Providers from "@/app/Components/Providers";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PageLoader from "./Components/pageLoader";
 import { SessionProvider } from "next-auth/react";
-import { Providers } from "./Components/Providers";
 
 
 const geistSans = Geist({
@@ -16,6 +15,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+};
 
 export const metadata: Metadata = {
   title: "DIVLAB website",
@@ -33,10 +37,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <Providers >
-        {children}
-        </Providers>
+        <Providers>{children}</Providers>
         <PageLoader />
+        <script type="text/javascript" src="https://fr.monetbil.com/widget/v2/monetbil.min.js"></script>
+
       </body>
     </html>
   );

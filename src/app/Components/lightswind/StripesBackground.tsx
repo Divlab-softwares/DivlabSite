@@ -39,6 +39,8 @@ const StripesBackground: React.FC<StripesBackgroundProps> = ({
         height,
         className // now `opacity-50` will apply more obviously
       )}
+
+      data-theme="dark"
     />
   );
 };

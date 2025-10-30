@@ -5,11 +5,11 @@ import Image from "next/image"
 // import Link from "next/link"
 import TextScrollMarquee from '@/app/Components/lightswind/TextScrollMarquee';
 import { ChevronLeft } from "lucide-react"
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 const FormationNavBar = () => {
     const router = useRouter();
     return (
-        <nav className="h-1/10 w-full flex flex-col relative bg-black text-white  ">
+        <nav className="h-9/100 w-full flex flex-col relative bg-black text-white  ">
             <div className="flex justify-between flex-row w-full items-center">
                 <Button className="w-fit h-full flex items-center justify-center p-0  bg-transparent" >
                     <a
@@ -37,18 +37,19 @@ const FormationNavBar = () => {
                     <a href="#design" className="hover:text-info"><span>Design</span></a>
                 </div>
             </div>
+            <a href="#solutions web" className="hover:text-info">
 
-            <TextScrollMarquee
-                baseVelocity={1}
-                direction="right"
-                className="text-sm font-bold  text-blue-500  w-full border-t rounded-t-md border-gray-600 "
-                scrollDependent={false}
-                delay={300}
-            >
-               
+                <TextScrollMarquee
+                    baseVelocity={1}
+                    direction="right"
+                    className="text-sm font-bold  text-blue-500  w-full border-t rounded-t-md border-gray-600 "
+                    scrollDependent={false}
+                    delay={300}
+                >
                     🚀 Super promotion actuellement sur la conception des sites web, valable jusqu'au 1er janvier ! Venez en profiter 🚀
-                
-            </TextScrollMarquee>
+
+                </TextScrollMarquee>
+            </a>
         </nav>
     );
 }

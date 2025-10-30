@@ -23,7 +23,7 @@ export const OnlineFormations = [
         'location': '/fichiers/DIVLAB_NONE_7-strategies-pour-monter-une-entrprise-de-succes_premium.pdf',
         'format': 'pdf',
         'type': 'premium',
-        'description': 'Indisponible (sous licence)',
+        'description': 'Indisponible (sous licence)', 
         'img': '/assets/formations/DIVLAB_NONE_7-strategies-pour-monter-une-entrprise-de-succes_premium.jpeg',
         'value': 'Formation'
     },
@@ -508,7 +508,7 @@ export const IA = [
         id: 3, value: "Pack premium", content: "Création d'une pipeline complet (modèles personnalisé / prétraitement des données, entrainement,déploiement cloud ou local) / Intégration dans un site ou application / Suivi technique detaille", Delai: "15-21 jours", Livraison: " code fonctionnel ou petits scripts", prixfcfa: " 150 000 FCFA", prixeur: " 229 €", img: "/assets/IaPremium.webp"
     },
     {
-        id: 4, value: "Pack Entreprise", content: "modèles avance (chatbot intelligent, systeme de recommandation) / Acompagnement + integration dan un site web ou app / support technique apres livraison", Delai: "", Livraison: " code fonctionnel ou petits scripts", prixfcfa: " 380.9 €", prixeur: " 250 000FCFA", img: "/assets/IaPremium.jpeg"
+        id: 4, value: "Pack Entreprise", content: "modèles avance (chatbot intelligent, systeme de recommandation) / Acompagnement + integration dan un site web ou app / support technique apres livraison", Delai: "", Livraison: " code fonctionnel ou petits scripts", prixfcfa: " 250 000FCFA", prixeur: " 380.9 €", img: "/assets/IaPremium.jpeg"
     },
 
 ]

@@ -1,14 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
+<<<<<<< HEAD
   provider = "postgresql"
   url      = env("DIRECT_URL")
 }
@@ -19,61 +14,56 @@ model Signup {
   password  String
   email     String   @unique
   createdAt DateTime @default(now())
+=======
+  provider  = "postgresql"
+  url       = env("DIRECT_URL")
+>>>>>>> recovery
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  name         String
-  password     String
-  email        String         @unique
-  createdAt    DateTime       @default(now())
-  conversation Conversation[] @relation("UserConversation")
-  receiverConversation  Conversation[] @relation("ReceiverConversation")
-  connected     Boolean     @default(false)
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("user")
+  provider      String?
+  password      String?
+  connected     Boolean   @default(false)
+  accounts      Account[]
+  sessions      Session[]
 }
 
-model Client {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
-model Files {
-  id        Int      @id @default(autoincrement())
-  file      Bytes
-  messageId Int
-  message   Message  @relation("MessageFile", fields: [messageId], references: [id])
-  createdAt DateTime @default(now())
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Message {
-  id           Int          @id @default(autoincrement())
-  user         String
-  receiver      String    @default("chatbot")
-  message      String
-  answer       String
-  files        Files[]      @relation("MessageFile")
-  conversation Conversation @relation("ConversationMessage", fields: [ConversationId], references: [id])
-  ConversationId    Int
-  score        Int
-  createdAt    DateTime     @default(now())
-}
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-model Conversation {
-  id        Int       @id @default(autoincrement())
-  input     String
-  request   Message[] @relation("ConversationMessage")
-  reqScore  Int
-  archived  Boolean
-  deleted   Boolean
-  warned    Boolean
-  ephemeral Boolean
-  createdAt DateTime  @default(now())
-  user      User      @relation("UserConversation", fields: [userId], references: [email])
-  receiver      User   @relation("ReceiverConversation", fields: [receiverId], references: [email])
-  receiverId    String   @default("chatBot") 
-  userId    String
-  convId    Int    @default(0) 
-
+  @@unique([identifier, token])
 }

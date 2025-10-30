@@ -2,12 +2,12 @@ import json
 import re
 
 # 📄 Chemin du fichier généré
-INPUT_FILE = "src/app/data.js"
-OUTPUT_FILE = "src/app/data.js"
+INPUT_FILE = "data.js"
+OUTPUT_FILE = "data1.js"
 
 # 🚀 Nouvelles colonnes à ajouter
 DEFAULT_COLUMNS = {
-    "value": "Formation",
+    "Name": "the name",
 }
 
 def load_js_as_json(js_file):

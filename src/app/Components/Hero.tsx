@@ -1,7 +1,7 @@
 
 import Silk from "./SilkBg";
 import "aos/dist/aos.css";
-import Whatsapp from "../../../public/assets/Whatsapp.svg";
+import Whatsapp from "../../../public/assets/Whatsapp.svg"; 
 
 
 const Hero = () => {
