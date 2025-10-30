@@ -111,6 +111,7 @@ const DivlabSpaceSignUp: React.FC<Sign> = ({ setSignResult, setSign }) => {
                 status: "failed"
             });
             setFormData({ name: formData.name, email: formData.email, password: "", confirmPassword: "" });
+        setIsLoading(false);
         }
         // setSign(false) 
         // Add your form submission logic here
@@ -197,7 +198,7 @@ const DivlabSpaceSignUp: React.FC<Sign> = ({ setSignResult, setSign }) => {
                     <button
                         type="submit"
                        // disabled={isLoading}
-                        onClick={() => { formData.name && formData.email && formData.password && formData.confirmPassword && setIsLoading(true) }}
+                        onClick={() => { formData.name  && formData.email && formData.password && formData.confirmPassword && setIsLoading(true) }}
                         className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                        <p>{isLoading ? 'Chargement, veuillez patienter...' : 'S\'inscrire'}</p>

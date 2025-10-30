@@ -627,7 +627,7 @@ const Formations = () => {
                         exit={{ x: -20, opacity: 0 }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="text-black w-100 h-50 rounded-xl bg-white/90 flex flex-col gap-5 items-center justify-center fixed right-6 md:top-33 top-50 z-50">
-                        <Button disabled={signOutVal == 2} onClick={() => { setSignOutVal(2); signOut() }} className="cursor-pointer">{signOutVal === 2 ? 'Chargement, veuillez patienter...' : 'Se déconnecter'}</Button>
+                        <Button disabled={signOutVal == 2} onClick={() => { setSignOutVal(2); signOut({ callbackUrl: '/Services' }) }} className="cursor-pointer">{signOutVal === 2 ? 'Chargement, veuillez patienter...' : 'Se déconnecter'}</Button>
                     </motion.div >
                 )}
             </AnimatePresence>
@@ -659,7 +659,7 @@ const Formations = () => {
                                             transition={{ duration: 0.5 }}
                                         >
 
-                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].img} alt="Formations en ligne" className="transition-all md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80  rounded-xl shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80 hover:-translate-y-[1%] hover:translate-x-[1%]  rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
 
                                         </motion.div>
                                     </div>
