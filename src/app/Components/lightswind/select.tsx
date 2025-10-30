@@ -193,19 +193,34 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
     React.useImperativeHandle(ref, () => triggerRef.current!, [triggerRef]);
 
     return (
-      <button
-        ref={triggerRef}
-        type="button"
-        data-state={open ? "open" : "closed"}
-        className={cn(
-          "flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-          className
-        )}
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        {...props}
-      >
-        {open ? (
+      <div className={cn("relative w-full", className)}>
+        <button
+          ref={triggerRef}
+          type="button"
+          data-state={open ? "open" : "closed"}
+          className={cn(
+            "flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+            // keep button-specific classes separate from wrapper classes
+            ""
+          )}
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          {...props}
+        >
+          {/* When open we render a visually-hidden placeholder inside the button so the input
+              is not nested within it; the real input is rendered as a sibling below. */}
+          {open ? <span className="sr-only">{children}</span> : children}
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 opacity-50 transition-transform duration-200",
+              open && "rotate-180"
+            )}
+          />
+        </button>
+
+        {/* Render the search input as a sibling positioned over the button when open
+            to avoid nesting interactive controls. */}
+        {open && (
           <input
             ref={searchInputRef}
             type="text"
@@ -213,21 +228,11 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
             onChange={(e) => setSearchQuery(e.target.value)}
             onClick={(e) => e.stopPropagation()}
             placeholder="Search..."
-            className="w-full bg-transparent p-0 text-sm 
-    border-none outline-none ring-0 focus:outline-none focus:ring-0 
-    active:outline-none active:ring-0"
-            style={{ boxShadow: "none" }} // ensure Chrome removes highlight
+            className="absolute left-3 right-8 top-1/2 -translate-y-1/2 w-[calc(100%-2rem)] bg-transparent p-0 text-sm border-none outline-none ring-0 focus:outline-none focus:ring-0 active:outline-none active:ring-0"
+            style={{ boxShadow: "none", zIndex: 1 }} // ensure visible above the button
           />
-        ) : (
-          children
         )}
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 opacity-50 transition-transform duration-200",
-            open && "rotate-180"
-          )}
-        />
-      </button>
+      </div>
     );
   }
 );
