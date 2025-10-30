@@ -100,11 +100,12 @@ export const InteractiveGradient = ({
       ref={cardRef}
       className={cn(
         `relative grid place-content-center place-items-center text-center
-        border transition-all duration-300
+        border border-transparent transition-all duration-300
         interactive-gradient-card text-foreground`,
         backgroundColor || 'bg-white dark:bg-black',
         className
       )}
+      
       style={{
         ...getBackgroundStyle(), // This handles the radial glow overlay
         ...getBorderStyle(),
@@ -120,7 +121,7 @@ export const InteractiveGradient = ({
         {`
           .interactive-gradient-card::before {
             position: absolute;
-            content: "";
+            content: ""; 
             top: 0;
             left: 0;
             width: 100%;

@@ -44,7 +44,4 @@ next-env.d.ts
 
 /src/app/DivlabSpace
 /src/app/api
-
-/src/generated/prisma
-
-/src/generated/prisma
+/ngrok.exe

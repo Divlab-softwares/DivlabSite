@@ -29,8 +29,8 @@ import PaymentNotification from "../Components/PaymentNotification";
 import Whatsapp from "../../../public/assets/Whatsapp.svg";
 import UserProfile from "../../../public/assets/UserProfile.png";
 import { Input } from "../Components/lightswind/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/lightswind/select";
-import InteractiveGradient from "@/components/lightswind/interactive-gradient-card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/Components/lightswind/select";
+import InteractiveGradient from "@/app/Components/lightswind/interactive-gradient-card";
 import DivlabSpaceSignUp from "../Components/DivlabSpaceSignUp";
 import DivlabSpaceLogin from "../Components/DivlabSpaceLogin";
 
@@ -51,7 +51,7 @@ const Formations = () => {
         status: "success" | "failed";
     }
 
-    const PromPrice = 50
+    const PromPrice = 2000
     const [IdOpen, setIdOpen] = useState<number>(-1)
     const [changeCourseHeight, setChangeCourseHeight] = useState<number>(0)
     const serviceKey = process.env.MONETBIL_SERVICE_KEY;
@@ -181,7 +181,7 @@ const Formations = () => {
                     // }
                     localStorage.removeItem('monetbilPaymentInProgress');
                 }
-                 else if (data == null) {
+                else if (data == null) {
                     hasNotified = true; // bloque les suivants
                     //setIsChecking(false);
                     // setNotif({
@@ -195,7 +195,7 @@ const Formations = () => {
                     //console.log(" localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
                     // console.error("Statut vide:", data);
                     localStorage.removeItem('monetbilPaymentInProgress');
-                   // console.log("Nouveau localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
+                    // console.log("Nouveau localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
                 }
             } catch (err) {
                 console.error('Erreur checkStatus:', err);
@@ -320,7 +320,7 @@ const Formations = () => {
         setSearchCoursesResult(newBoard);
         setDisplayedFormations(newBoard.slice(startIndex, startIndex + itemsPerPage));
         //setSearchDataValue(searchData)
-        
+
         if (searchData == "") {
             setSearchCoursesResult(OnlineFormations)
         }
@@ -328,7 +328,7 @@ const Formations = () => {
 
     const handleSubmit = () => {
         setOpenCollapse(1)
-       
+
         if (listRef.current) {
             listRef.current?.scrollIntoView({ behavior: "smooth" });
             setTimeout(() => {
@@ -337,7 +337,7 @@ const Formations = () => {
         }
         setSearchCoursesResult(searchCourses(searchData, OnlineFormations));
         setSearchDataValue(searchData)
-        
+
     };
 
     function normalizeText(text: string): string {
@@ -365,7 +365,7 @@ const Formations = () => {
     }
 
 
-    
+
 
     const clearSearch = () => {
         setSearchData("")
@@ -588,7 +588,7 @@ const Formations = () => {
                     </div>
 
                     <div className=" h-full w-10">
-                        <Link href="#formations" className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold shadow-xl"><img src={!session ? UserProfile.src : session.user?.image} alt="" className="w-10 h-10 rounded-full " /></Link>
+                        <Link href="#formations" className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold shadow-xl"><img src={!session?.user?.image ? UserProfile.src : session.user?.image} alt="" className="w-10 h-10 rounded-full " /></Link>
                     </div>
                 </div>
 
@@ -666,7 +666,7 @@ const Formations = () => {
                                 </div>
 
                                 <div className="flex flex-col gap-3 h-auto md:w-2/3 w-full">
-                                    <Card className="w-100% relative h-full rounded-4xl flex flex-col border-none  justify-between bg-transparent">
+                                    <Card className="w-100% relative h-full rounded-4xl flex flex-col border-none  justify-between items-center bg-transparent">
                                         <motion.div
                                             key={IdOpen}
                                             initial={{ opacity: "0%", x: "-10%", y: 0 }}
@@ -679,7 +679,7 @@ const Formations = () => {
                                                 <hr />
                                                 <CardDescription className="flex flex-row flex-wrap gap-2 items-center">
                                                     <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "pdf / videos / images / presentations..." : searchCoursesResultCurrent[IdOpen].format}</i></span>
-                                                    <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].type == "premium" ? " text-yellow-500  bg-gray-300" : searchCoursesResultCurrent[IdOpen].type == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type}  </span>
+                                                    <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].type == "premium" ? " text-yellow-400  bg-gray-400 font-semibold" : searchCoursesResultCurrent[IdOpen].type == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type}  </span>
                                                     <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type == "premium" ? `${PromPrice} FCFA` : ""}</span>
                                                     <span className="text-red-500 ml-3"> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type == "premium" ? `Prix promotionnel` : ""}</span>
                                                 </CardDescription>
@@ -699,19 +699,19 @@ const Formations = () => {
                                             ) : (searchCoursesResultCurrent[IdOpen].type != "premium" ? (
 
                                                 <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                    <a href={searchCoursesResultCurrent[IdOpen].location} download={searchCoursesResultCurrent[IdOpen].location.split("/").pop()} className="w-full h-full flex items-center justify-center">Telecharger</a>
+                                                        <a href={searchCoursesResultCurrent[IdOpen].location} download={searchCoursesResultCurrent[IdOpen].location.split("/").pop()} className="w-full h-full flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
                                                 </Button>
                                             ) : (
                                                 <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
-                                                    <Button className=" h-12 w-full md:w-3/5 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1  p-0 ">
+                                                            <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
                                                         <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
                                                     </Button>
-                                                    <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} />
+                                                    {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
                                                 </div>)
                                             )}
 
 
-                                            
+
 
                                             {/* {paymentStatus && (
                                                 <motion.div
@@ -733,9 +733,13 @@ const Formations = () => {
 
 
                                             <Button className={`rounded-xl h-fit ${sideBar ? "hover:w-1/2" : "hover:w-1/3"}  w-12 hover:shadow-lg bg-gradient-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold `}>
-                                                <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a></Button>
-
+                                                <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a>
+                                            </Button>
+                                            
                                         </CardFooter>
+                                        {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse()} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                            <a href={`#formationslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
+                                        </Button>)}
                                     </Card>
 
                                 </div>
@@ -1404,7 +1408,7 @@ const Formations = () => {
                                     </div>
                                     <div className="relative">
                                         <h1 className="text-xl font-bold p-2  italic ">Div<span className="text-blue-500">lab</span></h1>
-                                        <button className="rounded-full absolute right-1 bottom-1 p-1  hover:bg-gray-600 bg-black/20  rounded-l-xl  transition-all duration-300 cursor-pointer" onClick={() => setSideBar(false)}><X size={20}/></button>
+                                        <button className="rounded-full absolute right-1 bottom-1 p-1  hover:bg-gray-600 bg-black/20  rounded-l-xl  transition-all duration-300 cursor-pointer" onClick={() => setSideBar(false)}><X size={20} /></button>
                                         <hr />
                                     </div>
                                 </div>
