@@ -3,21 +3,8 @@ generator client {
 }
 
 datasource db {
-<<<<<<< HEAD
-  provider = "postgresql"
-  url      = env("DIRECT_URL")
-}
-
-model Signup {
-  id        Int      @id @default(autoincrement())
-  name      String
-  password  String
-  email     String   @unique
-  createdAt DateTime @default(now())
-=======
   provider  = "postgresql"
   url       = env("DIRECT_URL")
->>>>>>> recovery
 }
 
 model User {
