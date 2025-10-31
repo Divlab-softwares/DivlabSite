@@ -2,10 +2,10 @@
 export const OnlineFormations = [
     {
         'id': 1,
-        'location': '/fichiers/DIVLAB_30-days-of-react-ebook-free.pdf',
+        'location': '/fichiers/DIVLAB_30-days-of-react-ebook_free.pdf',
         'format': 'pdf',
         'type': 'free',
-        'description': ' Today, we\'re starting out at the beginning.Let\'s look at what React is and what makes it tick.We\'ll discuss why we want to use it. Over the next 30 days, you\'ll get a good feel for the various parts of the React (https://facebook.github.io/react/) web framework and its ecosystem Each day in our 30 day adventure will build upon the previous day\'s materials so by the end of the series, you\'ll not only know the terms, concepts, an underpinnings of how the framework works, but be able to use React in next web application.Let\'s get started. We\'ll start at the very beginnin(https://www.youtube.com/watch?v=1RW3nDRmu6k) as it\'s a very good place to start ',
+        'description': ' Today, we`re starting out at the beginning.Let`s look at what React is and what makes it tick.We`ll discuss why we want to use it. Over the next 30 days, you`ll get a good feel for the various parts of the React (https://facebook.github.io/react/) web framework and its ecosystem Each day in our 30 day adventure will build upon the previous day`s materials so by the end of the series, you\'ll not only know the terms, concepts, an underpinnings of how the framework works, but be able to use React in next web application.Let\'s get started. We\'ll start at the very beginnin(https://www.youtube.com/watch?v=1RW3nDRmu6k) as it\'s a very good place to start ',
         'img': '/assets/formations/DIVLAB_30-days-of-react-ebook-fullstackio_premium.jpeg',
         'value': 'Formation'
     },
@@ -20,7 +20,7 @@ export const OnlineFormations = [
     },
     {
         'id': 3,
-        'location': '/fichiers/DIVLAB_NONE_7-strategies-pour-monter-une-entrprise-de-succes_premium.pdf',
+        'location': '/fichiers/DIVLAB_NONE_7-strategies-pour-monter-une-entreprise-de-succes_premium.pdf',
         'format': 'pdf',
         'type': 'premium',
         'description': 'Indisponible (sous licence)', 
@@ -110,7 +110,7 @@ export const OnlineFormations = [
     },
     {
         'id': 13,
-        'location': "/fichiers/DIVLAB_Comment-trouver-quelqu'un-à-aimer_free.pdf",
+        'location': "/fichiers/DIVLAB_Comment-trouver-quelqu’un-à-aimer_free.pdf",
         'format': 'pdf',
         'type': 'free',
         'description': ' Pourquoi écrire un livre sur ce sujet? La séduction n\'est- elle pas un talent naturel, quelque chose qu\'on a dans le sang, une fois pour toutes, ou qu\'on n\'a pas du tout ? Qu\'on n\'aura jamais ? Eh bien, imaginez - vous que non! Séduire est quelque chose qui s\'apprend ...',
@@ -149,7 +149,7 @@ export const OnlineFormations = [
         'location': '/fichiers/DIVLAB_Data-ana-with-R_free.pdf',
         'format': 'pdf',
         'type': 'free',
-        'description': '“The goal is where we want to be. The objectives are the steps needed to get there.  Innocent Ndoh Mbue, PhD',
+        'description': 'The goal is where we want to be. The objectives are the steps needed to get there.  Innocent Ndoh Mbue, PhD',
         'img': '/assets/formations/DIVLAB_Data-ana-with-R_free.jpeg',
         'value': 'Formation'
     },

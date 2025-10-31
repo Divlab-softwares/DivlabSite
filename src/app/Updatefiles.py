@@ -7,7 +7,13 @@ OUTPUT_FILE = "data1.js"
 
 # 🚀 Nouvelles colonnes à ajouter
 DEFAULT_COLUMNS = {
-    "Name": "the name",
+    "Title": "the name",
+    "Format":"the format",
+    "class":"the class",
+    "Group":"the group",
+    "Autor":"the autor",
+    "Pages":"the pages",
+    "category": "the category",
 }
 
 def load_js_as_json(js_file):
@@ -32,15 +38,26 @@ def save_as_js(data, js_file):
 
 if __name__ == "__main__":
     files = load_js_as_json(INPUT_FILE)
+   # file_arranged = {"id"=0,"Title"="title","Location"="loc","Format"="form","class"="class","description"="description","img"="group","category"="cat","autor"="aut","Pages"="pages"}
 
     # Ajouter les nouvelles colonnes
     for file in files:
         for key, default_value in DEFAULT_COLUMNS.items():
             if key not in file:
                 # Exemple : titre basé sur le nom du fichier
-                if key == "title":
+                if key == "Title":
                     file[key] = file["location"].split("/")[-1]
-                elif key == "type":
+                elif key == "Format":
+                    file[key] = "PDF"
+                elif key == "Class":
+                    file[key] = file["location"].split(".")[-1]
+                elif key == "Group":
+                    file[key] = file["location"].split(".")[-1]
+                elif key == "Category":
+                    file[key] = file["location"].split(".")[-1]
+                elif key == "Autor":
+                    file[key] = file["location"].split(".")[-1]
+                elif key == "Pages":
                     file[key] = file["location"].split(".")[-1]
                 else:
                     file[key] = default_value

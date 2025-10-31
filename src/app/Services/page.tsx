@@ -22,7 +22,7 @@ import {
 import { ChevronLeft, ClosedCaption, Moon, Search, SearchX, Sun, User, UserCircle, X } from "lucide-react"
 import Title from "@/app/Components/Title";
 import StripesBackground from '@/app/Components/lightswind/StripesBackground';
-import { OnlineFormations, Websites, IA, design } from '@/app/data.js'
+import { OnlineFormations, Websites, IA, design } from '@/app/data_restructured.js'
 import PayButton from "../Components/PayButton";
 import AnimatedNotification from "../Components/lightswind/animated-notification";
 import PaymentNotification from "../Components/PaymentNotification";
@@ -72,7 +72,7 @@ const Formations = () => {
 
     const [searchCoursesResult, setSearchCoursesResult] = useState<typeof OnlineFormations>(OnlineFormations.map(course => ({
         ...course,
-        _normTitle: normalizeText(course.location)
+        _normTitle: normalizeText(course.Title)
     })));
     const [searchCoursesResultCurrent, setSearchCoursesResultCurrent] = useState<typeof OnlineFormations>(OnlineFormations)
     type PaymentStatus = { status: 'success' | 'failed' | string; message?: string };
@@ -296,7 +296,7 @@ const Formations = () => {
         }
         const q = normalizeText(query);
         const search = courses.filter(course =>
-            normalizeText(course.location).includes(q)
+            normalizeText(course.Title).includes(q)
         );
         searchCache.set(key, search); // on garde le résultat en mémoire
         return search;
@@ -417,7 +417,7 @@ const Formations = () => {
 
     const categorizedCourses = OnlineFormations.map(f => ({
         ...f,
-        category: categorize(f.location),
+        category: categorize(f.Title),
     }));
 
     // const grouped = OnlineFormations.reduce((acc, f) => {
@@ -460,8 +460,8 @@ const Formations = () => {
     const preNormalizedCourses = categorizedCourses.map(course => ({
         ...course,
         _normCategory: normalizeText(course.category.map(cat => cat.category).join(" ")),
-        _normType: normalizeText(course.format),
-        _normClasse: normalizeText(course.type)
+        _normType: normalizeText(course.Format),
+        _normClasse: normalizeText(course.Class)
     }));
 
     // --- Étape 2 : fonction avec mémoïsation simple
@@ -638,8 +638,10 @@ const Formations = () => {
                     <div className="h-full w-full overflow-auto space-y-4  scroll-smooth">
                         <hr className="mb-4" />
                         <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u>
-                        <div
-                            className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
+
+                        {/* Zone des formations en e-book*/}
+
+                        <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
 
                             <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
                                 <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
@@ -659,7 +661,7 @@ const Formations = () => {
                                             transition={{ duration: 0.5 }}
                                         >
 
-                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80 hover:-translate-y-[1%] hover:translate-x-[1%]  rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80 hover:-translate-y-[1%] hover:translate-x-[1%]  rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
 
                                         </motion.div>
                                     </div>
@@ -675,43 +677,46 @@ const Formations = () => {
                                             transition={{ duration: 0.5, ease: "easeInOut" }}
                                             className="h-fit w-full border-x rounded-4xl" >
                                             <CardHeader>
-                                                <CardTitle className=" text-3xl uppercase whitespace-pre-wrap"> {IdOpen == -1 ? "FORMATIONS" : searchCoursesResultCurrent[IdOpen].location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</CardTitle>
+                                                <CardTitle className=" text-3xl uppercase whitespace-pre-wrap"> {IdOpen == -1 ? "FORMATIONS" : searchCoursesResultCurrent[IdOpen].Title}</CardTitle>
                                                 <hr />
-                                                <CardDescription className="flex flex-row flex-wrap gap-2 items-center">
-                                                    <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "pdf / videos / images / presentations..." : searchCoursesResultCurrent[IdOpen].format}</i></span>
-                                                    <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].type == "premium" ? " text-yellow-400  bg-gray-400 font-semibold" : searchCoursesResultCurrent[IdOpen].type == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type}  </span>
-                                                    <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type == "premium" ? `${PromPrice} FCFA` : ""}</span>
-                                                    <span className="text-red-500 ml-3"> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].type == "premium" ? `Prix promotionnel` : ""}</span>
+                                                <CardDescription className="flex flex-col flex-wrap gap-2 items-start">
+                                                    <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
+                                                        <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "pdf / videos / images / presentations..." : searchCoursesResultCurrent[IdOpen].Format}</i></span>
+                                                        <span className={`${IdOpen == -1 ? "" : "badge badge-soft badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "" : `${searchCoursesResultCurrent[IdOpen].Pages} Pages`} </i></span>
+                                                        <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].Class == "premium" ? " text-yellow-400  bg-black font-semibold" : searchCoursesResultCurrent[IdOpen].Class == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class}  </span>
+                                                        <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `${PromPrice} FCFA` : ""}</span>
+                                                        <span className="text-red-500 ml-3"> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `Prix promotionnel` : ""}</span>
+                                                    </div>
+                                                    <div className="">
+                                                        {IdOpen == -1 ? "" : (searchCoursesResultCurrent[IdOpen].Author !== "Inconnu" && searchCoursesResultCurrent[IdOpen].Author !== "Author") ? (<span className="text-md font-bold">Auteur: {searchCoursesResultCurrent[IdOpen].Author}</span>) : ""}
+                                                    </div>
                                                 </CardDescription>
 
                                             </CardHeader>
                                             <CardContent className="">
 
-                                                <p>{IdOpen == -1 ? "Devenez le meilleur de vous avec les formations sur mesure et adaptés à la lecture et la compréhension facile." : searchCoursesResultCurrent[IdOpen].description} </p>
+                                                <p>{IdOpen == -1 ? "Devenez le meilleur de vous avec les formations sur mesure et adaptés à la lecture et la compréhension facile." : searchCoursesResultCurrent[IdOpen].Description} </p>
                                             </CardContent>
                                         </motion.div>
                                         <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
+
 
                                             {IdOpen === -1 ? (
                                                 <Button onClick={() => handleOpenCollapse()} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
                                                     <a href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="w-full h-full p-2 flex items-center justify-center">{openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}</a>
                                                 </Button>
-                                            ) : (searchCoursesResultCurrent[IdOpen].type != "premium" ? (
-
+                                            ) : (searchCoursesResultCurrent[IdOpen].Class != "premium" ? (
                                                 <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                        <a href={searchCoursesResultCurrent[IdOpen].location} download={searchCoursesResultCurrent[IdOpen].location.split("/").pop()} className="w-full h-full flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
+                                                    <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
                                                 </Button>
                                             ) : (
                                                 <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
-                                                            <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
+                                                    <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
                                                         <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
                                                     </Button>
                                                     {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
                                                 </div>)
                                             )}
-
-
-
 
                                             {/* {paymentStatus && (
                                                 <motion.div
@@ -735,7 +740,7 @@ const Formations = () => {
                                             <Button className={`rounded-xl h-fit ${sideBar ? "hover:w-1/2" : "hover:w-1/3"}  w-12 hover:shadow-lg bg-gradient-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold `}>
                                                 <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a>
                                             </Button>
-                                            
+
                                         </CardFooter>
                                         {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse()} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
                                             <a href={`#formationslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
@@ -825,13 +830,14 @@ const Formations = () => {
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
                                         <div className="w-fit h-full flex flex-row gap-2">
                                             {newCategorizedCourses.map((course, index) => (
-                                                <button key={course.id} onClick={() => { setSearchCoursesResultCurrent(newCategorizedCourses), setIdOpen(index), setChangeCourseHeight(1) }} className="w-40 h-full p-1 rounded-xl shadow-[-8px_2px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
+                                                <button key={course.Id} onClick={() => { setSearchCoursesResultCurrent(newCategorizedCourses), setIdOpen(index), setChangeCourseHeight(1) }} className="w-40 h-full p-1 rounded-xl shadow-[-8px_2px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
                                                     <Link href="#formations" className=" flex flex-col items-center h-full overflow-hidden ">
-                                                        <Image height={500} width={500} src={course.img} alt="Formations en ligne" className="  w-full h-4/5  rounded-xl shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
+                                                        <Image height={500} width={500} src={course.Img} alt="Formations en ligne" className="  w-full h-4/5  rounded-xl shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
 
                                                         <div className="flex flex-col w-full items-start whitespace-nowrap p-1">
-                                                            <p className="text-sm font-medium"><i>{course.location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p>
-                                                            <span className="text-sm flex flex-row gap-3"><i>{course.format}</i><i className={`${course.type == "premium" ? "text-yellow-500" : "text-info"}`} >{course.type}</i></span>
+                                                            <p className="text-sm font-medium"><i>{course.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p>
+                                                            <span className="text-sm flex flex-row gap-3"><i>{course.Format}</i><i className={`${course.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{course.Class}</i></span>
+                                                            <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Pages} pages</i></span>
                                                             {/* <span className="text-sm flex flex-col gap-2"><i>{course.category.map((cat) => { return <span key={cat.category} className="text-xs">{cat.category}</span>; })}</i></span> */}
                                                         </div>
                                                     </Link>
@@ -861,7 +867,7 @@ const Formations = () => {
                                             transition={{ duration: 0.6, ease: "easeOut" }}
                                             className="relative"
                                         >
-                                            <div className="h-auto w-full relative flex flex-row space-y-8 p-2 rounded-xl flex-wrap  md:space-x-6 justify-center">
+                                            <div className="h-auto w-full relative flex flex-row space-y-8 p-2 rounded-xl flex-wrap space-x-4  md:space-x-6 justify-center">
                                                 <AnimatePresence mode="popLayout">
                                                     {displayedFormations.map((Formations, index) => (
                                                         // <button onClick={() => { setIdOpen(index) }} key={Formations.id} className="  w-1/2  p-2 rounded-md shadow-[-8px_3px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
@@ -896,7 +902,7 @@ const Formations = () => {
                                                                 ease: "easeOut",
                                                                 delay: index * 0.08,
                                                             }}
-                                                            className="h-120 cursor-pointer " key={Formations.id} onClick={() => { setIdOpen(index), setChangeCourseHeight(1), setSearchCoursesResultCurrent(displayedFormations) }} >
+                                                            className="h-120 cursor-pointer " key={Formations.Id} onClick={() => { setIdOpen(index), setChangeCourseHeight(1), setSearchCoursesResultCurrent(displayedFormations) }} >
                                                             <InteractiveGradient
 
                                                                 color="#1890ff"
@@ -919,15 +925,15 @@ const Formations = () => {
                                                                                     height={420}
 
                                                                                     className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
-                                                                                    src={Formations.img} // https://picsum.photos/500/350?image=${(id + 5) * 11}
+                                                                                    src={Formations.Img} // https://picsum.photos/500/350?image=${(id + 5) * 11}
                                                                                 />
                                                                             </div>
-                                                                            <CardTitle className=""><p className="text-sm font-bold"><i>{Formations.location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
-                                                                            <CardDescription><span className="text-sm flex flex-row gap-3"><i>{Formations.format}</i><i className={`${Formations.type == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.type}</i></span></CardDescription>
+                                                                            <CardTitle className=""><p className="text-sm font-bold"><i>{Formations.Title?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
+                                                                            <CardDescription><span className="text-sm flex flex-row gap-3"><i>{Formations.Format}</i><i className={`${Formations.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.Class}</i><i className={`text-info`} >{Formations.Pages} pages</i></span></CardDescription>
                                                                             <hr />
                                                                         </CardHeader>
                                                                         <CardContent className=" ">
-                                                                            <p className="line-clamp-3 leading-relaxed ">{Formations.description}</p>
+                                                                            <p className="line-clamp-3 leading-relaxed ">{Formations.Description}</p>
                                                                         </CardContent>
 
                                                                     </Card>
@@ -1005,7 +1011,416 @@ const Formations = () => {
 
                             </div>
                         </div>
-                        <div className="flex flex-row h-fit  md:p-4 space-y-4 ">
+
+                        <u><Title title="EPREUVES" className="text-4xl pt-2" id="formations" /></u>
+
+                        {/* Zone des Epreuves*/}
+
+                        <div
+                            className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
+
+                            <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
+                                <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
+                                    <div className="flex flex-col md:block items-center w-full  relative h-fit rounded-xl shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
+                                        <StripesBackground
+                                            position="right"
+                                            width="w-full"
+                                            height="h-full"
+                                            opacity="opacity-60"
+                                            className='rounded-xl'
+                                        />
+                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl"
+                                            key={IdOpen}
+                                            initial={{ opacity: "0%", x: 0, y: 0, scale: 0.8 }}
+                                            animate={{ opacity: "100%", x: "5%", y: "-5%", scale: 1 }}
+                                            exit={{ x: "20%", y: "-20%", opacity: "0%", scale: 0.8 }}
+                                            transition={{ duration: 0.5 }}
+                                        >
+
+                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80 hover:m-translate-y-[1%] hover:translate-x-[1%]  rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+
+                                        </motion.div>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-3 h-auto md:w-2/3 w-full">
+                                    <Card className="w-100% relative h-full rounded-4xl flex flex-col border-none  justify-between items-center bg-transparent">
+                                        <motion.div
+                                            key={IdOpen}
+                                            initial={{ opacity: "0%", x: "-10%", y: 0 }}
+                                            animate={{ opacity: "100%", x: "0%", y: "0%" }}
+                                            exit={{ x: "10%", y: "0%", opacity: "0%", scale: 0.8 }}
+                                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                                            className="h-fit w-full border-x rounded-4xl" >
+                                            <CardHeader>
+                                                <CardTitle className=" text-3xl uppercase whitespace-pre-wrap"> {IdOpen == -1 ? "FORMATIONS" : searchCoursesResultCurrent[IdOpen].Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</CardTitle>
+                                                <hr />
+                                                <CardDescription className="flex flex-row flex-wrap gap-2 items-center">
+                                                    <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "pdf / videos / images / presentations..." : searchCoursesResultCurrent[IdOpen].Format}</i></span>
+                                                    <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Pages}</i></span>
+                                                    <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].Class == "premium" ? " text-yellow-400  bg-black font-semibold" : searchCoursesResultCurrent[IdOpen].Class == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class}  </span>
+                                                    <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `${PromPrice} FCFA` : ""}</span>
+                                                    <span className="text-red-500 ml-3"> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `Prix promotionnel` : ""}</span>
+                                                </CardDescription>
+
+                                            </CardHeader>
+                                            <CardContent className="">
+
+                                                <p>{IdOpen == -1 ? "Devenez le meilleur de vous avec les formations sur mesure et adaptés à la lecture et la compréhension facile." : searchCoursesResultCurrent[IdOpen].Description} </p>
+                                            </CardContent>
+                                        </motion.div>
+                                        <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
+
+                                            {IdOpen === -1 ? (
+                                                <Button onClick={() => handleOpenCollapse()} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                                    <a href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="w-full h-full p-2 flex items-center justify-center">{openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}</a>
+                                                </Button>
+                                            ) : (searchCoursesResultCurrent[IdOpen].Class != "premium" ? (
+
+                                                <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                                    <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
+                                                </Button>
+                                            ) : (
+                                                <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
+                                                    <Button className="transition-all duration-300 h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl  bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
+                                                        <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
+                                                    </Button>
+                                                    {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
+                                                </div>)
+                                            )}
+
+
+
+
+                                            {/* {paymentStatus && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: 20 }}
+                                                    className={`z-50 fixed bottom-3 right-5  p-4 rounded-xl h-20 w-fit text-white font-bold flex items-center justify-center  ${paymentStatus.status === 'success'
+                                                            ? 'bg-green-600'
+                                                            : 'bg-red-600'
+                                                        }`}
+                                                >
+
+                                                    {paymentStatus.status === 'success'
+                                                        ? '✅ Paiement réussi ! Téléchargement disponible.'
+                                                        : `❌ Paiement échoué : ${paymentStatus.message || 'Veuillez réessayer.'}`}
+                                                </motion.div>
+                                            )} */}
+
+
+
+                                            <Button className={`rounded-xl h-fit ${sideBar ? "hover:w-1/2" : "hover:w-1/3"}  w-12 hover:shadow-lg bg-gradient-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold `}>
+                                                <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a>
+                                            </Button>
+
+                                        </CardFooter>
+                                        {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse()} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                            <a href={`#formationslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
+                                        </Button>)}
+                                    </Card>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="category" className="h-90">
+
+                            <div className="flex relative h-full   w-full  rounded-3xl p-2  shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]" >
+
+                                <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
+                                    <CardHeader className="py-2">
+                                        <div className="  flex flex-col md:flex-row gap-5 items-center ">
+                                            <span className="text-2xl font-bold">Categorisation</span>
+                                            <div className="gap-2 flex flex-wrap md:flex-row">
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Type : </p>
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "type");
+                                                    }}>
+                                                        <SelectTrigger className="w-[180px] md:w-[200px]">
+                                                            <SelectValue placeholder="Choisir le Type..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="pdf">Pdf</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Categorie : </p>
+                                                    {/* <select onChange={handleselect} >
+                                                        <option value="Programmation Python">developpement pyhton</option>
+                                                        <option value="Développement Web">dev web</option>
+                                                        <option value="IA & Deep Learning">IA</option>
+                                                    </select> */}
+
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "category");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="Programmation Python">Programmation python</SelectItem>
+                                                            <SelectItem value="Développement Web">Développement web</SelectItem>
+                                                            <SelectItem value="Développement Mobile">Développement mobile</SelectItem>
+                                                            <SelectItem value="Intelligence Artificielle">IA & Deep Learning</SelectItem>
+                                                            <SelectItem value="Data Science">Data Science</SelectItem>
+                                                            <SelectItem value="Cybersécurité">Cybersécurité</SelectItem>
+                                                            <SelectItem value="Réseaux & Systèmes">Réseaux &amp; Systèmes</SelectItem>
+                                                            <SelectItem value="Bases de Données">Bases de Données</SelectItem>
+                                                            <SelectItem value="Bureautique">Bureautique</SelectItem>
+                                                            <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
+                                                            <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
+                                                            <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
+                                                            <SelectItem value="Formation Académique">Formation Académique</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                {/* <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Classe : </p>
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "classe");
+                                                    }}>
+                                                        <SelectTrigger className="w-[180px] md:w-[200px]">
+                                                            <SelectValue placeholder="Choisir la Classe..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="free">gratuit</SelectItem>
+                                                            <SelectItem value="premium">premium</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span> */}
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Etablissement : </p>
+                                                    {/* <select onChange={handleselect} >
+                                                        <option value="Programmation Python">developpement pyhton</option>
+                                                        <option value="Développement Web">dev web</option>
+                                                        <option value="IA & Deep Learning">IA</option>
+                                                    </select> */}
+
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "category");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="Programmation Python">Programmation python</SelectItem>
+                                                            <SelectItem value="Développement Web">Développement web</SelectItem>
+                                                            <SelectItem value="Développement Mobile">Développement mobile</SelectItem>
+                                                            <SelectItem value="Intelligence Artificielle">IA & Deep Learning</SelectItem>
+                                                            <SelectItem value="Data Science">Data Science</SelectItem>
+                                                            <SelectItem value="Cybersécurité">Cybersécurité</SelectItem>
+                                                            <SelectItem value="Réseaux & Systèmes">Réseaux &amp; Systèmes</SelectItem>
+                                                            <SelectItem value="Bases de Données">Bases de Données</SelectItem>
+                                                            <SelectItem value="Bureautique">Bureautique</SelectItem>
+                                                            <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
+                                                            <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
+                                                            <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
+                                                            <SelectItem value="Formation Académique">Formation Académique</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" , Type = "{typeCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
+
+                                    </CardHeader>
+                                    <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
+                                        <div className="w-fit h-full flex flex-row gap-2">
+                                            {newCategorizedCourses.map((course, index) => (
+                                                <button key={course.Id} onClick={() => { setSearchCoursesResultCurrent(newCategorizedCourses), setIdOpen(index), setChangeCourseHeight(1) }} className="w-40 h-full p-1 rounded-xl shadow-[-8px_2px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
+                                                    <Link href="#formations" className=" flex flex-col items-center h-full overflow-hidden ">
+                                                        <Image height={500} width={500} src={course.Img} alt="Formations en ligne" className="  w-full h-4/5  rounded-xl shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
+
+                                                        <div className="flex flex-col w-full items-start whitespace-nowrap p-1">
+                                                            <p className="text-sm font-medium"><i>{course.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p>
+                                                            <span className="text-sm flex flex-row gap-3"><i>{course.Format}</i><i className={`${course.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{course.Class}</i></span>
+                                                            {/* <span className="text-sm flex flex-col gap-2"><i>{course.category.map((cat) => { return <span key={cat.category} className="text-xs">{cat.category}</span>; })}</i></span> */}
+                                                        </div>
+                                                    </Link>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                            </div>
+
+                        </div>
+                        <div id="paperslist" ref={listRef} className={`${sideBar ? "md:hidden" : ""}  w-full h-auto  rounded-2xl shadow-[inset_7px_-7px_80px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)]`} data-theme={`${theme}`}>
+                            <Collapsible open={openCollapse == 1} onOpenChange={() => setOpenCollapse(0)} className=" ">
+
+                                <CollapsibleTrigger asChild className="">
+
+                                </CollapsibleTrigger>
+                                <CollapsibleContent className=" p-2">
+                                    <div className="   flex flex-col w-full h-auto space-y-2">
+                                        <Link href="#formations" onClick={() => { handleOpenCollapse(), handleCilck(-1), setChangeCourseHeight(0) }} className=" mb-2 rounded-full w-10 h-10 bg-black/20 hover:bg-blue-500 flex items-center justify-center cursor-pointer">{<X />}</Link>
+
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 40 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 40 }}
+                                            transition={{ duration: 0.6, ease: "easeOut" }}
+                                            className="relative"
+                                        >
+                                            <div className="h-auto w-full relative flex flex-row space-y-8 p-2 rounded-xl flex-wrap  md:space-x-6 justify-center">
+                                                <AnimatePresence mode="popLayout">
+                                                    {displayedFormations.map((Formations, index) => (
+                                                        // <button onClick={() => { setIdOpen(index) }} key={Formations.id} className="  w-1/2  p-2 rounded-md shadow-[-8px_3px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
+                                                        //     <Link href="#formations" className=" flex flex-col items-center w-fit h-full ">
+                                                        //         <Image height={80} width={50} src={Formations.img} alt="Formations en ligne" className="object-cover  w-10 h-13  rounded-sm shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
+
+                                                        //         <div className="flex flex-col justify-center w-full items-start ">
+                                                        //             <p className="text-sm font-bold"><i>{Formations.location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p>
+                                                        //             <span className="text-sm flex flex-row gap-3"><i>{Formations.format}</i><i className={`${Formations.type == "premium" ? "text-accent" : "text-info"}`} >{Formations.type}</i></span>
+                                                        //         </div>
+                                                        //     </Link>
+
+
+                                                        // </button>
+
+                                                        <motion.button
+                                                            layout
+                                                            initial={{ opacity: 0, scale: 0.8, y: 40 }}
+                                                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                                                            exit={{
+                                                                opacity: 0,
+                                                                y: -50,
+                                                                position: "absolute",
+                                                                top: 0,
+                                                                left: 0,
+                                                                right: 0,
+                                                                z: -1,
+                                                                scale: 0.7
+                                                            }}
+                                                            transition={{
+                                                                duration: 0.4,
+                                                                ease: "easeOut",
+                                                                delay: index * 0.08,
+                                                            }}
+                                                            className="h-120 cursor-pointer " key={Formations.Id} onClick={() => { setIdOpen(index), setChangeCourseHeight(1), setSearchCoursesResultCurrent(displayedFormations) }} >
+                                                            <InteractiveGradient
+
+                                                                color="#1890ff"
+                                                                glowColor="#1076675d"
+                                                                followMouse={true}
+                                                                hoverOnly={false}
+                                                                intensity={100}
+                                                                backgroundColor={cardCol}
+                                                                width="20rem"
+                                                                height="full"
+                                                                borderRadius="2.25rem"
+                                                                className="flex items-start h-full transition  duration-400  ease-in-out hover:border-info hover:scale-102  hover:-translate-y-2 hover:shadow-[0_5px_20px_rgba(0,0,0,0.6)] justify-center h-100% mt-5  shadow-[0_5px_20px_rgba(0,0,0,0.5)] ">
+                                                                <Link href="#formations" className=" w-full h-full">
+                                                                    <Card className={` w-100% relative h-100% rounded-4xl border-none flex flex-col ${textCol}`}>
+                                                                        <CardHeader>
+                                                                            <div className="mb-5 w-full h-50 rounded-3xl bg-gray-500 transform duration-300 hover:scale-104">
+                                                                                <Image
+                                                                                    alt=""
+                                                                                    width={320}
+                                                                                    height={420}
+
+                                                                                    className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
+                                                                                    src={Formations.Img} // https://picsum.photos/500/350?image=${(id + 5) * 11}
+                                                                                />
+                                                                            </div>
+                                                                            <CardTitle className=""><p className="text-sm font-bold"><i>{Formations.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
+                                                                            <CardDescription><span className="text-sm flex flex-row gap-3"><i>{Formations.Format}</i><i className={`${Formations.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.Class}</i></span></CardDescription>
+                                                                            <hr />
+                                                                        </CardHeader>
+                                                                        <CardContent className=" ">
+                                                                            <p className="line-clamp-3 leading-relaxed ">{Formations.Description}</p>
+                                                                        </CardContent>
+
+                                                                    </Card>
+                                                                </Link>
+                                                            </InteractiveGradient>
+                                                        </motion.button>
+                                                    )
+
+                                                    )}
+                                                </AnimatePresence>
+                                            </div>
+
+                                        </motion.div>
+                                        {/* Pagination */}
+                                        <div className="flex justify-center mt-6 space-x-2 items-center">
+                                            {/* Bouton précédent */}
+                                            <button
+                                                disabled={currentPage === 1}
+                                                onClick={() => {
+                                                    const newPage: number = Math.max(currentPage - 1, 1);
+                                                    setCurrentPage(newPage);
+                                                    handlePageChange(newPage);
+                                                }}
+                                                className="px-3 py-1 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 text-black"
+                                            >
+                                                <Link href="#formationslist" className="w-full h-full">
+                                                    ←
+                                                </Link>
+                                            </button>
+
+                                            {/* Pages dynamiques */}
+                                            {getPageNumbers().map((page, index) =>
+                                                page === "..." ? (
+                                                    <span key={index} className="px-2 text-blue-500">
+                                                        ...
+                                                    </span>
+                                                ) : (
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => handlePageChange(Number(page))}
+                                                        className={`cursor-pointer transition-all duration-400 ease-in-out px-3 py-1 rounded-lg ${currentPage === page
+                                                            ? "bg-blue-600 text-white"
+                                                            : "bg-gray-200 hover:bg-gray-300 text-black"
+                                                            }`}
+                                                    >
+                                                        <Link href="#formationslist" className="w-full h-full">
+                                                            {page}
+                                                        </Link>
+
+                                                    </button>
+                                                )
+                                            )}
+
+                                            {/* Bouton suivant */}
+                                            <button
+                                                disabled={currentPage === totalPages}
+                                                onClick={() => {
+                                                    const newPage: number = Math.min(currentPage + 1, totalPages);
+                                                    setCurrentPage(newPage);
+                                                    handlePageChange(newPage);
+                                                }}
+                                                className="px-3 py-1 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 text-black"
+                                            >
+                                                <Link href="#formationslist" className="w-full h-full">
+                                                    →
+                                                </Link>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </CollapsibleContent>
+                            </Collapsible>
+                            {/* commentaire */}
+                            <div className="  rounded-md shadow-[-8px_3px_15px_rgba(0,0,0,0.6)] h-fit ">
+
+                            </div>
+                        </div>
+
+
+                        {/* Zone des formations en ligne */}
+
+                        <div id="formationsOnline" className="flex flex-row h-fit  md:p-4 space-y-4 ">
                             <HoverCard
                                 openDelay={100}
                                 closeDelay={0}
@@ -1059,7 +1474,9 @@ const Formations = () => {
 
                         </div>
 
-                        <div className="flex flex-row h-fit  md:p-4 space-y-4 ">
+                        {/* Zone des formations en presentiel*/}
+
+                        <div id="formationPresentiel" className="flex flex-row h-fit  md:p-4 space-y-4 ">
                             <HoverCard
                                 openDelay={100}
                                 closeDelay={0}
@@ -1113,6 +1530,7 @@ const Formations = () => {
 
                         </div>
 
+                        {/* Zone des Solutions web */}
                         <u><Title title="SOLUTIONS WEB" className="text-4xl pt-2" id="solutions web" /></u>
                         {Websites.map((site, index) => (
                             <div className="flex flex-row  justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)] " key={site.id} data-theme={`${theme}`}>
@@ -1437,13 +1855,13 @@ const Formations = () => {
                                                             (
                                                                 <div className=" flex flex-col space-y-1  py-2 rounded-xl  h-full " >
                                                                     {searchCoursesResult.map((Formations, index) => (
-                                                                        <button onClick={() => { setSearchCoursesResultCurrent(searchCoursesResult), setIdOpen(index), setChangeCourseHeight(1) }} key={Formations.id} className="flex flex-row  w-fit space-x-2 p-2 rounded-md shadow-[2px_3px_20px_rgba(0,0,0,0.5)] hover:bg-black/20">
+                                                                        <button onClick={() => { setSearchCoursesResultCurrent(searchCoursesResult), setIdOpen(index), setChangeCourseHeight(1) }} key={Formations.Id} className="flex flex-row  w-fit space-x-2 p-2 rounded-md shadow-[2px_3px_20px_rgba(0,0,0,0.5)] hover:bg-black/20">
                                                                             <Link href="#formations" className=" flex flex-row justify-center items-center ml-2 w-200 h-full ">
-                                                                                <Image height={80} width={50} src={Formations.img} alt="Formations en ligne" className="object-cover  w-9 h-12  rounded-sm shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
+                                                                                <Image height={80} width={50} src={Formations.Img} alt="Formations en ligne" className="object-cover  w-9 h-12  rounded-sm shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
 
                                                                                 <div className="flex flex-col justify-center w-full items-start ">
-                                                                                    <p className="text-md font-bold"><i>{Formations.location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p>
-                                                                                    <span className="text-sm flex flex-row gap-3"><i>{Formations.format}</i><i className={`${Formations.type == "premium" ? "text-yellow-600" : Formations.type == "sous licence" ? "text-red-700" : "text-info"}`} >{Formations.type}</i></span>
+                                                                                    <p className="text-md font-bold"><i>{Formations.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p>
+                                                                                    <span className="text-sm flex flex-row gap-3"><i>{Formations.Format}</i><i className={`${Formations.Class == "premium" ? "text-yellow-600" : Formations.Class == "sous licence" ? "text-red-700" : "text-info"}`} >{Formations.Class}</i></span>
                                                                                 </div>
                                                                             </Link>
 

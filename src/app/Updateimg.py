@@ -30,8 +30,7 @@ def process_formations(match):
 
         # Remplacer (ou ajouter) la clé img
         if re.search(r'/assets/ImgCarousel/12.jpeg', obj_text):
-            obj_text = re.sub(r'/assets/ImgCarousel/12.jpeg',
-                              f'{new_img}', obj_text)
+            obj_text = re.sub(r'/assets/ImgCarousel/12.jpeg', f'{new_img}', obj_text)
         else:
             obj_text = obj_text.rstrip("}")  # retirer la dernière accolade
             obj_text += f', img: "{new_img}" }}'

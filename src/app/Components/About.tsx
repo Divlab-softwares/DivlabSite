@@ -9,7 +9,7 @@ import { ChevronUpCircle, X, ChevronUp } from "lucide-react"
 import Image from "next/image";
 import { Button } from "./lightswind/button";
 import img from "../../../public/assets/Group.webp";
-import img1 from "../../../public/assets/formations/DIVLAB_30-days-of-react-ebook-fullstackio_premium.jpeg";
+import img1 from "../../../public/assets/formations/DIVLAB_30-days-of-react-ebook_free.jpeg";
 import img2 from "../../../public/assets/Blog.jpeg";
 import img3 from "../../../public/assets/IaPremium.jpeg";
 import { AnimatePresence, motion } from "motion/react";
