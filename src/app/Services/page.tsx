@@ -641,7 +641,8 @@ const Formations = () => {
 
                         {/* Zone des formations en e-book*/}
 
-                        <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
+                        <div
+                            className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
 
                             <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
                                 <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
@@ -700,23 +701,26 @@ const Formations = () => {
                                         </motion.div>
                                         <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
 
-
                                             {IdOpen === -1 ? (
                                                 <Button onClick={() => handleOpenCollapse()} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
                                                     <a href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="w-full h-full p-2 flex items-center justify-center">{openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}</a>
                                                 </Button>
                                             ) : (searchCoursesResultCurrent[IdOpen].Class != "premium" ? (
+
                                                 <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                    <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
+                                                        <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
                                                 </Button>
                                             ) : (
                                                 <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
-                                                    <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
+                                                            <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
                                                         <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
                                                     </Button>
                                                     {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
                                                 </div>)
                                             )}
+
+
+
 
                                             {/* {paymentStatus && (
                                                 <motion.div
@@ -740,7 +744,7 @@ const Formations = () => {
                                             <Button className={`rounded-xl h-fit ${sideBar ? "hover:w-1/2" : "hover:w-1/3"}  w-12 hover:shadow-lg bg-gradient-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold `}>
                                                 <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a>
                                             </Button>
-
+                                            
                                         </CardFooter>
                                         {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse()} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
                                             <a href={`#formationslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
@@ -1418,7 +1422,7 @@ const Formations = () => {
                         </div>
 
 
-                        {/* Zone des formations en ligne */}
+{/* Zone des formations en ligne */}
 
                         <div id="formationsOnline" className="flex flex-row h-fit  md:p-4 space-y-4 ">
                             <HoverCard
@@ -1474,7 +1478,7 @@ const Formations = () => {
 
                         </div>
 
-                        {/* Zone des formations en presentiel*/}
+{/* Zone des formations en presentiel*/}
 
                         <div id="formationPresentiel" className="flex flex-row h-fit  md:p-4 space-y-4 ">
                             <HoverCard
@@ -1530,7 +1534,7 @@ const Formations = () => {
 
                         </div>
 
-                        {/* Zone des Solutions web */}
+{/* Zone des Solutions web */}
                         <u><Title title="SOLUTIONS WEB" className="text-4xl pt-2" id="solutions web" /></u>
                         {Websites.map((site, index) => (
                             <div className="flex flex-row  justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)] " key={site.id} data-theme={`${theme}`}>
