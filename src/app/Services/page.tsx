@@ -451,7 +451,7 @@ const Formations = () => {
         category: categorize(f.Title),
     }));
 
-    const categorizedPapers = OnlineFormations.map(f => ({
+    const categorizedPapers = Papers.map(f => ({
         ...f,
         category: categorize(f.Title),
     }));
@@ -1145,14 +1145,14 @@ const Formations = () => {
                                                 <CardDescription className="flex flex-row flex-wrap gap-2 items-center">
                                                     <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
                                                         <span className={`${IdPaperOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "pdf / videos / images / presentations..." : searchPapersResultCurrent[IdPaperOpen].Format}</i></span>
-                                                        <span className={`${IdPaperOpen == -1 ? "" : "badge badge-soft badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "" : `${searchPapersResultCurrent[IdPaperOpen].Pages} Pages`} </i></span>
+                                                        {/* <span className={`${IdPaperOpen == -1 ? "" : "badge badge-soft badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "" : `${searchPapersResultCurrent[IdPaperOpen].Pages} Pages`} </i></span> */}
                                                         <span className={`${IdPaperOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchPapersResultCurrent[IdPaperOpen].Class == "premium" ? " text-yellow-400  bg-black font-semibold" : searchPapersResultCurrent[IdPaperOpen].Class == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdPaperOpen == -1 ? "" : searchPapersResultCurrent[IdPaperOpen].Class}  </span>
                                                         <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdPaperOpen == -1 ? "" : searchPapersResultCurrent[IdPaperOpen].Class == "premium" ? `${PromPrice} FCFA` : ""}</span>
                                                         <span className="text-red-500 ml-3"> {IdPaperOpen == -1 ? "" : searchPapersResultCurrent[IdPaperOpen].Class == "premium" ? `Prix promotionnel` : ""}</span>
                                                     </div>
-                                                    <div className="">
+                                                    {/* <div className="">
                                                         {IdPaperOpen == -1 ? "" : (searchPapersResultCurrent[IdPaperOpen].Author !== "Inconnu" && searchPapersResultCurrent[IdPaperOpen].Author !== "Author") ? (<span className="text-md font-bold">Auteur: {searchPapersResultCurrent[IdPaperOpen].Author}</span>) : ""}
-                                                    </div>
+                                                    </div> */}
                                                 </CardDescription>
 
                                             </CardHeader>
@@ -1350,7 +1350,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{categoryPaper}" , Format = "{FormatCategoryPaper}" , Etablissement = "{SchoolCategoryPaper}", Niveau scolaire = "{LevelCategoryPaper}"</i></CardDescription>)}
+                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Etablissement = "{schoolCategoryPaper}", Niveau scolaire = "{levelCategoryPaper}"</i></CardDescription>)}
 
                                     </CardHeader>
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
