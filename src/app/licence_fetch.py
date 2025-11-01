@@ -111,7 +111,7 @@ def classify_document(file_path):
 
 # --- Exemple d'utilisation ---
 if __name__ == "__main__":
-    pdf_path = "../../public/fichiers/DIVLAB_30-days-of-react-ebook-free.pdf"
+    pdf_path = "../../public/fichiers/epreuves/Epreuve_SN_24_Serie_Temp_2024.pdf"
     result = classify_document(pdf_path)
     print(result)
     # Sortie possible :

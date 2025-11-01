@@ -695,6 +695,21 @@ export const OnlineFormations = [
 export const Papers = [
     {
         "Id": 1,
+        "Title": "Epreuve de Machine Learning",
+        "Location": "/fichiers/epreuves/DIVLAB_Epreuve-de-Machine-Learning_ENSAE.pdf",
+        "Format": "pdf",
+        "Class": "premium",
+        "Description": " ",
+        "Img": "/assets/epreuve/ENSAE.jpeg",
+        "Group": "Epreuves",
+        "Category": "Intelligence artificielle",
+        "School": "ENSAE ( Ecole Normale ....",
+        "Type": "TD",
+        "Level": "niveau 3 universitaire",
+        "Year": "2022-2023"
+    },
+    {
+        "Id": 1,
         "Title": "Groupe d'epreuves d'introduction a l'Inteligence artificiel",
         "Location": "/fichiers/epreuves/anciennes épreuves introduction à L'intelligence artificielle .pdf",
         "Format": "pdf",
