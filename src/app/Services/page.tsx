@@ -22,7 +22,7 @@ import {
 import { ChevronLeft, ClosedCaption, Moon, Search, SearchX, Sun, User, UserCircle, X } from "lucide-react"
 import Title from "@/app/Components/Title";
 import StripesBackground from '@/app/Components/lightswind/StripesBackground';
-import { OnlineFormations, Websites, IA, design } from '@/app/data_restructured.js'
+import { OnlineFormations, Websites, IA, design, Papers } from '@/app/data_restructured.js'
 import PayButton from "../Components/PayButton";
 import AnimatedNotification from "../Components/lightswind/animated-notification";
 import PaymentNotification from "../Components/PaymentNotification";
@@ -53,9 +53,12 @@ const Formations = () => {
 
     const PromPrice = 2000
     const [IdOpen, setIdOpen] = useState<number>(-1)
+    const [IdPaperOpen, setIdPaperOpen] = useState<number>(-1)
     const [changeCourseHeight, setChangeCourseHeight] = useState<number>(0)
+    const [changePaperHeight, setChangePaperHeight] = useState<number>(0)
     const serviceKey = process.env.MONETBIL_SERVICE_KEY;
     const [openCollapse, setOpenCollapse] = useState<number>(0)
+    const [openPaperCollapse, setOpenPaperCollapse] = useState<number>(0)
     const [theme, setTheme] = useState("garden")
     const [sideBar, setSideBar] = useState<boolean>(false)
     const [searchData, setSearchData] = useState<string>("")
@@ -74,7 +77,13 @@ const Formations = () => {
         ...course,
         _normTitle: normalizeText(course.Title)
     })));
+
+    const [searchPapersResult, setSearchPapersResult] = useState<typeof Papers>(Papers.map(paper => ({
+        ...paper,
+        _normTitle: normalizeText(paper.Title)
+    })));
     const [searchCoursesResultCurrent, setSearchCoursesResultCurrent] = useState<typeof OnlineFormations>(OnlineFormations)
+    const [searchPapersResultCurrent, setSearchPapersResultCurrent] = useState<typeof Papers>(Papers)
     type PaymentStatus = { status: 'success' | 'failed' | string; message?: string };
     const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null);
     interface NotifState {
@@ -90,14 +99,27 @@ const Formations = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const startIndex = (currentPage - 1) * itemsPerPage;
+
+    const [currentPaperPage, setCurrentPaperPage] = useState(1);
+    const itemsPerPaperPage = 5;
+    const startPaperIndex = (currentPaperPage - 1) * itemsPerPaperPage;
+
     const [displayedFormations, setDisplayedFormations] = useState(searchCoursesResult.slice(startIndex, startIndex + itemsPerPage));
+    const [displayedPapers, setDisplayedPapers] = useState(searchPapersResult.slice(startPaperIndex, startPaperIndex + itemsPerPaperPage));
     const totalPages = Math.ceil(searchCoursesResult.length / itemsPerPage);
+    const totalPaperPages = Math.ceil(searchPapersResult.length / itemsPerPaperPage);
     const [signResult, setSignResult] = useState<SignResult | null>(null);
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
         const newStartIndex = (page - 1) * itemsPerPage;
         setDisplayedFormations(searchCoursesResult.slice(newStartIndex, newStartIndex + itemsPerPage));
+    };
+
+    const handlePaperPageChange = (page: number) => {
+        setCurrentPaperPage(page);
+        const newStartIndex = (page - 1) * itemsPerPaperPage;
+        setDisplayedPapers(searchPapersResult.slice(newStartIndex, newStartIndex + itemsPerPaperPage));
     };
 
     // Verification du statut de connexion
@@ -246,12 +268,21 @@ const Formations = () => {
     //     return () => clearInterval(interval);
     // }, []);
 
-    const handleOpenCollapse = () => {
-        if (openCollapse == 0) {
-            setOpenCollapse(1)
-        } else {
-            setOpenCollapse(0)
+    const handleOpenCollapse = (value: string) => {
+        if (value == "formation") {
+            if (openCollapse == 0) {
+                setOpenCollapse(1)
+            } else {
+                setOpenCollapse(0)
+            }
+        } else if (value == "epreuve") {
+            if (openPaperCollapse == 0) {
+                setOpenPaperCollapse(1)
+            } else {
+                setOpenPaperCollapse(0)
+            }
         }
+
     }
 
     const handleCilck = (id: number) => {
@@ -420,6 +451,11 @@ const Formations = () => {
         category: categorize(f.Title),
     }));
 
+    const categorizedPapers = OnlineFormations.map(f => ({
+        ...f,
+        category: categorize(f.Title),
+    }));
+
     // const grouped = OnlineFormations.reduce((acc, f) => {
     //     const cat = categorize(f.location)[0]?.category || "Autres";
     //     acc[cat] = acc[cat] || [];
@@ -428,32 +464,69 @@ const Formations = () => {
     // }, {} as Record<string, typeof OnlineFormations>);
 
     const [newCategorizedCourses, setNewCategorizedCourses] = useState<typeof categorizedCourses>([]);
+    const [newCategorizedPapers, setNewCategorizedPapers] = useState<typeof categorizedPapers>([]);
 
-    const [typeCategory, setTypeCategory] = useState("tout");
+    const [formatCategory, setFormatCategory] = useState("tout");
     const [category, setCategory] = useState("tout");
     const [classeCategory, setClasseCategory] = useState("tout");
 
-    const handleSelect = (value: string, categoryType: string) => {
+    const [formatCategoryPaper, setFormatCategoryPaper] = useState("tout");
+    const [categoryPaper, setCategoryPaper] = useState("tout");
+    const [classeCategoryPaper, setClasseCategoryPaper] = useState("tout");
+    const [schoolCategoryPaper, setSchoolCategoryPaper] = useState("tout");
+    const [levelCategoryPaper, setLevelCategoryPaper] = useState("tout");
+
+    const handleSelect = (value: string, categoryType: string, group: string) => {
         // const cat = categorize(value)
         let c = category
-        let t = typeCategory
+        let f = formatCategory
         let cl = classeCategory
+
+        let c_p = categoryPaper
+        let f_p = formatCategoryPaper
+        let cl_p = classeCategoryPaper
+        let s_p = schoolCategoryPaper
+        let l_p = levelCategoryPaper
+
         switch (categoryType) {
-            case "type":
-                setTypeCategory(value);
-                t = value
+            case "format":
+                switch (group) {
+                    case "epreuve":
+                        setFormatCategoryPaper(value);
+                        f_p = value
+                    case "formation":
+                        setFormatCategory(value);
+                        f = value
+                }
                 break;
             case "category":
-                setCategory(value);
-                c = value
+                switch (group) {
+                    case "epreuve":
+                        setCategoryPaper(value);
+                        c_p = value
+                    case "formation":
+                        setCategory(value);
+                        c = value
+                }
                 break;
             case "classe":
-                setClasseCategory(value);
-                cl = value
+                switch (group) {
+                    case "epreuve":
+                        setClasseCategoryPaper(value);
+                        cl_p = value
+                    case "formation":
+                        setClasseCategory(value);
+                        cl = value
+                }
                 break;
         }
-        console.log("Categorie:", c, "Type:", t);
-        setNewCategorizedCourses(selectCategory(c, t, cl))
+        console.log("Categorie:", c, "Type:", f , "class", cl);
+        if (group == "epreuve") {
+            setNewCategorizedPapers(selectCategory(c_p, f_p, cl_p, group))
+        } else if (group == "formation") {
+            setNewCategorizedCourses(selectCategory(c, f, cl, group))
+        }
+
     }
 
     // --- Étape 1 : pré-normalisation (à faire une seule fois, ex: au chargement)
@@ -464,30 +537,40 @@ const Formations = () => {
         _normClasse: normalizeText(course.Class)
     }));
 
+    const preNormalizedPapers = categorizedPapers.map(paper => ({
+        ...paper,
+        _normCategory: normalizeText(paper.category.map(cat => cat.category).join(" ")),
+        _normType: normalizeText(paper.Format),
+        _normClasse: normalizeText(paper.Class)
+    }));
+
     // --- Étape 2 : fonction avec mémoïsation simple
     const cache = new Map();
+    const cachePaper = new Map();
 
-    const selectCategory = (category: string, type: string, classe: string) => {
-        const key = `${category}|${type}|${classe}`;
-        if (cache.has(key)) {
-            return cache.get(key); // renvoie directement le résultat précédent
+    const selectCategory = (category: string, type: string, classe: string, group: string) => {
+        const key = `${category}|${type}|${classe}|${group}`;
+        const cacheToUse = group === "epreuve" ? cachePaper : cache;
+        if (cacheToUse.has(key)) {
+            return cacheToUse.get(key); // renvoie directement le résultat précédent
         }
-
+        const PrenormalizedTable = group === "epreuve" ? preNormalizedPapers : preNormalizedCourses;
 
         const normalizedC = normalizeText(category);
         const normalizedT = normalizeText(type);
         const normalizedCL = normalizeText(classe);
 
-        const filtered = preNormalizedCourses.filter(course => {
+        const filtered = PrenormalizedTable.filter(course => {
             const matchCategory = normalizedC === "tout" || course._normCategory.includes(normalizedC);
             const matchType = normalizedT === "tout" || course._normType.includes(normalizedT);
             const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
             return matchCategory && matchType && matchClasse;
         });
 
-        cache.set(key, filtered); // on garde le résultat en mémoire
+        cacheToUse.set(key, filtered); // on garde le résultat en mémoire
         return filtered;
     };
+
 
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -499,27 +582,29 @@ const Formations = () => {
 
 
     // Fonction pour générer la liste des pages à afficher
-    const getPageNumbers = () => {
+    const getPageNumbers = (group: string) => {
         const pages: (number | string)[] = [];
+        const total = group === "epreuve" ? totalPaperPages : totalPages;
+        const current = group == "epreuve" ? currentPaperPage : currentPage;
 
-        if (totalPages <= 7) {
+        if (total <= 7) {
             // Si peu de pages → tout afficher
-            for (let i = 1; i <= totalPages; i++) pages.push(i);
+            for (let i = 1; i <= total; i++) pages.push(i);
         } else {
             // Si beaucoup de pages → ellipses intelligentes
-            if (currentPage <= 4) {
-                pages.push(1, 2, 3, 4, 5, "...", totalPages);
-            } else if (currentPage >= totalPages - 3) {
-                pages.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+            if (current <= 4) {
+                pages.push(1, 2, 3, 4, 5, "...", total);
+            } else if (current >= total - 3) {
+                pages.push(1, "...", total - 4, total - 3, total - 2, total - 1, total);
             } else {
                 pages.push(
                     1,
                     "...",
-                    currentPage - 1,
-                    currentPage,
-                    currentPage + 1,
+                    current - 1,
+                    current,
+                    current + 1,
                     "...",
-                    totalPages
+                    total
                 );
             }
         }
@@ -641,8 +726,7 @@ const Formations = () => {
 
                         {/* Zone des formations en e-book*/}
 
-                        <div
-                            className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
+                        <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
 
                             <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
                                 <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
@@ -654,7 +738,7 @@ const Formations = () => {
                                             opacity="opacity-60"
                                             className='rounded-xl'
                                         />
-                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl"
+                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl hover:-translate-x-[0%] md:hover:translate-x-[2%] hover:translate-y-[0%] md:hover:-translate-y-[1%] hover:scale-104 md:hover:scale-100 transition-all duration-400"
                                             key={IdOpen}
                                             initial={{ opacity: "0%", x: 0, y: 0, scale: 0.8 }}
                                             animate={{ opacity: "100%", x: "5%", y: "-5%", scale: 1 }}
@@ -662,7 +746,7 @@ const Formations = () => {
                                             transition={{ duration: 0.5 }}
                                         >
 
-                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80 hover:-translate-y-[1%] hover:translate-x-[1%]  rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
 
                                         </motion.div>
                                     </div>
@@ -702,17 +786,17 @@ const Formations = () => {
                                         <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
 
                                             {IdOpen === -1 ? (
-                                                <Button onClick={() => handleOpenCollapse()} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                                <Button onClick={() => handleOpenCollapse("formation")} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
                                                     <a href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="w-full h-full p-2 flex items-center justify-center">{openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}</a>
                                                 </Button>
                                             ) : (searchCoursesResultCurrent[IdOpen].Class != "premium" ? (
 
                                                 <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                        <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
+                                                    <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
                                                 </Button>
                                             ) : (
                                                 <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
-                                                            <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
+                                                    <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
                                                         <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
                                                     </Button>
                                                     {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
@@ -744,9 +828,9 @@ const Formations = () => {
                                             <Button className={`rounded-xl h-fit ${sideBar ? "hover:w-1/2" : "hover:w-1/3"}  w-12 hover:shadow-lg bg-gradient-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold `}>
                                                 <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a>
                                             </Button>
-                                            
+
                                         </CardFooter>
-                                        {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse()} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                        {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse("formation")} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
                                             <a href={`#formationslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
                                         </Button>)}
                                     </Card>
@@ -764,12 +848,12 @@ const Formations = () => {
                                             <span className="text-2xl font-bold">Categorisation</span>
                                             <div className="gap-2 flex flex-wrap md:flex-row">
                                                 <span className="flex flex-row items-center gap-1">
-                                                    <p className="text-md font-medium">Type : </p>
+                                                    <p className="text-md font-medium">Format : </p>
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "type");
+                                                        handleSelect(value, "format", "formation");
                                                     }}>
                                                         <SelectTrigger className="w-[180px] md:w-[200px]">
-                                                            <SelectValue placeholder="Choisir le Type..." />
+                                                            <SelectValue placeholder="Choisir le Format..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
                                                             <SelectItem value="tout">Tout...</SelectItem>
@@ -786,7 +870,7 @@ const Formations = () => {
                                                     </select> */}
 
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "category");
+                                                        handleSelect(value, "category", "formation");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
@@ -812,7 +896,7 @@ const Formations = () => {
                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">Classe : </p>
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "classe");
+                                                        handleSelect(value, "classe", "formation");
                                                     }}>
                                                         <SelectTrigger className="w-[180px] md:w-[200px]">
                                                             <SelectValue placeholder="Choisir la Classe..." />
@@ -828,7 +912,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" , Type = "{typeCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
+                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" , Type = "{formatCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
 
                                     </CardHeader>
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
@@ -862,7 +946,7 @@ const Formations = () => {
                                 </CollapsibleTrigger>
                                 <CollapsibleContent className=" p-2">
                                     <div className="   flex flex-col w-full h-auto space-y-2">
-                                        <Link href="#formations" onClick={() => { handleOpenCollapse(), handleCilck(-1), setChangeCourseHeight(0) }} className=" mb-2 rounded-full w-10 h-10 bg-black/20 hover:bg-blue-500 flex items-center justify-center cursor-pointer">{<X />}</Link>
+                                        <Link href="#formations" onClick={() => { handleOpenCollapse("formation"), handleCilck(-1), setChangeCourseHeight(0) }} className=" mb-2 rounded-full w-10 h-10 bg-black/20 hover:bg-blue-500 flex items-center justify-center cursor-pointer">{<X />}</Link>
 
                                         <motion.div
                                             initial={{ opacity: 0, y: 40 }}
@@ -969,7 +1053,7 @@ const Formations = () => {
                                             </button>
 
                                             {/* Pages dynamiques */}
-                                            {getPageNumbers().map((page, index) =>
+                                            {getPageNumbers("formation").map((page, index) =>
                                                 page === "..." ? (
                                                     <span key={index} className="px-2 text-blue-500">
                                                         ...
@@ -1016,12 +1100,11 @@ const Formations = () => {
                             </div>
                         </div>
 
-                        <u><Title title="EPREUVES" className="text-4xl pt-2" id="formations" /></u>
+                        <u><Title title="EPREUVES" className="text-4xl pt-2" id="papers" /></u>
 
                         {/* Zone des Epreuves*/}
 
-                        <div
-                            className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
+                        <div className={` ${changePaperHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
 
                             <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
                                 <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
@@ -1033,15 +1116,15 @@ const Formations = () => {
                                             opacity="opacity-60"
                                             className='rounded-xl'
                                         />
-                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl"
-                                            key={IdOpen}
+                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl hover:-translate-x-[0%] md:hover:translate-x-[2%] hover:translate-y-[0%] md:hover:-translate-y-[1%] hover:scale-103 md:hover:scale-100 transition-all duration-400"
+                                            key={IdPaperOpen}
                                             initial={{ opacity: "0%", x: 0, y: 0, scale: 0.8 }}
                                             animate={{ opacity: "100%", x: "5%", y: "-5%", scale: 1 }}
                                             exit={{ x: "20%", y: "-20%", opacity: "0%", scale: 0.8 }}
                                             transition={{ duration: 0.5 }}
                                         >
 
-                                            <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80 hover:m-translate-y-[1%] hover:translate-x-[1%]  rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+                                            <img src={IdPaperOpen == -1 ? "/assets/epreuve.jpeg" : searchPapersResultCurrent[IdPaperOpen].Img} alt="Formations en ligne" className="transition-all duration-400   -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
 
                                         </motion.div>
                                     </div>
@@ -1057,39 +1140,44 @@ const Formations = () => {
                                             transition={{ duration: 0.5, ease: "easeInOut" }}
                                             className="h-fit w-full border-x rounded-4xl" >
                                             <CardHeader>
-                                                <CardTitle className=" text-3xl uppercase whitespace-pre-wrap"> {IdOpen == -1 ? "FORMATIONS" : searchCoursesResultCurrent[IdOpen].Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</CardTitle>
+                                                <CardTitle className=" text-3xl uppercase whitespace-pre-wrap"> {IdPaperOpen == -1 ? "EPREUVES" : searchPapersResultCurrent[IdPaperOpen].Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</CardTitle>
                                                 <hr />
                                                 <CardDescription className="flex flex-row flex-wrap gap-2 items-center">
-                                                    <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "pdf / videos / images / presentations..." : searchCoursesResultCurrent[IdOpen].Format}</i></span>
-                                                    <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Pages}</i></span>
-                                                    <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].Class == "premium" ? " text-yellow-400  bg-black font-semibold" : searchCoursesResultCurrent[IdOpen].Class == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class}  </span>
-                                                    <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `${PromPrice} FCFA` : ""}</span>
-                                                    <span className="text-red-500 ml-3"> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `Prix promotionnel` : ""}</span>
+                                                    <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
+                                                        <span className={`${IdPaperOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "pdf / videos / images / presentations..." : searchPapersResultCurrent[IdPaperOpen].Format}</i></span>
+                                                        <span className={`${IdPaperOpen == -1 ? "" : "badge badge-soft badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "" : `${searchPapersResultCurrent[IdPaperOpen].Pages} Pages`} </i></span>
+                                                        <span className={`${IdPaperOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchPapersResultCurrent[IdPaperOpen].Class == "premium" ? " text-yellow-400  bg-black font-semibold" : searchPapersResultCurrent[IdPaperOpen].Class == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdPaperOpen == -1 ? "" : searchPapersResultCurrent[IdPaperOpen].Class}  </span>
+                                                        <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdPaperOpen == -1 ? "" : searchPapersResultCurrent[IdPaperOpen].Class == "premium" ? `${PromPrice} FCFA` : ""}</span>
+                                                        <span className="text-red-500 ml-3"> {IdPaperOpen == -1 ? "" : searchPapersResultCurrent[IdPaperOpen].Class == "premium" ? `Prix promotionnel` : ""}</span>
+                                                    </div>
+                                                    <div className="">
+                                                        {IdPaperOpen == -1 ? "" : (searchPapersResultCurrent[IdPaperOpen].Author !== "Inconnu" && searchPapersResultCurrent[IdPaperOpen].Author !== "Author") ? (<span className="text-md font-bold">Auteur: {searchPapersResultCurrent[IdPaperOpen].Author}</span>) : ""}
+                                                    </div>
                                                 </CardDescription>
 
                                             </CardHeader>
-                                            <CardContent className="">
+                                            {/* <CardContent className="">
 
-                                                <p>{IdOpen == -1 ? "Devenez le meilleur de vous avec les formations sur mesure et adaptés à la lecture et la compréhension facile." : searchCoursesResultCurrent[IdOpen].Description} </p>
-                                            </CardContent>
+                                                <p>{IdPaperOpen == -1 ? "Decouvrez les epreuves qui vous permettrons enfin de reviser facilement, de manière ludique et interactive." : searchPapersResultCurrent[IdPaperOpen].Description} </p>
+                                            </CardContent> */}
                                         </motion.div>
                                         <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
 
-                                            {IdOpen === -1 ? (
-                                                <Button onClick={() => handleOpenCollapse()} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                    <a href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="w-full h-full p-2 flex items-center justify-center">{openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}</a>
+                                            {IdPaperOpen === -1 ? (
+                                                <Button onClick={() => handleOpenCollapse("epreuve")} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                                    <a href={`${openPaperCollapse == 1 ? "#paperslist" : "#papers"}`} className="w-full h-full p-2 flex items-center justify-center">{openPaperCollapse == 0 ? "Afficher toutes les epreuves" : "Fermer les epreuves"}</a>
                                                 </Button>
-                                            ) : (searchCoursesResultCurrent[IdOpen].Class != "premium" ? (
+                                            ) : (searchPapersResultCurrent[IdPaperOpen].Class != "premium" ? (
 
                                                 <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                    <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
+                                                    <a href={searchPapersResultCurrent[IdPaperOpen].Location} download={searchPapersResultCurrent[IdPaperOpen].Location.split("/").pop()} className="w-full h-full flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
                                                 </Button>
                                             ) : (
                                                 <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
                                                     <Button className="transition-all duration-300 h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl  bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
                                                         <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
                                                     </Button>
-                                                    {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
+                                                    {/* <PayButton amount={PromPrice} item_ref={searchPapersResultCurrent[IdPaperOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
                                                 </div>)
                                             )}
 
@@ -1120,30 +1208,30 @@ const Formations = () => {
                                             </Button>
 
                                         </CardFooter>
-                                        {!sideBar && IdOpen != -1 && openCollapse == 0 && (<Button onClick={() => handleOpenCollapse()} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                            <a href={`#formationslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
+                                        {!sideBar && IdPaperOpen != -1 && openPaperCollapse == 0 && (<Button onClick={() => handleOpenCollapse("epreuve")} className="h-10 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                            <a href={`#paperslist`} className="w-full h-full p-2 flex items-center justify-center">Afficher toutes les formations</a>
                                         </Button>)}
                                     </Card>
 
                                 </div>
                             </div>
                         </div>
-                        <div id="category" className="h-90">
+                        <div id="paperscategory" className="h-90">
 
                             <div className="flex relative h-full   w-full  rounded-3xl p-2  shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]" >
 
                                 <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
                                     <CardHeader className="py-2">
-                                        <div className="  flex flex-col md:flex-row gap-5 items-center ">
+                                        <div className="  flex flex-col md:flex-row gap-5 items-start ">
                                             <span className="text-2xl font-bold">Categorisation</span>
                                             <div className="gap-2 flex flex-wrap md:flex-row">
                                                 <span className="flex flex-row items-center gap-1">
-                                                    <p className="text-md font-medium">Type : </p>
+                                                    <p className="text-md font-medium">Format : </p>
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "type");
+                                                        handleSelect(value, "format", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[180px] md:w-[200px]">
-                                                            <SelectValue placeholder="Choisir le Type..." />
+                                                            <SelectValue placeholder="Choisir le Format..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
                                                             <SelectItem value="tout">Tout...</SelectItem>
@@ -1153,14 +1241,9 @@ const Formations = () => {
                                                 </span>
                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">Categorie : </p>
-                                                    {/* <select onChange={handleselect} >
-                                                        <option value="Programmation Python">developpement pyhton</option>
-                                                        <option value="Développement Web">dev web</option>
-                                                        <option value="IA & Deep Learning">IA</option>
-                                                    </select> */}
 
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "category");
+                                                        handleSelect(value, "category", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
@@ -1183,34 +1266,46 @@ const Formations = () => {
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
-                                                {/* <span className="flex flex-row items-center gap-1">
-                                                    <p className="text-md font-medium">Classe : </p>
+
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Etablissement : </p>
+                                                   
+
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "classe");
+                                                        handleSelect(value, "School", "epreuve");
                                                     }}>
-                                                        <SelectTrigger className="w-[180px] md:w-[200px]">
-                                                            <SelectValue placeholder="Choisir la Classe..." />
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir l'etablissement..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
                                                             <SelectItem value="tout">Tout...</SelectItem>
-                                                            <SelectItem value="free">gratuit</SelectItem>
-                                                            <SelectItem value="premium">premium</SelectItem>
+                                                            <SelectItem value="Programmation Python">ENSPD</SelectItem>
+                                                            <SelectItem value="Développement Web">ENSPY</SelectItem>
+                                                            <SelectItem value="Développement Mobile">IUT DE NGAOUNDERE</SelectItem>
+                                                            <SelectItem value="Intelligence Artificielle">IUT DE DOUALA</SelectItem>
+                                                            <SelectItem value="Data Science">IUT DE YDE</SelectItem>
+                                                            <SelectItem value="Cybersécurité">IUT DE BAMENDA</SelectItem>
+                                                            <SelectItem value="Réseaux & Systèmes">IUT DE GAROUA</SelectItem>
+                                                            <SelectItem value="Bases de Données">IUT DE DOUALA</SelectItem>
+                                                            <SelectItem value="Bureautique">IUT DE DOUALA</SelectItem>
+                                                            <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
+                                                            <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
+                                                            <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
+                                                            <SelectItem value="Formation Académique">Formation Académique</SelectItem>
                                                         </SelectContent>
                                                     </Select>
-                                                </span> */}
+                                                </span>
+
+
                                                 <span className="flex flex-row items-center gap-1">
-                                                    <p className="text-md font-medium">Etablissement : </p>
-                                                    {/* <select onChange={handleselect} >
-                                                        <option value="Programmation Python">developpement pyhton</option>
-                                                        <option value="Développement Web">dev web</option>
-                                                        <option value="IA & Deep Learning">IA</option>
-                                                    </select> */}
+                                                    <p className="text-md font-medium">Niveau scolaire : </p>
+
 
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "category");
+                                                        handleSelect(value, "level", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
-                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                            <SelectValue placeholder="Choisir le niveau scolaire..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
                                                             <SelectItem value="tout">Tout...</SelectItem>
@@ -1227,6 +1322,27 @@ const Formations = () => {
                                                             <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
                                                             <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
                                                             <SelectItem value="Formation Académique">Formation Académique</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+
+                                                 <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Type : </p>
+                                                   
+
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "type", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir le type d'epreuve..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="Programmation Python">Concours</SelectItem>
+                                                            <SelectItem value="Développement Web">Examens</SelectItem>
+                                                            <SelectItem value="Développement Mobile">Séquences</SelectItem>
+                                                            <SelectItem value="Intelligence Artificielle">TD</SelectItem>
+                                                           
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
@@ -1234,14 +1350,14 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" , Type = "{typeCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
+                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{categoryPaper}" , Format = "{FormatCategoryPaper}" , Etablissement = "{SchoolCategoryPaper}", Niveau scolaire = "{LevelCategoryPaper}"</i></CardDescription>)}
 
                                     </CardHeader>
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
                                         <div className="w-fit h-full flex flex-row gap-2">
-                                            {newCategorizedCourses.map((course, index) => (
-                                                <button key={course.Id} onClick={() => { setSearchCoursesResultCurrent(newCategorizedCourses), setIdOpen(index), setChangeCourseHeight(1) }} className="w-40 h-full p-1 rounded-xl shadow-[-8px_2px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
-                                                    <Link href="#formations" className=" flex flex-col items-center h-full overflow-hidden ">
+                                            {newCategorizedPapers.map((course, index) => (
+                                                <button key={course.Id} onClick={() => { setSearchPapersResultCurrent(newCategorizedPapers), setIdPaperOpen(index), setChangePaperHeight(1) }} className="w-40 h-full p-1 rounded-xl shadow-[-8px_2px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
+                                                    <Link href="#papers" className=" flex flex-col items-center h-full overflow-hidden ">
                                                         <Image height={500} width={500} src={course.Img} alt="Formations en ligne" className="  w-full h-4/5  rounded-xl shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
 
                                                         <div className="flex flex-col w-full items-start whitespace-nowrap p-1">
@@ -1259,15 +1375,15 @@ const Formations = () => {
                             </div>
 
                         </div>
-                        <div id="paperslist" ref={listRef} className={`${sideBar ? "md:hidden" : ""}  w-full h-auto  rounded-2xl shadow-[inset_7px_-7px_80px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)]`} data-theme={`${theme}`}>
-                            <Collapsible open={openCollapse == 1} onOpenChange={() => setOpenCollapse(0)} className=" ">
+                        <div id="paperslist" className={`${sideBar ? "md:hidden" : ""}  w-full h-auto  rounded-2xl shadow-[inset_7px_-7px_80px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)]`} data-theme={`${theme}`}>
+                            <Collapsible open={openPaperCollapse == 1} onOpenChange={() => setOpenCollapse(0)} className=" ">
 
                                 <CollapsibleTrigger asChild className="">
 
                                 </CollapsibleTrigger>
                                 <CollapsibleContent className=" p-2">
-                                    <div className="   flex flex-col w-full h-auto space-y-2">
-                                        <Link href="#formations" onClick={() => { handleOpenCollapse(), handleCilck(-1), setChangeCourseHeight(0) }} className=" mb-2 rounded-full w-10 h-10 bg-black/20 hover:bg-blue-500 flex items-center justify-center cursor-pointer">{<X />}</Link>
+                                    <div className="flex flex-col w-full h-auto space-y-2">
+                                        <Link href="#papers" onClick={() => { handleOpenCollapse("epreuve"), setIdPaperOpen(-1), setChangePaperHeight(0) }} className=" mb-2 rounded-full w-10 h-10 bg-black/20 hover:bg-blue-500 flex items-center justify-center cursor-pointer">{<X />}</Link>
 
                                         <motion.div
                                             initial={{ opacity: 0, y: 40 }}
@@ -1276,9 +1392,9 @@ const Formations = () => {
                                             transition={{ duration: 0.6, ease: "easeOut" }}
                                             className="relative"
                                         >
-                                            <div className="h-auto w-full relative flex flex-row space-y-8 p-2 rounded-xl flex-wrap  md:space-x-6 justify-center">
+                                            <div className="h-auto w-full relative flex flex-row space-y-8 p-2 rounded-xl flex-wrap space-x-4 md:space-x-6 justify-center">
                                                 <AnimatePresence mode="popLayout">
-                                                    {displayedFormations.map((Formations, index) => (
+                                                    {displayedPapers.map((Formations, index) => (
                                                         // <button onClick={() => { setIdOpen(index) }} key={Formations.id} className="  w-1/2  p-2 rounded-md shadow-[-8px_3px_15px_rgba(0,0,0,0.6)] hover:bg-black/20">
                                                         //     <Link href="#formations" className=" flex flex-col items-center w-fit h-full ">
                                                         //         <Image height={80} width={50} src={Formations.img} alt="Formations en ligne" className="object-cover  w-10 h-13  rounded-sm shadow-[-3px_1px_7px_rgba(0,200,255,0.6)] mr-1"></Image>
@@ -1311,7 +1427,7 @@ const Formations = () => {
                                                                 ease: "easeOut",
                                                                 delay: index * 0.08,
                                                             }}
-                                                            className="h-120 cursor-pointer " key={Formations.Id} onClick={() => { setIdOpen(index), setChangeCourseHeight(1), setSearchCoursesResultCurrent(displayedFormations) }} >
+                                                            className="h-120 cursor-pointer " key={Formations.Id} onClick={() => { setIdPaperOpen(index), setChangePaperHeight(1), setSearchPapersResultCurrent(displayedPapers) }} >
                                                             <InteractiveGradient
 
                                                                 color="#1890ff"
@@ -1322,28 +1438,32 @@ const Formations = () => {
                                                                 backgroundColor={cardCol}
                                                                 width="20rem"
                                                                 height="full"
-                                                                borderRadius="2.25rem"
-                                                                className="flex items-start h-full transition  duration-400  ease-in-out hover:border-info hover:scale-102  hover:-translate-y-2 hover:shadow-[0_5px_20px_rgba(0,0,0,0.6)] justify-center h-100% mt-5  shadow-[0_5px_20px_rgba(0,0,0,0.5)] ">
-                                                                <Link href="#formations" className=" w-full h-full">
-                                                                    <Card className={` w-100% relative h-100% rounded-4xl border-none flex flex-col ${textCol}`}>
-                                                                        <CardHeader>
-                                                                            <div className="mb-5 w-full h-50 rounded-3xl bg-gray-500 transform duration-300 hover:scale-104">
+                                                                borderRadius="1.5rem"
+                                                                className="flex items-start h-full transition  duration-400   ease-in-out hover:border-info hover:scale-102  hover:-translate-y-2 p-0 hover:shadow-[0_5px_20px_rgba(0,0,0,0.6)] justify-center h-100% mt-5  shadow-[0_5px_20px_rgba(0,0,0,0.5)] ">
+                                                                <Link href="#papers" className=" w-full h-full">
+                                                                    <Card className={` w-100% relative h-100%  border-none flex flex-col p-0 ${textCol}`}>
+                                                                        <CardHeader className=" h-120 p-2 flex flex-col items-center justify-end overflow-y-hidden">
+                                                                            <div className="w-full h-8/10 rounded-3xl bg-gray-500 transform duration-300 hover:scale-104 mb-2 ">
                                                                                 <Image
                                                                                     alt=""
-                                                                                    width={320}
-                                                                                    height={420}
+                                                                                    width={500}
+                                                                                    height={500}
 
-                                                                                    className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
+                                                                                    className={" shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
                                                                                     src={Formations.Img} // https://picsum.photos/500/350?image=${(id + 5) * 11}
                                                                                 />
                                                                             </div>
-                                                                            <CardTitle className=""><p className="text-sm font-bold"><i>{Formations.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
-                                                                            <CardDescription><span className="text-sm flex flex-row gap-3"><i>{Formations.Format}</i><i className={`${Formations.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.Class}</i></span></CardDescription>
-                                                                            <hr />
+                                                                            <div className = "w-full h-2/10 px-1 flex flex-col items-start justify-between"> 
+                                                                                <hr />
+                                                                                <CardTitle className=""><p className="text-xl font-bold line-clamp-2 leading-relaxed "><i>{Formations.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
+                                                                                <CardDescription><span className="ml-2 text-sm flex flex-row gap-3"><i>{Formations.Format}</i><i className={`${Formations.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.Class}</i></span></CardDescription>
+                                                                               
+                                                                            </div>
+                                                                           
                                                                         </CardHeader>
-                                                                        <CardContent className=" ">
+                                                                        {/* <CardContent className=" ">
                                                                             <p className="line-clamp-3 leading-relaxed ">{Formations.Description}</p>
-                                                                        </CardContent>
+                                                                        </CardContent> */}
 
                                                                     </Card>
                                                                 </Link>
@@ -1360,21 +1480,21 @@ const Formations = () => {
                                         <div className="flex justify-center mt-6 space-x-2 items-center">
                                             {/* Bouton précédent */}
                                             <button
-                                                disabled={currentPage === 1}
+                                                disabled={currentPaperPage === 1}
                                                 onClick={() => {
-                                                    const newPage: number = Math.max(currentPage - 1, 1);
-                                                    setCurrentPage(newPage);
-                                                    handlePageChange(newPage);
+                                                    const newPage: number = Math.max(currentPaperPage - 1, 1);
+                                                    setCurrentPaperPage(newPage);
+                                                    handlePaperPageChange(newPage);
                                                 }}
                                                 className="px-3 py-1 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 text-black"
                                             >
-                                                <Link href="#formationslist" className="w-full h-full">
+                                                <Link href="#paperslist" className="w-full h-full">
                                                     ←
                                                 </Link>
                                             </button>
 
                                             {/* Pages dynamiques */}
-                                            {getPageNumbers().map((page, index) =>
+                                            {getPageNumbers("epreuve").map((page, index) =>
                                                 page === "..." ? (
                                                     <span key={index} className="px-2 text-blue-500">
                                                         ...
@@ -1382,13 +1502,13 @@ const Formations = () => {
                                                 ) : (
                                                     <button
                                                         key={index}
-                                                        onClick={() => handlePageChange(Number(page))}
-                                                        className={`cursor-pointer transition-all duration-400 ease-in-out px-3 py-1 rounded-lg ${currentPage === page
+                                                        onClick={() => handlePaperPageChange(Number(page))}
+                                                        className={`cursor-pointer transition-all duration-400 ease-in-out px-3 py-1 rounded-lg ${currentPaperPage === page
                                                             ? "bg-blue-600 text-white"
                                                             : "bg-gray-200 hover:bg-gray-300 text-black"
                                                             }`}
                                                     >
-                                                        <Link href="#formationslist" className="w-full h-full">
+                                                        <Link href="#paperslist" className="w-full h-full">
                                                             {page}
                                                         </Link>
 
@@ -1398,15 +1518,15 @@ const Formations = () => {
 
                                             {/* Bouton suivant */}
                                             <button
-                                                disabled={currentPage === totalPages}
+                                                disabled={currentPaperPage === totalPaperPages}
                                                 onClick={() => {
-                                                    const newPage: number = Math.min(currentPage + 1, totalPages);
-                                                    setCurrentPage(newPage);
-                                                    handlePageChange(newPage);
+                                                    const newPage: number = Math.min(currentPaperPage + 1, totalPaperPages);
+                                                    setCurrentPaperPage(newPage);
+                                                    handlePaperPageChange(newPage);
                                                 }}
                                                 className="px-3 py-1 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 text-black"
                                             >
-                                                <Link href="#formationslist" className="w-full h-full">
+                                                <Link href="#paperslist" className="w-full h-full">
                                                     →
                                                 </Link>
                                             </button>
@@ -1422,7 +1542,7 @@ const Formations = () => {
                         </div>
 
 
-{/* Zone des formations en ligne */}
+                        {/* Zone des formations en ligne */}
 
                         <div id="formationsOnline" className="flex flex-row h-fit  md:p-4 space-y-4 ">
                             <HoverCard
@@ -1478,7 +1598,7 @@ const Formations = () => {
 
                         </div>
 
-{/* Zone des formations en presentiel*/}
+                        {/* Zone des formations en presentiel*/}
 
                         <div id="formationPresentiel" className="flex flex-row h-fit  md:p-4 space-y-4 ">
                             <HoverCard
@@ -1534,7 +1654,7 @@ const Formations = () => {
 
                         </div>
 
-{/* Zone des Solutions web */}
+                        {/* Zone des Solutions web */}
                         <u><Title title="SOLUTIONS WEB" className="text-4xl pt-2" id="solutions web" /></u>
                         {Websites.map((site, index) => (
                             <div className="flex flex-row  justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)] " key={site.id} data-theme={`${theme}`}>
