@@ -33,7 +33,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import InteractiveGradient from "@/app/Components/lightswind/interactive-gradient-card";
 import DivlabSpaceSignUp from "../Components/DivlabSpaceSignUp";
 import DivlabSpaceLogin from "../Components/DivlabSpaceLogin";
-import { TypingText } from "../Components/lightswind/typing-text";
 import { ShineButton } from "../Components/lightswind/shine-button";
 import TextType from "../Components/TextType";
 import { BorderBeam } from "../Components/lightswind/border-beam";
@@ -672,9 +671,9 @@ const Formations = () => {
                             </div>
                         ) : (
                             <div className="h-full flex flex-row items-center justify-center gap-2">
-                                <button className={`text-bold cursor-pointer ${sign == 1 ? "bg-blue-700" : ""}  hover:bg-blue-300  border font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 1 ? undefined : 1)) }} >Se connecter</button>
+                                    <button className={`text-bold cursor-pointer ${sign == 1 ? "bg-blue-700 " : "hover:bg-blue-300"}    border font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 1 ? undefined : 1)) }} >Se connecter</button>
                                 <span> | </span>
-                                <button className={`text-bold cursor-pointer ${sign == 0 ? "bg-blue-700" : "bg-blue-500"}  hover:bg-blue-700 font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 0 ? undefined : 0)) }}>S'inscrire</button>
+                                    <button className={`text-bold cursor-pointer ${sign == 0 ? "bg-blue-700" : "bg-blue-500 hover:bg-blue-700"}   font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 0 ? undefined : 0)) }}>S'inscrire</button>
                             </div>
                         )}
 
