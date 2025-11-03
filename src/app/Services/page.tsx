@@ -33,6 +33,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import InteractiveGradient from "@/app/Components/lightswind/interactive-gradient-card";
 import DivlabSpaceSignUp from "../Components/DivlabSpaceSignUp";
 import DivlabSpaceLogin from "../Components/DivlabSpaceLogin";
+import { TypingText } from "../Components/lightswind/typing-text";
+import { ShineButton } from "../Components/lightswind/shine-button";
+import TextType from "../Components/TextType";
+import { BorderBeam } from "../Components/lightswind/border-beam";
 
 
 const Formations = () => {
@@ -520,7 +524,7 @@ const Formations = () => {
                 }
                 break;
         }
-        console.log("Categorie:", c, "Type:", f , "class", cl);
+        console.log("Categorie:", c, "Type:", f, "class", cl);
         if (group == "epreuve") {
             setNewCategorizedPapers(selectCategory(c_p, f_p, cl_p, group))
         } else if (group == "formation") {
@@ -644,11 +648,15 @@ const Formations = () => {
             </button>
             <FormationNavBar />
             <div className="w-full 9/100 md:h-6/100 p-1 flex flex-col md:flex-row items-end  md:items-center md:justify-center gap-2" data-theme={`${theme}`}>
-                <div className="w-full h-1/2 md:h-full bg-blue-500 gap-1 flex flex-row items-center justify-center p-1 rounded-xl">
-                    <Search />
-                    <Input onKeyDown={handleKeyDown} type="text" value={searchData} className="w-full h-full bg-white/30" onChange={handleChange} placeholder="Vous cherchez une formation ? ..." data-theme={`${theme}`} />
-                    <button className="rounded-full p-1 bg-black/40 hover:bg-white/20" onClick={clearSearch} > <SearchX size={20} /></button>
-                    <Button onClick={handleSubmit} type="submit" variant="ServicesSearch" className="h-full" >Rechercher</Button>
+                <div className="relative w-full h-1/2 md:h-full bg-white/30  gap-1 flex flex-row items-center justify-center  rounded-2xl">
+
+                    <Input onKeyDown={handleKeyDown} type="text" value={searchData} className="bg-blue-200 w-full h-full  hover:bg-blue-300 text-gray-800" onChange={handleChange} placeholder="Vous cherchez une formation ? ..." data-theme={`${theme}`} />
+                    <div className="absolute flex flex-row gap-1 right-2 top-1/2 transform -translate-y-1/2">
+                        <button className="transition-all duration-200 hover:bg-red-300 rounded-md p-1" onClick={clearSearch} > <X size={18} /></button>
+                        <button onClick={handleSubmit} className="transition-all duration-200 hover:bg-blue-400 rounded-md p-1"><Search size={18} /></button>
+                    </div>
+
+                    {/* <Button onClick={handleSubmit} type="submit" variant="ServicesSearch" className="h-full" >Rechercher</Button> */}
 
                 </div>
                 <div className="w-100 h-1/2 md:h-full rounded-xl flex flex-row items-center justify-end gap-2  px-2 bg-white/30 " data-theme={`${theme}`}>
@@ -663,10 +671,10 @@ const Formations = () => {
 
                             </div>
                         ) : (
-                            <div>
-                                <Button className={`text-bold cursor-pointer ${sign == 1 ? "bg-blue-700" : "bg-blue-500"}  hover:bg-blue-700`} onClick={() => { setSign(prev => (prev === 1 ? undefined : 1)) }}>Se connecter</Button>
+                            <div className="h-full flex flex-row items-center justify-center gap-2">
+                                <button className={`text-bold cursor-pointer ${sign == 1 ? "bg-blue-700" : ""}  hover:bg-blue-300  border font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 1 ? undefined : 1)) }} >Se connecter</button>
                                 <span> | </span>
-                                <Button className={`text-bold cursor-pointer ${sign == 0 ? "bg-blue-700" : "bg-blue-500"}  hover:bg-blue-700`} onClick={() => { setSign(prev => (prev === 0 ? undefined : 0)) }}>S'inscrire</Button>
+                                <button className={`text-bold cursor-pointer ${sign == 0 ? "bg-blue-700" : "bg-blue-500"}  hover:bg-blue-700 font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 0 ? undefined : 0)) }}>S'inscrire</button>
                             </div>
                         )}
 
@@ -712,7 +720,7 @@ const Formations = () => {
                         exit={{ x: -20, opacity: 0 }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="text-black w-100 h-50 rounded-xl bg-white/90 flex flex-col gap-5 items-center justify-center fixed right-6 md:top-33 top-50 z-50">
-                        <Button disabled={signOutVal == 2} onClick={() => { setSignOutVal(2); signOut({ callbackUrl: '/Services' }) }} className="cursor-pointer">{signOutVal === 2 ? 'Chargement, veuillez patienter...' : 'Se déconnecter'}</Button>
+                        <Button disabled={signOutVal == 2} onClick={() => { setSignOutVal(2); signOut({ callbackUrl: '/Services' }) }} className="cursor-pointer bg-red-500 hover:bg-red-600">{signOutVal === 2 ? 'Chargement, veuillez patienter...' : 'Se déconnecter'}</Button>
                     </motion.div >
                 )}
             </AnimatePresence>
@@ -726,9 +734,28 @@ const Formations = () => {
 
                         {/* Zone des formations en e-book*/}
 
-                        <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
+                        <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"}  transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[0_5px_20px_rgba(0,200,255,0.6)] rounded-3xl`} data-theme={`${theme}`}>
 
-                            <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
+                            
+
+                            <div className="flex flex-row relative w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap  " >
+                                
+                                <BorderBeam
+                                    size={50}
+                                    duration={5.5}
+                                    delay={0}
+                                    colorFrom="#0785ce"
+                                    colorTo="#0785ce"
+                                    reverse={false}
+                                    initialOffset={0}
+                                    borderThickness={5}
+                                    opacity={1}
+                                    glowIntensity={8}
+                                    beamBorderRadius={45}
+                                    pauseOnHover={false}
+                                    speedMultiplier={1.1}
+                                />
+                                
                                 <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
                                     <div className="flex flex-col md:block items-center w-full  relative h-fit rounded-xl shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
                                         <StripesBackground
@@ -760,21 +787,31 @@ const Formations = () => {
                                             animate={{ opacity: "100%", x: "0%", y: "0%" }}
                                             exit={{ x: "10%", y: "0%", opacity: "0%", scale: 0.8 }}
                                             transition={{ duration: 0.5, ease: "easeInOut" }}
-                                            className="h-fit w-full border-x rounded-4xl" >
+                                            className="h-fit w-full rounded-4xl" >
                                             <CardHeader>
-                                                <CardTitle className=" text-3xl uppercase whitespace-pre-wrap"> {IdOpen == -1 ? "FORMATIONS" : searchCoursesResultCurrent[IdOpen].Title}</CardTitle>
+                                                <CardTitle className=" text-3xl whitespace-pre-wrap"> {IdOpen == -1 ? (
+                                                    <TextType
+                                                        text={["Vos formations en ligne sur mesure.", "Devellopez vos competences grace a un seul click.", "Obtenez le meilleur service qui puisse etre offert."]}
+                                                        typingSpeed={90}
+                                                        pauseDuration={3000}
+                                                        showCursor={true}
+                                                        cursorCharacter="|"
+                                                        // onSentenceComplete={(sentence = "Votre Divlab space a ete cree avec succes.", index = 0) => setSide("open")}
+                                                        className="text-4xl font-bold"
+                                                    />
+                                                ) : searchCoursesResultCurrent[IdOpen].Title}</CardTitle>
                                                 <hr />
-                                                <CardDescription className="flex flex-col flex-wrap gap-2 items-start">
-                                                    <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
+                                                <CardDescription className="flex flex-col flex-wrap gap-2 items-start" >
+                                                    <span className="flex flex-row flex-wrap gap-2 items-center justify-center">
                                                         <span className={`${IdOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "pdf / videos / images / presentations..." : searchCoursesResultCurrent[IdOpen].Format}</i></span>
                                                         <span className={`${IdOpen == -1 ? "" : "badge badge-soft badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdOpen == -1 ? "" : `${searchCoursesResultCurrent[IdOpen].Pages} Pages`} </i></span>
                                                         <span className={`${IdOpen == -1 ? "" : (`badge  badge-outline rounded-full badge-md mt-2   ${searchCoursesResultCurrent[IdOpen].Class == "premium" ? " text-yellow-400  bg-black font-semibold" : searchCoursesResultCurrent[IdOpen].Class == "sous licence" ? "badge-accent" : "badge-info"} `)}`}>{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class}  </span>
                                                         <span className="text-3xl  animate-zoom text-center ml-3 underline decoration-1  decoration-gray-100  ">{IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `${PromPrice} FCFA` : ""}</span>
                                                         <span className="text-red-500 ml-3"> {IdOpen == -1 ? "" : searchCoursesResultCurrent[IdOpen].Class == "premium" ? `Prix promotionnel` : ""}</span>
-                                                    </div>
-                                                    <div className="">
+                                                    </span>
+                                                    <span className="">
                                                         {IdOpen == -1 ? "" : (searchCoursesResultCurrent[IdOpen].Author !== "Inconnu" && searchCoursesResultCurrent[IdOpen].Author !== "Author") ? (<span className="text-md font-bold">Auteur: {searchCoursesResultCurrent[IdOpen].Author}</span>) : ""}
-                                                    </div>
+                                                    </span>
                                                 </CardDescription>
 
                                             </CardHeader>
@@ -783,22 +820,38 @@ const Formations = () => {
                                                 <p>{IdOpen == -1 ? "Devenez le meilleur de vous avec les formations sur mesure et adaptés à la lecture et la compréhension facile." : searchCoursesResultCurrent[IdOpen].Description} </p>
                                             </CardContent>
                                         </motion.div>
-                                        <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
+                                        <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 md:space-x-8 w-full mt-5">
 
                                             {IdOpen === -1 ? (
-                                                <Button onClick={() => handleOpenCollapse("formation")} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                    <a href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="w-full h-full p-2 flex items-center justify-center">{openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}</a>
-                                                </Button>
+                                                <Link onClick={() => handleOpenCollapse("formation")} href={`${openCollapse == 1 ? "#formationslist" : "#formations"}`} className="h-12 rounded-xl w-full  transition-transform duration-400 hover:scale-105  hover:-translate-y-1  font-bold">
+                                                    <ShineButton className="w-full h-full p-2 flex items-center justify-center"
+                                                        label={`${openCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}`}
+                                                        size="lg"
+                                                        bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
+                                                    //onClick={() => alert('Thanks for your support!')}
+                                                    />
+                                                </Link>
                                             ) : (searchCoursesResultCurrent[IdOpen].Class != "premium" ? (
 
-                                                <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
-                                                    <a href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
-                                                </Button>
+                                                <Link href={searchCoursesResultCurrent[IdOpen].Location} download={searchCoursesResultCurrent[IdOpen].Location.split("/").pop()} className="font-bold h-12 rounded-xl w-full   transition-transform duration-400 hover:scale-105  hover:-translate-y-1 p-0 shadow-4xl">
+                                                    <ShineButton
+                                                        className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/40 via-cyan-400 to-blue-500 "
+                                                        label="Télécharger"
+                                                        size="lg"
+                                                        bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
+                                                    //onClick={() => alert('Thanks for your support!')}
+                                                    />
+                                                </Link>
                                             ) : (
                                                 <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
-                                                    <Button className="h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
-                                                        <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
-                                                    </Button>
+                                                    <Link href="https://layidgpo.mychariow.com" target="_blank" className="font-bold h-12 w-full hover:scale-105 hover:-translate-y-1 shadow-xl transition-all duration-400 bg-linear-to-tr rounded-xl">
+                                                        <ShineButton
+                                                            className="w-full h-full rounded-xl p-2 flex items-center justify-center"
+                                                            label="Acheter (via chariow)"
+                                                            size="lg"
+                                                            bgColor="linear-gradient(325deg, hsl(24 100% 50%) 0%, hsl(34 100% 60%) 55%, hsl(24 100% 50%) 90%)"
+                                                        />
+                                                    </Link>
                                                     {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
                                                 </div>)
                                             )}
@@ -1106,7 +1159,22 @@ const Formations = () => {
 
                         <div className={` ${changePaperHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
 
-                            <div className="flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
+                            <div className="relative flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
+                                <BorderBeam
+                                    size={50}
+                                    duration={5.5}
+                                    delay={0}
+                                    colorFrom="#0785ce"
+                                    colorTo="#0785ce"
+                                    reverse={false}
+                                    initialOffset={0}
+                                    borderThickness={5}
+                                    opacity={1}
+                                    glowIntensity={8}
+                                    beamBorderRadius={45}
+                                    pauseOnHover={false}
+                                    speedMultiplier={1.1}
+                                />
                                 <div className="md:h-full flex flex-col items-start md:w-1/3 w-full ">
                                     <div className="flex flex-col md:block items-center w-full  relative h-fit rounded-xl shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
                                         <StripesBackground
@@ -1269,7 +1337,7 @@ const Formations = () => {
 
                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">Etablissement : </p>
-                                                   
+
 
                                                     <Select onValueChange={(value) => {
                                                         handleSelect(value, "School", "epreuve");
@@ -1326,9 +1394,9 @@ const Formations = () => {
                                                     </Select>
                                                 </span>
 
-                                                 <span className="flex flex-row items-center gap-1">
+                                                <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">Type : </p>
-                                                   
+
 
                                                     <Select onValueChange={(value) => {
                                                         handleSelect(value, "type", "epreuve");
@@ -1342,7 +1410,7 @@ const Formations = () => {
                                                             <SelectItem value="Développement Web">Examens</SelectItem>
                                                             <SelectItem value="Développement Mobile">Séquences</SelectItem>
                                                             <SelectItem value="Intelligence Artificielle">TD</SelectItem>
-                                                           
+
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
@@ -1453,13 +1521,13 @@ const Formations = () => {
                                                                                     src={Formations.Img} // https://picsum.photos/500/350?image=${(id + 5) * 11}
                                                                                 />
                                                                             </div>
-                                                                            <div className = "w-full h-2/10 px-1 flex flex-col items-start justify-between"> 
+                                                                            <div className="w-full h-2/10 px-1 flex flex-col items-start justify-between">
                                                                                 <hr />
                                                                                 <CardTitle className=""><p className="text-xl font-bold line-clamp-2 leading-relaxed "><i>{Formations.Location?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
                                                                                 <CardDescription><span className="ml-2 text-sm flex flex-row gap-3"><i>{Formations.Format}</i><i className={`${Formations.Class == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.Class}</i></span></CardDescription>
-                                                                               
+
                                                                             </div>
-                                                                           
+
                                                                         </CardHeader>
                                                                         {/* <CardContent className=" ">
                                                                             <p className="line-clamp-3 leading-relaxed ">{Formations.Description}</p>
@@ -1660,7 +1728,23 @@ const Formations = () => {
                             <div className="flex flex-row  justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)] " key={site.id} data-theme={`${theme}`}>
                                 <Image height={30} width={30} src="/assets/promo.svg" alt="promo" className="absolute w-30 h-30 top-0 right-10 -rotate-10 animate-zoom z-5"></Image>
 
-                                <div className="flex flex-row w-full justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7" >
+                                <div className="relative flex flex-row w-full justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7 shadow-[0_5px_10px_rgba(0,200,255,0.6)]" >
+
+                                    <BorderBeam
+                                        size={50}
+                                        duration={5.5}
+                                        delay={0}
+                                        colorFrom="#0785ce"
+                                        colorTo="#0785ce"
+                                        reverse={false}
+                                        initialOffset={0}
+                                        borderThickness={5}
+                                        opacity={1}
+                                        glowIntensity={8}
+                                        beamBorderRadius={45}
+                                        pauseOnHover={false}
+                                        speedMultiplier={1.1}
+                                    />
 
                                     <div className="w-full md:w-1/3 relative h-100   rounded-3xl shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
                                         <StripesBackground
@@ -1744,7 +1828,23 @@ const Formations = () => {
                         {IA.map((ia, index) => (
                             <div className="flex flex-row justify-center rounded-3xl relative p-2 pt-6 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]  " key={ia.id} data-theme={`${theme}`}>
 
-                                <div className="flex flex-row w-full justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7">
+                                <div className="relative flex flex-row w-full justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7   rounded-3xl shadow-[0_5px_10px_rgba(0,200,255,0.6)]">
+
+                                    <BorderBeam
+                                        size={50}
+                                        duration={5.5}
+                                        delay={0}
+                                        colorFrom="#0785ce"
+                                        colorTo="#0785ce"
+                                        reverse={false}
+                                        initialOffset={0}
+                                        borderThickness={5}
+                                        opacity={1}
+                                        glowIntensity={8}
+                                        beamBorderRadius={45}
+                                        pauseOnHover={false}
+                                        speedMultiplier={1.1}
+                                    />
                                     <div className="w-full md:w-1/3 relative  h-100 rounded-3xl shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
                                         <StripesBackground
                                             position="right"
@@ -1828,7 +1928,23 @@ const Formations = () => {
                         {design.map((des, index) => (
                             <div className="flex flex-row justify-center rounded-3xl relative p-2 pt-6 md:ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]  " key={des.id} data-theme={`${theme}`}>
 
-                                <div className="flex flex-row w-full justify-between items-center flex-wrap md:flex-nowrap p-4 md:space-x-10 space-y-5 md:space-y-0">
+                                <div className="relative flex flex-row w-full justify-between items-center flex-wrap md:flex-nowrap p-4 md:space-x-10 space-y-5 md:space-y-0   rounded-3xl shadow-[0_5px_10px_rgba(0,200,255,0.6)]">
+
+                                    <BorderBeam
+                                        size={50}
+                                        duration={5.5}
+                                        delay={0}
+                                        colorFrom="#0785ce"
+                                        colorTo="#0785ce"
+                                        reverse={false}
+                                        initialOffset={0}
+                                        borderThickness={5}
+                                        opacity={1}
+                                        glowIntensity={8}
+                                        beamBorderRadius={45}
+                                        pauseOnHover={false}
+                                        speedMultiplier={1.1}
+                                    />
 
                                     {index == 0 ? (
                                         <div className="w-full md:w-1/3 relative h-fit  rounded-3xl shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
@@ -1940,7 +2056,12 @@ const Formations = () => {
                 </div>
                 <AnimatePresence>
                     {sideBar ? (
-                        <motion.div className="md:flex hidden flex-row w-1/4   items-center justify-between space-x-3  pb-5 h-full rounded-sm shadow-[-8px_3px_15px_rgba(0,0,0,0.6),inset_8px_-3px_15px_rgba(0,0,0,0.3),inset_-8px_3px_30px_rgba(255,255,255,0.1)] bg-backdrop-blur  " data-theme={` ${theme}`}>
+                        <motion.div
+                            initial={{ x: "100%", opacity: 1 }}
+                            animate={{ x: "0%", opacity: 1 }}
+                            exit={{ x: "100%", opacity: 0 }}
+                            transition={{ duration: 0.4, ease: "easeInOut" }} 
+                        className="md:flex hidden flex-row w-1/4   items-center justify-between space-x-3  pb-5 h-full rounded-sm shadow-[-8px_3px_15px_rgba(0,0,0,0.6),inset_8px_-3px_15px_rgba(0,0,0,0.3),inset_-8px_3px_30px_rgba(255,255,255,0.1)] bg-backdrop-blur  " data-theme={` ${theme}`}>
 
                             <div className="flex flex-col  space-y-1 w-full  pt-0 h-full px-2">
 
