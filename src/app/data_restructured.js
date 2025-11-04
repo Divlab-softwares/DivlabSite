@@ -715,7 +715,7 @@ export const Papers = [
         "Title": "EPREUVE DES MECHANIQUES DE MILIEUX CONTINUS",
         "Location": "/fichiers/epreuves/anciennes épreuves MEMA3..pdf",
         "Format": "pdf",
-        "Class": "premium",
+        "Class": "free",
         "Description": " ",
         "Img": "/assets/epreuve/default.jpeg",
         "Group": "Epreuves",
@@ -793,7 +793,7 @@ export const Papers = [
         "Level": "niveau 3 universitaire",
         "Year": "session 2021",
         "Cursus": " Ingenieur",
-        "Filiere": "GENIE CIVIL"
+        "Filiere": "GC (Geni civil), INFOTEL (Informatique et Telecommunication)"
     },
     {
         "Id": 7,

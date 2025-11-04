@@ -519,6 +519,34 @@ const Formations = () => {
                         cl = value
                 }
                 break;
+
+            // uniquement pour epreuve
+             case "shool":
+                switch (group) {
+                    case "epreuve":
+                        setSchoolCategoryPaper(value);
+                        s_p= value
+                
+                }
+                break;
+             case "level":
+                switch (group) {
+                    case "epreuve":
+                        setLevelCategoryPaper(value);
+                        l_p = value
+                
+                }
+                break;
+             case "type":
+                switch (group) {
+                    case "epreuve":
+                        setFormatCategoryPaper(value);
+                        f_p = value
+
+                }
+                break;
+            
+
         }
         console.log("Categorie:", c, "Type:", f , "class", cl);
         if (group == "epreuve") {
@@ -528,28 +556,32 @@ const Formations = () => {
         }
 
     }
+    
 
     // --- Étape 1 : pré-normalisation (à faire une seule fois, ex: au chargement)
     const preNormalizedCourses = categorizedCourses.map(course => ({
         ...course,
         _normCategory: normalizeText(course.category.map(cat => cat.category).join(" ")),
         _normType: normalizeText(course.Format),
-        _normClasse: normalizeText(course.Class)
+        _normClasse: normalizeText(course.Class),
+   
     }));
 
     const preNormalizedPapers = categorizedPapers.map(paper => ({
         ...paper,
         _normCategory: normalizeText(paper.category.map(cat => cat.category).join(" ")),
         _normType: normalizeText(paper.Format),
-        _normClasse: normalizeText(paper.Class)
+        _normClasse: normalizeText(paper.Class),
+        _normSchool: normalizeText(paper.School),
+        _normLevel: normalizeText(paper.Level)
     }));
 
     // --- Étape 2 : fonction avec mémoïsation simple
     const cache = new Map();
     const cachePaper = new Map();
 
-    const selectCategory = (category: string, type: string, classe: string, group: string) => {
-        const key = `${category}|${type}|${classe}|${group}`;
+    const selectCategory = (category: string, type: string, classe: string, group: string,school?: string,level?: string) => {
+        const key = `${category}|${type}|${classe}|${group}|${school}|${level}`;
         const cacheToUse = group === "epreuve" ? cachePaper : cache;
         if (cacheToUse.has(key)) {
             return cacheToUse.get(key); // renvoie directement le résultat précédent
@@ -559,12 +591,18 @@ const Formations = () => {
         const normalizedC = normalizeText(category);
         const normalizedT = normalizeText(type);
         const normalizedCL = normalizeText(classe);
+        const normalizedS = normalizeText(school || "");
+        const normalizedL = normalizeText(level || "");
 
         const filtered = PrenormalizedTable.filter(course => {
             const matchCategory = normalizedC === "tout" || course._normCategory.includes(normalizedC);
             const matchType = normalizedT === "tout" || course._normType.includes(normalizedT);
             const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
-            return matchCategory && matchType && matchClasse;
+
+            const matchSchool = group === "epreuve" ? normalizedS === "tout" || course._normSchool?.includes(normalizedS) : true;
+            const matchLevel = group === "epreuve" ? normalizedL === "tout" || course._normLevel?.includes(normalizedL) : true;
+
+            return matchCategory && matchType && matchClasse && matchSchool && matchLevel;
         });
 
         cacheToUse.set(key, filtered); // on garde le résultat en mémoire
@@ -578,7 +616,7 @@ const Formations = () => {
             handleSubmit();
         }
     };
-
+                     
 
 
     // Fonction pour générer la liste des pages à afficher
@@ -1240,29 +1278,17 @@ const Formations = () => {
                                                     </Select>
                                                 </span>
                                                 <span className="flex flex-row items-center gap-1">
-                                                    <p className="text-md font-medium">Categorie : </p>
+                                                    <p className="text-md font-medium">categorie : </p>
 
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "category", "epreuve");
+                                                        handleSelect(value, "Category", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
-                                                            <SelectItem value="tout">Tout...</SelectItem>
-                                                            <SelectItem value="Programmation Python">Programmation python</SelectItem>
-                                                            <SelectItem value="Développement Web">Développement web</SelectItem>
-                                                            <SelectItem value="Développement Mobile">Développement mobile</SelectItem>
-                                                            <SelectItem value="Intelligence Artificielle">IA & Deep Learning</SelectItem>
-                                                            <SelectItem value="Data Science">Data Science</SelectItem>
-                                                            <SelectItem value="Cybersécurité">Cybersécurité</SelectItem>
-                                                            <SelectItem value="Réseaux & Systèmes">Réseaux &amp; Systèmes</SelectItem>
-                                                            <SelectItem value="Bases de Données">Bases de Données</SelectItem>
-                                                            <SelectItem value="Bureautique">Bureautique</SelectItem>
-                                                            <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
-                                                            <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
-                                                            <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
-                                                            <SelectItem value="Formation Académique">Formation Académique</SelectItem>
+                                                        <SelectItem value="Mathématiques">Mathématiques</SelectItem>
+                                                        <SelectItem value="autre">autre</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
@@ -1308,24 +1334,28 @@ const Formations = () => {
                                                             <SelectValue placeholder="Choisir le niveau scolaire..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
-                                                            <SelectItem value="tout">Tout...</SelectItem>
-                                                            <SelectItem value="Programmation Python">Programmation python</SelectItem>
-                                                            <SelectItem value="Développement Web">Développement web</SelectItem>
-                                                            <SelectItem value="Développement Mobile">Développement mobile</SelectItem>
-                                                            <SelectItem value="Intelligence Artificielle">IA & Deep Learning</SelectItem>
-                                                            <SelectItem value="Data Science">Data Science</SelectItem>
-                                                            <SelectItem value="Cybersécurité">Cybersécurité</SelectItem>
-                                                            <SelectItem value="Réseaux & Systèmes">Réseaux &amp; Systèmes</SelectItem>
-                                                            <SelectItem value="Bases de Données">Bases de Données</SelectItem>
-                                                            <SelectItem value="Bureautique">Bureautique</SelectItem>
-                                                            <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
-                                                            <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
-                                                            <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
-                                                            <SelectItem value="Formation Académique">Formation Académique</SelectItem>
+                                                            <SelectItem value="niveau 1 universitaire">niveau 1 universitaire</SelectItem>
+                                                            <SelectItem value="niveau 2 universitaire">niveau 2 universitaire</SelectItem>
+                                                            <SelectItem value="niveau 3 universitaire">niveau 3 universitaire</SelectItem>
+                                                        
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
+                                                 <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">classe: </p>
 
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "Class", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                        <SelectItem value="premium">premium</SelectItem>
+                                                        <SelectItem value="gratuit">gratuit</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
                                                  <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">Type : </p>
                                                    
@@ -1350,7 +1380,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Etablissement = "{schoolCategoryPaper}", Niveau scolaire = "{levelCategoryPaper}"</i></CardDescription>)}
+                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de filiere = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Etablissement = "{schoolCategoryPaper}", Niveau scolaire = "{levelCategoryPaper}"</i></CardDescription>)}
 
                                     </CardHeader>
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
