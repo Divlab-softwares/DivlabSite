@@ -544,30 +544,37 @@ const Formations = () => {
         ...paper,
         _normCategory: normalizeText(paper.category.map(cat => cat.category).join(" ")),
         _normType: normalizeText(paper.Format),
-        _normClasse: normalizeText(paper.Class)
+        _normClasse: normalizeText(paper.Class),
+        _normSchool: normalizeText(paper.School)
     }));
 
     // --- Étape 2 : fonction avec mémoïsation simple
     const cache = new Map();
     const cachePaper = new Map();
 
-    const selectCategory = (category: string, type: string, classe: string, group: string) => {
+    const selectCategory = (category: string, type: string, classe: string, group: string = "epreuve") => {
         const key = `${category}|${type}|${classe}|${group}`;
         const cacheToUse = group === "epreuve" ? cachePaper : cache;
         if (cacheToUse.has(key)) {
             return cacheToUse.get(key); // renvoie directement le résultat précédent
         }
         const PrenormalizedTable = group === "epreuve" ? preNormalizedPapers : preNormalizedCourses;
+        
 
         const normalizedC = normalizeText(category);
         const normalizedT = normalizeText(type);
         const normalizedCL = normalizeText(classe);
 
-        const filtered = PrenormalizedTable.filter(course => {
-            const matchCategory = normalizedC === "tout" || course._normCategory.includes(normalizedC);
-            const matchType = normalizedT === "tout" || course._normType.includes(normalizedT);
-            const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
-            return matchCategory && matchType && matchClasse;
+        // force to any[] and guard optional properties to satisfy TypeScript
+        const filtered = (PrenormalizedTable as any[]).filter((course: any) => {
+            const matchCategory = normalizedC === "tout" || (course._normCategory?.includes(normalizedC));
+            const matchType = normalizedT === "tout" || (course._normType?.includes(normalizedT));
+            const matchClasse = normalizedCL === "tout" || (course._normClasse?.includes(normalizedCL));
+
+            // const matchSchool = group === "epreuve"
+            //     ? (normalizedCL === "tout" || (typeof course._normSchool === "string" && course._normSchool.includes(normalizedCL)))
+            //     : true;
+            return matchCategory && matchType && matchClasse ;
         });
 
         cacheToUse.set(key, filtered); // on garde le résultat en mémoire
