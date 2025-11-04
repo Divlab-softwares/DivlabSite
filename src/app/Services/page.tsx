@@ -473,8 +473,9 @@ const Formations = () => {
     const [formatCategoryPaper, setFormatCategoryPaper] = useState("tout");
     const [categoryPaper, setCategoryPaper] = useState("tout");
     const [classeCategoryPaper, setClasseCategoryPaper] = useState("tout");
-    const [schoolCategoryPaper, setSchoolCategoryPaper] = useState("tout");
-    const [levelCategoryPaper, setLevelCategoryPaper] = useState("tout");
+   const [filiereCategoryPaper, setFiliereCategoryPaper]= useState("tout");
+    const [levelCategoryPaper, setLevelCategoryPaper] = useState("tout"); 
+    const [typeCategoryPaper, settypeCategoryPaper]= useState("tout");
 
     const handleSelect = (value: string, categoryType: string, group: string) => {
         // const cat = categorize(value)
@@ -485,8 +486,9 @@ const Formations = () => {
         let c_p = categoryPaper
         let f_p = formatCategoryPaper
         let cl_p = classeCategoryPaper
-        let s_p = schoolCategoryPaper
+        let f_l=filiereCategoryPaper
         let l_p = levelCategoryPaper
+        let t_p= typeCategoryPaper
 
         switch (categoryType) {
             case "format":
@@ -521,12 +523,12 @@ const Formations = () => {
                 break;
 
             // uniquement pour epreuve
-             case "shool":
+            case "filiere":
                 switch (group) {
                     case "epreuve":
-                        setSchoolCategoryPaper(value);
-                        s_p= value
-                
+                        setFiliereCategoryPaper(value);
+                        f_l = value
+
                 }
                 break;
              case "level":
@@ -540,29 +542,31 @@ const Formations = () => {
              case "type":
                 switch (group) {
                     case "epreuve":
-                        setFormatCategoryPaper(value);
-                        f_p = value
+                        settypeCategoryPaper(value);
+                        t_p = value
 
                 }
                 break;
             
 
         }
-        console.log("Categorie:", c, "Type:", f , "class", cl);
+        
+
+        console.log("Categorie:", c, "Type:", f, "class", cl);
         if (group == "epreuve") {
-            setNewCategorizedPapers(selectCategory(c_p, f_p, cl_p, group))
+            setNewCategorizedPapers(selectCategory(c_p, f_p, cl_p,f_l,  l_p, t_p, group))
         } else if (group == "formation") {
             setNewCategorizedCourses(selectCategory(c, f, cl, group))
         }
 
     }
-    
+
 
     // --- Étape 1 : pré-normalisation (à faire une seule fois, ex: au chargement)
     const preNormalizedCourses = categorizedCourses.map(course => ({
         ...course,
         _normCategory: normalizeText(course.category.map(cat => cat.category).join(" ")),
-        _normType: normalizeText(course.Format),
+        _normformat: normalizeText(course.Format),
         _normClasse: normalizeText(course.Class),
    
     }));
@@ -570,48 +574,56 @@ const Formations = () => {
     const preNormalizedPapers = categorizedPapers.map(paper => ({
         ...paper,
         _normCategory: normalizeText(paper.category.map(cat => cat.category).join(" ")),
-        _normType: normalizeText(paper.Format),
+        _normformat: normalizeText(paper.Format),
         _normClasse: normalizeText(paper.Class),
         _normSchool: normalizeText(paper.School),
-        _normLevel: normalizeText(paper.Level)
+        _normLevel: normalizeText(paper.Level),
+        _normFilier: normalizeText(paper.Filiere),
+        _normType: normalizeText(paper.Type)
     }));
 
     // --- Étape 2 : fonction avec mémoïsation simple
     const cache = new Map();
     const cachePaper = new Map();
 
-    const selectCategory = (category: string, type: string, classe: string, group: string,school?: string,level?: string) => {
-        const key = `${category}|${type}|${classe}|${group}|${school}|${level}`;
+    const selectCategory = (category?: string, format?: string, classe?: string, level?: string,filiere?: string,type?: string, group?: string) => {
+        const key = `${category}|${format}|${classe}|${group}|${level}|${filiere}|${type}`;
         const cacheToUse = group === "epreuve" ? cachePaper : cache;
         if (cacheToUse.has(key)) {
             return cacheToUse.get(key); // renvoie directement le résultat précédent
         }
         const PrenormalizedTable = group === "epreuve" ? preNormalizedPapers : preNormalizedCourses;
 
-        const normalizedC = normalizeText(category);
-        const normalizedT = normalizeText(type);
-        const normalizedCL = normalizeText(classe);
-        const normalizedS = normalizeText(school || "");
+        const normalizedC = normalizeText(category|| "");
+        const normalizedF = normalizeText(format|| "");
+        const normalizedCL = normalizeText(classe|| "");
         const normalizedL = normalizeText(level || "");
+        const normalizedFL = normalizeText(filiere || "");
+        const normalizeT = normalizeText(type || "");
+
 
         const filtered = PrenormalizedTable.filter(course => {
-            const matchCategory = normalizedC === "tout" || course._normCategory.includes(normalizedC);
-            const matchType = normalizedT === "tout" || course._normType.includes(normalizedT);
-            const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
-
-            const matchSchool = group === "epreuve"
-                ? (normalizedS === "tout" || ("_normSchool" in course && typeof (course as any)._normSchool === "string" && (course as any)._normSchool.includes(normalizedS)))
+           const matchCategory =  normalizedC === "tout" || course._normCategory.includes(normalizedC);
+           const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
+           
+           const matchFormat = normalizedF === "tout" || course._normformat.includes(normalizedF);
+            const matchType = group ==="epreuve"
+                ? (normalizeT==="tout" ||("_normType"in course && typeof (course as any)._normType==="string" && (course as any)._normType.includes(normalizeT)))
                 : true;
+                const matchFiliere =  group ==="epreuve"
+                    ? (normalizedFL==="tout" || ("_normFiliere" in course && typeof(course as any)._normFiliere==="string" && (course as any)._normFiliere.includes(normalizedFL)))
+                    : true;
             const matchLevel = group === "epreuve"
-                ? (normalizedL === "tout" || ("_normLevel" in course && typeof (course as any)._normLevel === "string" && (course as any)._normLevel.includes(normalizedL)))
-                : true;
+                    ? (normalizedL === "tout" || ("_normLevel" in course && typeof (course as any)._normLevel === "string" && (course as any)._normLevel.includes(normalizedL)))
+                    : true;
 
-            return matchCategory && matchType && matchClasse && matchSchool && matchLevel;
+            return matchCategory && matchFormat && matchClasse && matchLevel && matchType;
         });
 
         cacheToUse.set(key, filtered); // on garde le résultat en mémoire
         return filtered;
     };
+    
 
 
 
@@ -954,7 +966,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" , Type = "{formatCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
+                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" ,  Format ="{formatCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
 
                                     </CardHeader>
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
@@ -1284,44 +1296,17 @@ const Formations = () => {
                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">categorie : </p>
 
-                                                    <Select onValueChange={(value) => {
-                                                        handleSelect(value, "Category", "epreuve");
+                                                 <Select onValueChange={(value) => {
+                                                        handleSelect(value, "category", "formation");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
-                                                        <SelectItem value="Mathématiques">Mathématiques</SelectItem>
-                                                        <SelectItem value="autre">autre</SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
-                                                </span>
-
-                                                <span className="flex flex-row items-center gap-1">
-                                                    <p className="text-md font-medium">Etablissement : </p>
-                                                   
-
-                                                    <Select onValueChange={(value) => {
-                                                        handleSelect(value, "School", "epreuve");
-                                                    }}>
-                                                        <SelectTrigger className="w-[200px]">
-                                                            <SelectValue placeholder="Choisir l'etablissement..." />
-                                                        </SelectTrigger>
-                                                        <SelectContent className="bg-black/80">
-                                                            <SelectItem value="tout">Tout...</SelectItem>
-                                                            <SelectItem value="Programmation Python">ENSPD</SelectItem>
-                                                            <SelectItem value="Développement Web">ENSPY</SelectItem>
-                                                            <SelectItem value="Développement Mobile">IUT DE NGAOUNDERE</SelectItem>
-                                                            <SelectItem value="Intelligence Artificielle">IUT DE DOUALA</SelectItem>
-                                                            <SelectItem value="Data Science">IUT DE YDE</SelectItem>
-                                                            <SelectItem value="Cybersécurité">IUT DE BAMENDA</SelectItem>
-                                                            <SelectItem value="Réseaux & Systèmes">IUT DE GAROUA</SelectItem>
-                                                            <SelectItem value="Bases de Données">IUT DE DOUALA</SelectItem>
-                                                            <SelectItem value="Bureautique">IUT DE DOUALA</SelectItem>
-                                                            <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
-                                                            <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
-                                                            <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
-                                                            <SelectItem value="Formation Académique">Formation Académique</SelectItem>
+                                                            <SelectItem value="informatique">informatique</SelectItem>
+                                                            <SelectItem value="Mathématiques">Mathématiques</SelectItem>
+                                                            <SelectItem value="autre">autre</SelectItem>
+                                                           
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
@@ -1349,14 +1334,32 @@ const Formations = () => {
                                                     <p className="text-md font-medium">classe: </p>
 
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "Class", "epreuve");
+                                                        handleSelect(value, "Classe", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
+                                                        <SelectItem value="tout">Tout...</SelectItem>
                                                         <SelectItem value="premium">premium</SelectItem>
-                                                        <SelectItem value="gratuit">gratuit</SelectItem>
+                                                        <SelectItem value="free">gratuit</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">filiere : </p>
+
+                                                 <Select onValueChange={(value) => {
+                                                        handleSelect(value, "Filiere", "formation");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="SDIA ( Science des donnees et Inteligence Artificielle)">SDIA ( Science des donnees et Inteligence Artificielle)</SelectItem>
+                                                            <SelectItem value= "Toutes les specialites"> Toutes les specialites</SelectItem>
+                                                            <SelectItem value= "GC (Geni civil), INFOTEL (Informatique et Telecommunication)">GC (Geni civil), INFOTEL (Informatique et Telecommunication)</SelectItem>
+                                                               <SelectItem value= "none"> aucune</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
@@ -1372,11 +1375,11 @@ const Formations = () => {
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
                                                             <SelectItem value="tout">Tout...</SelectItem>
-                                                            <SelectItem value="Programmation Python">Concours</SelectItem>
-                                                            <SelectItem value="Développement Web">Examens</SelectItem>
-                                                            <SelectItem value="Développement Mobile">Séquences</SelectItem>
-                                                            <SelectItem value="Intelligence Artificielle">TD</SelectItem>
-                                                           
+                                                            <SelectItem value="Concours">Concours</SelectItem>
+                                                            <SelectItem value="Examen">Examens</SelectItem>
+                                                            <SelectItem value="Séquences">Séquences</SelectItem>
+                                                            <SelectItem value="TD">TD</SelectItem>
+
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
@@ -1384,7 +1387,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de filiere = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Etablissement = "{schoolCategoryPaper}", Niveau scolaire = "{levelCategoryPaper}"</i></CardDescription>)}
+                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de cotegorie = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Niveau scolaire = "{levelCategoryPaper},    classe="{classeCategoryPaper}" ,  filiere="{filiereCategoryPaper}",   type="{typeCategoryPaper}"</i></CardDescription>)}
 
                                     </CardHeader>
                                     <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
