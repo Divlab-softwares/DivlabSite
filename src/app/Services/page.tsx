@@ -599,7 +599,6 @@ const Formations = () => {
             const matchType = normalizedT === "tout" || course._normType.includes(normalizedT);
             const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
 
-            // Safely check for _normSchool and _normLevel only when present to satisfy TypeScript
             const matchSchool = group === "epreuve"
                 ? (normalizedS === "tout" || ("_normSchool" in course && typeof (course as any)._normSchool === "string" && (course as any)._normSchool.includes(normalizedS)))
                 : true;
