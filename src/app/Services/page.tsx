@@ -599,8 +599,13 @@ const Formations = () => {
             const matchType = normalizedT === "tout" || course._normType.includes(normalizedT);
             const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
 
-            const matchSchool = group === "epreuve" ? normalizedS === "tout" || course._normSchool?.includes(normalizedS) : true;
-            const matchLevel = group === "epreuve" ? normalizedL === "tout" || course._normLevel?.includes(normalizedL) : true;
+            // Safely check for _normSchool and _normLevel only when present to satisfy TypeScript
+            const matchSchool = group === "epreuve"
+                ? (normalizedS === "tout" || ("_normSchool" in course && typeof (course as any)._normSchool === "string" && (course as any)._normSchool.includes(normalizedS)))
+                : true;
+            const matchLevel = group === "epreuve"
+                ? (normalizedL === "tout" || ("_normLevel" in course && typeof (course as any)._normLevel === "string" && (course as any)._normLevel.includes(normalizedL)))
+                : true;
 
             return matchCategory && matchType && matchClasse && matchSchool && matchLevel;
         });
