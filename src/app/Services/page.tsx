@@ -1248,7 +1248,7 @@ const Formations = () => {
                                                 opacity="opacity-60"
                                                 className='rounded-xl'
                                             />
-                                            <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl hover:-translate-x-[0%] md:hover:translate-x-[2%] hover:translate-y-[0%] md:hover:-translate-y-[1%] hover:scale-103 md:hover:scale-100 transition-all duration-400"
+                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl hover:translate-x-[0%] md:hover:translate-x-[2%] hover:translate-y-[0%] md:hover:-translate-y-[1%] hover:scale-104 md:hover:scale-100 transition-all duration-400"
                                                 key={IdPaperOpen}
                                                 initial={{ opacity: "0%", x: 0, y: 0, scale: 0.8 }}
                                                 animate={{ opacity: "100%", x: "5%", y: "-5%", scale: 1 }}
