@@ -753,7 +753,7 @@ export const Papers = [
         "Description": " ",
         "Img": "/assets/epreuve/default.jpeg",
         "Group": "Epreuves",
-        "Category": "Autres",
+        "Category": "informatique",
         "School": "ENSPM (Ecole Normale et Superieure de Polythechnique de Maroua)",
         "Type": "Examen",
         "Level": "niveau 3 universitaire",
@@ -824,7 +824,7 @@ export const Papers = [
         "Category": "Autres",
         "School": "ENSPY (Ecole Normale et Superieure de Polythechnique de Yaounde)",
         "Type": "Concours",
-        "Level": "niveau 3 universitaire",
+        "Level": "niveau 1 universitaire",
         "Year": "session 2021",
         "Cursus": "Ingenieur",
         "Filiere": "toutes les specialites"

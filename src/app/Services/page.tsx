@@ -482,7 +482,6 @@ const Formations = () => {
         let c = category
         let f = formatCategory
         let cl = classeCategory
-
         let c_p = categoryPaper
         let f_p = formatCategoryPaper
         let cl_p = classeCategoryPaper
@@ -528,6 +527,7 @@ const Formations = () => {
                     case "epreuve":
                         setFiliereCategoryPaper(value);
                         f_l = value
+                        console.log("test filiere" , f_l)
 
                 }
                 break;
@@ -552,11 +552,11 @@ const Formations = () => {
         }
         
 
-        console.log("Categorie:", c, "Type:", f, "class", cl);
+        console.log("Categorie:", c, "Type:", f, "class", cl, "classPaper", cl_p);
         if (group == "epreuve") {
-            setNewCategorizedPapers(selectCategory(c_p, f_p, cl_p,f_l,  l_p, t_p, group))
+            setNewCategorizedPapers(selectCategory({category: c_p,format:  f_p,classe: cl_p,filiere: f_l,level: l_p, type: t_p, group: group}))
         } else if (group == "formation") {
-            setNewCategorizedCourses(selectCategory(c, f, cl, group))
+            setNewCategorizedCourses(selectCategory({category: c,format: f, classe: cl,group: group}))
         }
 
     }
@@ -566,7 +566,7 @@ const Formations = () => {
     const preNormalizedCourses = categorizedCourses.map(course => ({
         ...course,
         _normCategory: normalizeText(course.category.map(cat => cat.category).join(" ")),
-        _normformat: normalizeText(course.Format),
+        _normFormat: normalizeText(course.Format),
         _normClasse: normalizeText(course.Class),
    
     }));
@@ -574,11 +574,11 @@ const Formations = () => {
     const preNormalizedPapers = categorizedPapers.map(paper => ({
         ...paper,
         _normCategory: normalizeText(paper.category.map(cat => cat.category).join(" ")),
-        _normformat: normalizeText(paper.Format),
+        _normFormat: normalizeText(paper.Format),
         _normClasse: normalizeText(paper.Class),
         _normSchool: normalizeText(paper.School),
         _normLevel: normalizeText(paper.Level),
-        _normFilier: normalizeText(paper.Filiere),
+        _normFiliere: normalizeText(paper.Filiere),
         _normType: normalizeText(paper.Type)
     }));
 
@@ -586,7 +586,18 @@ const Formations = () => {
     const cache = new Map();
     const cachePaper = new Map();
 
-    const selectCategory = (category?: string, format?: string, classe?: string, level?: string,filiere?: string,type?: string, group?: string) => {
+    interface GetDataOptions {
+        category?: string;
+        format?: string;
+        classe?: string;
+        level?: string;
+        filiere?: string;
+        type?: string;
+        group?: string;
+    }
+
+    const selectCategory = (options : GetDataOptions) => {
+        const { category, format, classe, level, filiere, type, group } = options;
         const key = `${category}|${format}|${classe}|${group}|${level}|${filiere}|${type}`;
         const cacheToUse = group === "epreuve" ? cachePaper : cache;
         if (cacheToUse.has(key)) {
@@ -600,24 +611,23 @@ const Formations = () => {
         const normalizedL = normalizeText(level || "");
         const normalizedFL = normalizeText(filiere || "");
         const normalizeT = normalizeText(type || "");
-
+        console.log("Categorie:", category, "Type:", type, "Class:", classe, "Format:", format,"Level:", level,"Filiere:",filiere);
 
         const filtered = PrenormalizedTable.filter(course => {
            const matchCategory =  normalizedC === "tout" || course._normCategory.includes(normalizedC);
            const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
-           
-           const matchFormat = normalizedF === "tout" || course._normformat.includes(normalizedF);
+           const matchFormat = normalizedF === "tout" || course._normFormat.includes(normalizedF);
             const matchType = group ==="epreuve"
                 ? (normalizeT==="tout" ||("_normType"in course && typeof (course as any)._normType==="string" && (course as any)._normType.includes(normalizeT)))
                 : true;
-                const matchFiliere =  group ==="epreuve"
-                    ? (normalizedFL==="tout" || ("_normFiliere" in course && typeof(course as any)._normFiliere==="string" && (course as any)._normFiliere.includes(normalizedFL)))
-                    : true;
+            const matchFiliere =  group ==="epreuve"
+                ? (normalizedFL==="tout" || ("_normFiliere" in course && typeof(course as any)._normFiliere==="string" && (course as any)._normFiliere.includes(normalizedFL)))
+                : true;
             const matchLevel = group === "epreuve"
                     ? (normalizedL === "tout" || ("_normLevel" in course && typeof (course as any)._normLevel === "string" && (course as any)._normLevel.includes(normalizedL)))
                     : true;
 
-            return matchCategory && matchFormat && matchClasse && matchLevel && matchType;
+            return matchCategory && matchFormat && matchClasse && matchLevel && matchType && matchFiliere;
         });
 
         cacheToUse.set(key, filtered); // on garde le résultat en mémoire
@@ -1297,7 +1307,7 @@ const Formations = () => {
                                                     <p className="text-md font-medium">categorie : </p>
 
                                                  <Select onValueChange={(value) => {
-                                                        handleSelect(value, "category", "formation");
+                                                        handleSelect(value, "category", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
@@ -1334,7 +1344,7 @@ const Formations = () => {
                                                     <p className="text-md font-medium">classe: </p>
 
                                                     <Select onValueChange={(value) => {
-                                                        handleSelect(value, "Classe", "epreuve");
+                                                        handleSelect(value, "classe", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
@@ -1350,7 +1360,7 @@ const Formations = () => {
                                                     <p className="text-md font-medium">filiere : </p>
 
                                                  <Select onValueChange={(value) => {
-                                                        handleSelect(value, "Filiere", "formation");
+                                                        handleSelect(value, "filiere", "epreuve");
                                                     }}>
                                                         <SelectTrigger className="w-[200px]">
                                                             <SelectValue placeholder="Choisir la categorie..." />
