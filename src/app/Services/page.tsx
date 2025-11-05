@@ -226,6 +226,7 @@ const Formations = () => {
     };
 
 
+
     // 🔹 Ancienne version avec useEffect (remplacée par startPaymentCheck)
     // useEffect(() => {
     //     let interval: ReturnType<typeof setInterval> | undefined; // on le déclare pour y avoir accès plus bas
