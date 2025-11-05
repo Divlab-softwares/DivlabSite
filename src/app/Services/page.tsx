@@ -794,7 +794,9 @@ const Formations = () => {
 
                         <div className="h-full w-full overflow-auto space-y-4  scroll-smooth">
                             <hr className="mb-4" />
-                            <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u>
+                           
+                            <span className="h-fit flex items-center w-full flex-row justify-center"><p className="text-center  w-fit animate-zoom"> <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u></p></span>
+
 
                             {/* Zone des formations en e-book*/}
 
@@ -837,7 +839,11 @@ const Formations = () => {
                                                 transition={{ duration: 0.5 }}
                                             >
 
+<<<<<<< HEAD
                                                 <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:translate-x-[0%] translate-y-[5%] md:translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+=======
+                                                <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+>>>>>>> d53546f (petit plus)
 
                                             </motion.div>
                                         </div>
@@ -962,6 +968,7 @@ const Formations = () => {
                                     <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
                                         <CardHeader className="py-2">
                                             <div className="  flex flex-col md:flex-row gap-5 items-center ">
+                                                
                                                 <span className="text-2xl font-bold">Categorisation</span>
                                                 <div className="gap-2 flex flex-wrap md:flex-row">
                                                     <span className="flex flex-row items-center gap-1">
@@ -1217,7 +1224,8 @@ const Formations = () => {
                                 </div>
                             </div>
 
-                            <u><Title title="EPREUVES" className="text-4xl pt-2" id="papers" /></u>
+                            
+                            <span className="h-fit flex items-center w-full flex-row justify-center"><p className="text-center  w-fit animate-zoom"><u><Title title="EPREUVES" className="text-4xl pt-2" id="papers" /></u></p></span>
 
                             {/* Zone des Epreuves*/}
 
@@ -1270,6 +1278,7 @@ const Formations = () => {
                                                 animate={{ opacity: "100%", x: "0%", y: "0%" }}
                                                 exit={{ x: "10%", y: "0%", opacity: "0%", scale: 0.8 }}
                                                 transition={{ duration: 0.5, ease: "easeInOut" }}
+<<<<<<< HEAD
                                                 className="h-fit w-full rounded-4xl" >
                                                 <CardHeader>
                                                 <CardTitle className=" text-3xl whitespace-pre-wrap"> {IdPaperOpen == -1 ? (
@@ -1283,8 +1292,23 @@ const Formations = () => {
                                                         className="text-4xl font-bold"
                                                     />
                                                 ) : searchPapersResultCurrent[IdPaperOpen].Title}</CardTitle>
+=======
+                                                className="h-fit w-full border-x rounded-4xl" >
+                                               <CardHeader>
+                                                    <CardTitle className=" text-3xl whitespace-pre-wrap"> {IdOpen == -1 ? (
+                                                        <TextType
+                                                            text={["Vos epreuves en ligne .", "prenez votre reussite en main.", "n'attendez plus."]}
+                                                            typingSpeed={90}
+                                                            pauseDuration={3000}
+                                                            showCursor={true}
+                                                            cursorCharacter="|"
+                                                            // onSentenceComplete={(sentence = "Votre Divlab space a ete cree avec succes.", index = 0) => setSide("open")}
+                                                            className="text-4xl font-bold"
+                                                        />
+                                                    ) : searchCoursesResultCurrent[IdOpen].Title}</CardTitle>
+>>>>>>> d53546f (petit plus)
                                                     <hr />
-                                                    <CardDescription className="flex flex-row flex-wrap gap-2 items-center">
+                                                    <CardDescription className="flex flex-col flex-wrap gap-2 items-start" >
                                                         <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
                                                             <span className={`${IdPaperOpen == -1 ? "" : "badge badge-info badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "pdf / videos / images / presentations..." : searchPapersResultCurrent[IdPaperOpen].Format}</i></span>
                                                             {/* <span className={`${IdPaperOpen == -1 ? "" : "badge badge-soft badge-outline  badge-md  mt-2  rounded-full"}`}><i> {IdPaperOpen == -1 ? "" : `${searchPapersResultCurrent[IdPaperOpen].Pages} Pages`} </i></span> */}

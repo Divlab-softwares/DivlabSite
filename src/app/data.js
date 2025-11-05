@@ -24,7 +24,7 @@ export const OnlineFormations = [
         'format': 'pdf',
         'type': 'premium',
         'description': 'Indisponible (sous licence)', 
-        'img': '/assets/formations/DIVLAB_NONE_7-strategies-pour-monter-une-entrprise-de-succes_premium.jpeg',
+        'img': '/assets/formations/DIVLAB_7-strategies-pour-monter-une-entreprise-de-succes_premium.jpeg',
         'value': 'Formation'
     },
     {
