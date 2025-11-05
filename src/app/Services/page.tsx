@@ -1029,7 +1029,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" ,  Format ="{formatCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
+                                       
 
                                         </CardHeader>
                                         <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
@@ -1407,9 +1407,9 @@ const Formations = () => {
                                                             <SelectValue placeholder="Choisir la categorie..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
-                                                            <SelectItem value="informatique">informatique</SelectItem>
+                                                            <SelectItem value="tout">Tout...</SelectItem>
                                                             <SelectItem value="Mathématiques">Mathématiques</SelectItem>
-                                                            <SelectItem value="autre">autre</SelectItem>
+                                                           
                                                            
                                                         </SelectContent>
                                                     </Select>
@@ -1427,8 +1427,7 @@ const Formations = () => {
                                                             <SelectValue placeholder="Choisir le niveau scolaire..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
-                                                            <SelectItem value="niveau 1 universitaire">niveau 1 universitaire</SelectItem>
-                                                            <SelectItem value="niveau 2 universitaire">niveau 2 universitaire</SelectItem>
+                                                            <SelectItem value="tout">Tout...</SelectItem>
                                                             <SelectItem value="niveau 3 universitaire">niveau 3 universitaire</SelectItem>
                                                         
                                                         </SelectContent>
@@ -1460,6 +1459,7 @@ const Formations = () => {
                                                             <SelectValue placeholder="Choisir la categorie..." />
                                                         </SelectTrigger>
                                                         <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
                                                             <SelectItem value="SDIA ( Science des donnees et Inteligence Artificielle)">SDIA ( Science des donnees et Inteligence Artificielle)</SelectItem>
                                                             <SelectItem value= "Toutes les specialites"> Toutes les specialites</SelectItem>
                                                             <SelectItem value= "GC (Geni civil), INFOTEL (Informatique et Telecommunication)">GC (Geni civil), INFOTEL (Informatique et Telecommunication)</SelectItem>
@@ -1481,7 +1481,6 @@ const Formations = () => {
                                                             <SelectItem value="tout">Tout...</SelectItem>
                                                             <SelectItem value="Concours">Concours</SelectItem>
                                                             <SelectItem value="Examen">Examens</SelectItem>
-                                                            <SelectItem value="Séquences">Séquences</SelectItem>
                                                             <SelectItem value="TD">TD</SelectItem>
 
                                                         </SelectContent>
@@ -1491,7 +1490,7 @@ const Formations = () => {
 
                                         </div>
                                         <hr />
-                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de cotegorie = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Niveau scolaire = "{levelCategoryPaper},    classe="{classeCategoryPaper}" ,  filiere="{filiereCategoryPaper}",   type="{typeCategoryPaper}"</i></CardDescription>)}
+                                       
 
                                         </CardHeader>
                                         <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">

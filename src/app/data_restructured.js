@@ -824,7 +824,7 @@ export const Papers = [
         "Category": "Autres",
         "School": "ENSPY (Ecole Normale et Superieure de Polythechnique de Yaounde)",
         "Type": "Concours",
-        "Level": "niveau 1 universitaire",
+        "Level": "niveau 3 universitaire",
         "Year": "session 2021",
         "Cursus": "Ingenieur",
         "Filiere": "toutes les specialites"
@@ -892,7 +892,7 @@ export const Papers = [
         "Category": "Autres",
         "School": "none",
         "Type": "Examen",
-        "Level": "niveau 1 universitaire",
+        "Level": "niveau 3 universitaire",
         "Year": "none",
         "Cursus": "none",
         "Filiere": "none"
