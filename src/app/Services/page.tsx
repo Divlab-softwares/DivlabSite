@@ -1308,7 +1308,7 @@ const Formations = () => {
                                             {IdPaperOpen === -1 ? (
                                                 <Link href={`${openPaperCollapse == 0 ? "#formationslist" : "#formations"}`} className="h-12 rounded-xl w-full  transition-transform duration-400 hover:scale-105  hover:-translate-y-1  font-bold">
                                                     <ShineButton className="w-full h-full p-2 flex items-center justify-center"
-                                                        label={`${openPaperCollapse == 0 ? "Afficher toutes les formations" : "Fermer les formations"}`}
+                                                        label={`${openPaperCollapse == 0 ? "Afficher toutes les epreuves" : "Fermer les epreuves"}`}
                                                         size="lg"
                                                         bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
                                                         onClick={() => handleOpenCollapse("epreuve")}
