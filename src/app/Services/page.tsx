@@ -229,6 +229,7 @@ const Formations = () => {
     };
 
 
+
     // 🔹 Ancienne version avec useEffect (remplacée par startPaymentCheck)
     // useEffect(() => {
     //     let interval: ReturnType<typeof setInterval> | undefined; // on le déclare pour y avoir accès plus bas
@@ -476,20 +477,21 @@ const Formations = () => {
     const [formatCategoryPaper, setFormatCategoryPaper] = useState("tout");
     const [categoryPaper, setCategoryPaper] = useState("tout");
     const [classeCategoryPaper, setClasseCategoryPaper] = useState("tout");
-    const [schoolCategoryPaper, setSchoolCategoryPaper] = useState("tout");
-    const [levelCategoryPaper, setLevelCategoryPaper] = useState("tout");
+   const [filiereCategoryPaper, setFiliereCategoryPaper]= useState("tout");
+    const [levelCategoryPaper, setLevelCategoryPaper] = useState("tout"); 
+    const [typeCategoryPaper, settypeCategoryPaper]= useState("tout");
 
     const handleSelect = (value: string, categoryType: string, group: string) => {
         // const cat = categorize(value)
         let c = category
         let f = formatCategory
         let cl = classeCategory
-
         let c_p = categoryPaper
         let f_p = formatCategoryPaper
         let cl_p = classeCategoryPaper
-        let s_p = schoolCategoryPaper
+        let f_l=filiereCategoryPaper
         let l_p = levelCategoryPaper
+        let t_p= typeCategoryPaper
 
         switch (categoryType) {
             case "format":
@@ -522,64 +524,120 @@ const Formations = () => {
                         cl = value
                 }
                 break;
+
+            // uniquement pour epreuve
+            case "filiere":
+                switch (group) {
+                    case "epreuve":
+                        setFiliereCategoryPaper(value);
+                        f_l = value
+                        console.log("test filiere" , f_l)
+
+                }
+                break;
+             case "level":
+                switch (group) {
+                    case "epreuve":
+                        setLevelCategoryPaper(value);
+                        l_p = value
+                
+                }
+                break;
+             case "type":
+                switch (group) {
+                    case "epreuve":
+                        settypeCategoryPaper(value);
+                        t_p = value
+
+                }
+                break;
+            
+
         }
-        console.log("Categorie:", c, "Type:", f, "class", cl);
+        
+
+        console.log("Categorie:", c, "Type:", f, "class", cl, "classPaper", cl_p);
         if (group == "epreuve") {
-            setNewCategorizedPapers(selectCategory(c_p, f_p, cl_p, group))
+            setNewCategorizedPapers(selectCategory({category: c_p,format:  f_p,classe: cl_p,filiere: f_l,level: l_p, type: t_p, group: group}))
         } else if (group == "formation") {
-            setNewCategorizedCourses(selectCategory(c, f, cl, group))
+            setNewCategorizedCourses(selectCategory({category: c,format: f, classe: cl,group: group}))
         }
 
     }
+
 
     // --- Étape 1 : pré-normalisation (à faire une seule fois, ex: au chargement)
     const preNormalizedCourses = categorizedCourses.map(course => ({
         ...course,
         _normCategory: normalizeText(course.category.map(cat => cat.category).join(" ")),
-        _normType: normalizeText(course.Format),
-        _normClasse: normalizeText(course.Class)
+        _normFormat: normalizeText(course.Format),
+        _normClasse: normalizeText(course.Class),
+   
     }));
 
     const preNormalizedPapers = categorizedPapers.map(paper => ({
         ...paper,
         _normCategory: normalizeText(paper.category.map(cat => cat.category).join(" ")),
-        _normType: normalizeText(paper.Format),
+        _normFormat: normalizeText(paper.Format),
         _normClasse: normalizeText(paper.Class),
-        _normSchool: normalizeText(paper.School)
+        _normSchool: normalizeText(paper.School),
+        _normLevel: normalizeText(paper.Level),
+        _normFiliere: normalizeText(paper.Filiere),
+        _normType: normalizeText(paper.Type)
     }));
 
     // --- Étape 2 : fonction avec mémoïsation simple
     const cache = new Map();
     const cachePaper = new Map();
 
-    const selectCategory = (category: string, type: string, classe: string, group: string = "epreuve") => {
-        const key = `${category}|${type}|${classe}|${group}`;
+    interface GetDataOptions {
+        category?: string;
+        format?: string;
+        classe?: string;
+        level?: string;
+        filiere?: string;
+        type?: string;
+        group?: string;
+    }
+
+    const selectCategory = (options : GetDataOptions) => {
+        const { category, format, classe, level, filiere, type, group } = options;
+        const key = `${category}|${format}|${classe}|${group}|${level}|${filiere}|${type}`;
         const cacheToUse = group === "epreuve" ? cachePaper : cache;
         if (cacheToUse.has(key)) {
             return cacheToUse.get(key); // renvoie directement le résultat précédent
         }
         const PrenormalizedTable = group === "epreuve" ? preNormalizedPapers : preNormalizedCourses;
-        
 
-        const normalizedC = normalizeText(category);
-        const normalizedT = normalizeText(type);
-        const normalizedCL = normalizeText(classe);
+        const normalizedC = normalizeText(category|| "");
+        const normalizedF = normalizeText(format|| "");
+        const normalizedCL = normalizeText(classe|| "");
+        const normalizedL = normalizeText(level || "");
+        const normalizedFL = normalizeText(filiere || "");
+        const normalizeT = normalizeText(type || "");
+        console.log("Categorie:", category, "Type:", type, "Class:", classe, "Format:", format,"Level:", level,"Filiere:",filiere);
 
-        // force to any[] and guard optional properties to satisfy TypeScript
-        const filtered = (PrenormalizedTable as any[]).filter((course: any) => {
-            const matchCategory = normalizedC === "tout" || (course._normCategory?.includes(normalizedC));
-            const matchType = normalizedT === "tout" || (course._normType?.includes(normalizedT));
-            const matchClasse = normalizedCL === "tout" || (course._normClasse?.includes(normalizedCL));
+        const filtered = PrenormalizedTable.filter(course => {
+           const matchCategory =  normalizedC === "tout" || course._normCategory.includes(normalizedC);
+           const matchClasse = normalizedCL === "tout" || course._normClasse.includes(normalizedCL);
+           const matchFormat = normalizedF === "tout" || course._normFormat.includes(normalizedF);
+            const matchType = group ==="epreuve"
+                ? (normalizeT==="tout" ||("_normType"in course && typeof (course as any)._normType==="string" && (course as any)._normType.includes(normalizeT)))
+                : true;
+            const matchFiliere =  group ==="epreuve"
+                ? (normalizedFL==="tout" || ("_normFiliere" in course && typeof(course as any)._normFiliere==="string" && (course as any)._normFiliere.includes(normalizedFL)))
+                : true;
+            const matchLevel = group === "epreuve"
+                    ? (normalizedL === "tout" || ("_normLevel" in course && typeof (course as any)._normLevel === "string" && (course as any)._normLevel.includes(normalizedL)))
+                    : true;
 
-            // const matchSchool = group === "epreuve"
-            //     ? (normalizedCL === "tout" || (typeof course._normSchool === "string" && course._normSchool.includes(normalizedCL)))
-            //     : true;
-            return matchCategory && matchType && matchClasse ;
+            return matchCategory && matchFormat && matchClasse && matchLevel && matchType && matchFiliere;
         });
 
         cacheToUse.set(key, filtered); // on garde le résultat en mémoire
         return filtered;
     };
+    
 
 
 
@@ -588,7 +646,7 @@ const Formations = () => {
             handleSubmit();
         }
     };
-
+                     
 
 
     // Fonction pour générer la liste des pages à afficher
@@ -969,9 +1027,9 @@ const Formations = () => {
                                                     </span>
                                                 </div>
 
-                                            </div>
-                                            <hr />
-                                            {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" , Type = "{formatCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
+                                        </div>
+                                        <hr />
+                                        {newCategorizedCourses.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{category}" ,  Format ="{formatCategory}" , Classe = "{classeCategory}"</i></CardDescription>)}
 
                                         </CardHeader>
                                         <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
@@ -1294,137 +1352,120 @@ const Formations = () => {
 
                                 <div className="flex relative h-full   w-full  rounded-3xl p-2  shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]" >
 
-                                    <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
-                                        <CardHeader className="py-2">
-                                            <div className="  flex flex-col md:flex-row gap-5 items-start ">
-                                                <span className="text-2xl font-bold">Categorisation</span>
-                                                <div className="gap-2 flex flex-wrap md:flex-row">
-                                                    <span className="flex flex-row items-center gap-1">
-                                                        <p className="text-md font-medium">Format : </p>
-                                                        <Select onValueChange={(value) => {
-                                                            handleSelect(value, "format", "epreuve");
-                                                        }}>
-                                                            <SelectTrigger className="w-[180px] md:w-[200px]">
-                                                                <SelectValue placeholder="Choisir le Format..." />
-                                                            </SelectTrigger>
-                                                            <SelectContent className="bg-black/80">
-                                                                <SelectItem value="tout">Tout...</SelectItem>
-                                                                <SelectItem value="pdf">Pdf</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </span>
-                                                    <span className="flex flex-row items-center gap-1">
-                                                        <p className="text-md font-medium">Categorie : </p>
+                                <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
+                                    <CardHeader className="py-2">
+                                        <div className="  flex flex-col md:flex-row gap-5 items-start ">
+                                            <span className="text-2xl font-bold">Categorisation</span>
+                                            <div className="gap-2 flex flex-wrap md:flex-row">
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Format : </p>
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "format", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[180px] md:w-[200px]">
+                                                            <SelectValue placeholder="Choisir le Format..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="pdf">Pdf</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">categorie : </p>
 
-                                                        <Select onValueChange={(value) => {
-                                                            handleSelect(value, "category", "epreuve");
-                                                        }}>
-                                                            <SelectTrigger className="w-[200px]">
-                                                                <SelectValue placeholder="Choisir la categorie..." />
-                                                            </SelectTrigger>
-                                                            <SelectContent className="bg-black/80">
-                                                                <SelectItem value="tout">Tout...</SelectItem>
-                                                                <SelectItem value="Programmation Python">Programmation python</SelectItem>
-                                                                <SelectItem value="Développement Web">Développement web</SelectItem>
-                                                                <SelectItem value="Développement Mobile">Développement mobile</SelectItem>
-                                                                <SelectItem value="Intelligence Artificielle">IA & Deep Learning</SelectItem>
-                                                                <SelectItem value="Data Science">Data Science</SelectItem>
-                                                                <SelectItem value="Cybersécurité">Cybersécurité</SelectItem>
-                                                                <SelectItem value="Réseaux & Systèmes">Réseaux &amp; Systèmes</SelectItem>
-                                                                <SelectItem value="Bases de Données">Bases de Données</SelectItem>
-                                                                <SelectItem value="Bureautique">Bureautique</SelectItem>
-                                                                <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
-                                                                <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
-                                                                <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
-                                                                <SelectItem value="Formation Académique">Formation Académique</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </span>
-
-                                                    <span className="flex flex-row items-center gap-1">
-                                                        <p className="text-md font-medium">Etablissement : </p>
+                                                 <Select onValueChange={(value) => {
+                                                        handleSelect(value, "category", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="informatique">informatique</SelectItem>
+                                                            <SelectItem value="Mathématiques">Mathématiques</SelectItem>
+                                                            <SelectItem value="autre">autre</SelectItem>
+                                                           
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
 
 
-                                                        <Select onValueChange={(value) => {
-                                                            handleSelect(value, "School", "epreuve");
-                                                        }}>
-                                                            <SelectTrigger className="w-[200px]">
-                                                                <SelectValue placeholder="Choisir l'etablissement..." />
-                                                            </SelectTrigger>
-                                                            <SelectContent className="bg-black/80">
-                                                                <SelectItem value="tout">Tout...</SelectItem>
-                                                                <SelectItem value="Programmation Python">ENSPD</SelectItem>
-                                                                <SelectItem value="Développement Web">ENSPY</SelectItem>
-                                                                <SelectItem value="Développement Mobile">IUT DE NGAOUNDERE</SelectItem>
-                                                                <SelectItem value="Intelligence Artificielle">IUT DE DOUALA</SelectItem>
-                                                                <SelectItem value="Data Science">IUT DE YDE</SelectItem>
-                                                                <SelectItem value="Cybersécurité">IUT DE BAMENDA</SelectItem>
-                                                                <SelectItem value="Réseaux & Systèmes">IUT DE GAROUA</SelectItem>
-                                                                <SelectItem value="Bases de Données">IUT DE DOUALA</SelectItem>
-                                                                <SelectItem value="Bureautique">IUT DE DOUALA</SelectItem>
-                                                                <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
-                                                                <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
-                                                                <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
-                                                                <SelectItem value="Formation Académique">Formation Académique</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </span>
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Niveau scolaire : </p>
 
 
-                                                    <span className="flex flex-row items-center gap-1">
-                                                        <p className="text-md font-medium">Niveau scolaire : </p>
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "level", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir le niveau scolaire..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="niveau 1 universitaire">niveau 1 universitaire</SelectItem>
+                                                            <SelectItem value="niveau 2 universitaire">niveau 2 universitaire</SelectItem>
+                                                            <SelectItem value="niveau 3 universitaire">niveau 3 universitaire</SelectItem>
+                                                        
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                 <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">classe: </p>
 
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "classe", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                        <SelectItem value="tout">Tout...</SelectItem>
+                                                        <SelectItem value="premium">premium</SelectItem>
+                                                        <SelectItem value="free">gratuit</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">filiere : </p>
 
-                                                        <Select onValueChange={(value) => {
-                                                            handleSelect(value, "level", "epreuve");
-                                                        }}>
-                                                            <SelectTrigger className="w-[200px]">
-                                                                <SelectValue placeholder="Choisir le niveau scolaire..." />
-                                                            </SelectTrigger>
-                                                            <SelectContent className="bg-black/80">
-                                                                <SelectItem value="tout">Tout...</SelectItem>
-                                                                <SelectItem value="Programmation Python">Programmation python</SelectItem>
-                                                                <SelectItem value="Développement Web">Développement web</SelectItem>
-                                                                <SelectItem value="Développement Mobile">Développement mobile</SelectItem>
-                                                                <SelectItem value="Intelligence Artificielle">IA & Deep Learning</SelectItem>
-                                                                <SelectItem value="Data Science">Data Science</SelectItem>
-                                                                <SelectItem value="Cybersécurité">Cybersécurité</SelectItem>
-                                                                <SelectItem value="Réseaux & Systèmes">Réseaux &amp; Systèmes</SelectItem>
-                                                                <SelectItem value="Bases de Données">Bases de Données</SelectItem>
-                                                                <SelectItem value="Bureautique">Bureautique</SelectItem>
-                                                                <SelectItem value="Mathématiques & Statistiques">Mathématiques &amp; Statistiques</SelectItem>
-                                                                <SelectItem value="Design & Multimédia">Design &amp; Multimédia</SelectItem>
-                                                                <SelectItem value="Entrepreneuriat & Business">Entrepreneuriat &amp; Business</SelectItem>
-                                                                <SelectItem value="Formation Académique">Formation Académique</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </span>
+                                                 <Select onValueChange={(value) => {
+                                                        handleSelect(value, "filiere", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir la categorie..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="SDIA ( Science des donnees et Inteligence Artificielle)">SDIA ( Science des donnees et Inteligence Artificielle)</SelectItem>
+                                                            <SelectItem value= "Toutes les specialites"> Toutes les specialites</SelectItem>
+                                                            <SelectItem value= "GC (Geni civil), INFOTEL (Informatique et Telecommunication)">GC (Geni civil), INFOTEL (Informatique et Telecommunication)</SelectItem>
+                                                               <SelectItem value= "none"> aucune</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
+                                                 <span className="flex flex-row items-center gap-1">
+                                                    <p className="text-md font-medium">Type : </p>
+                                                   
 
-                                                    <span className="flex flex-row items-center gap-1">
-                                                        <p className="text-md font-medium">Type : </p>
+                                                    <Select onValueChange={(value) => {
+                                                        handleSelect(value, "type", "epreuve");
+                                                    }}>
+                                                        <SelectTrigger className="w-[200px]">
+                                                            <SelectValue placeholder="Choisir le type d'epreuve..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-black/80">
+                                                            <SelectItem value="tout">Tout...</SelectItem>
+                                                            <SelectItem value="Concours">Concours</SelectItem>
+                                                            <SelectItem value="Examen">Examens</SelectItem>
+                                                            <SelectItem value="Séquences">Séquences</SelectItem>
+                                                            <SelectItem value="TD">TD</SelectItem>
 
-
-                                                        <Select onValueChange={(value) => {
-                                                            handleSelect(value, "type", "epreuve");
-                                                        }}>
-                                                            <SelectTrigger className="w-[200px]">
-                                                                <SelectValue placeholder="Choisir le type d'epreuve..." />
-                                                            </SelectTrigger>
-                                                            <SelectContent className="bg-black/80">
-                                                                <SelectItem value="tout">Tout...</SelectItem>
-                                                                <SelectItem value="Programmation Python">Concours</SelectItem>
-                                                                <SelectItem value="Développement Web">Examens</SelectItem>
-                                                                <SelectItem value="Développement Mobile">Séquences</SelectItem>
-                                                                <SelectItem value="Intelligence Artificielle">TD</SelectItem>
-
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </span>
-                                                </div>
-
+                                                        </SelectContent>
+                                                    </Select>
+                                                </span>
                                             </div>
-                                            <hr />
-                                            {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de Categorie = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Etablissement = "{schoolCategoryPaper}", Niveau scolaire = "{levelCategoryPaper}"</i></CardDescription>)}
+
+                                        </div>
+                                        <hr />
+                                        {newCategorizedPapers.length != 0 && (<CardDescription><i>Recherches en fonction de cotegorie = "{categoryPaper}" , Format = "{formatCategoryPaper}" , Niveau scolaire = "{levelCategoryPaper},    classe="{classeCategoryPaper}" ,  filiere="{filiereCategoryPaper}",   type="{typeCategoryPaper}"</i></CardDescription>)}
 
                                         </CardHeader>
                                         <CardContent className="h-full w-full py-2 overflow-auto flex items-center justify-start px-2">
