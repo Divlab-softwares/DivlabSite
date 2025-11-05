@@ -1434,7 +1434,7 @@ const Formations = () => {
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
-                                                 <span className="flex flex-row items-center gap-1">
+                                                 {/* <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">classe: </p>
 
                                                     <Select onValueChange={(value) => {
@@ -1449,7 +1449,7 @@ const Formations = () => {
                                                         <SelectItem value="free">gratuit</SelectItem>
                                                         </SelectContent>
                                                     </Select>
-                                                </span>
+                                                </span> */}
                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">filiere : </p>
 
