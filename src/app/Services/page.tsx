@@ -968,7 +968,6 @@ const Formations = () => {
                                     <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
                                         <CardHeader className="py-2">
                                             <div className="  flex flex-col md:flex-row gap-5 items-center ">
-                                                
                                                 <span className="text-2xl font-bold">Categorisation</span>
                                                 <div className="gap-2 flex flex-wrap md:flex-row">
                                                     <span className="flex flex-row items-center gap-1">
