@@ -794,17 +794,16 @@ const Formations = () => {
 
                         <div className="h-full w-full overflow-auto space-y-4  scroll-smooth">
                             <hr className="mb-4" />
-                           
-                            <span className="h-fit flex items-center w-full flex-row justify-center"><p className="text-center  w-fit animate-zoom"> <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u></p></span>
-
+                            
+                             <span className="h-fit flex items-center w-full flex-row justify-center"><p className="text-center  w-fit animate-zoom"> <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u></p></span>
 
                             {/* Zone des formations en e-book*/}
 
-                            <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"}  transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[0_5px_20px_rgba(0,200,255,0.6)]`} data-theme={`${theme}`}>
+                            <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"}  transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[0_5px_20px_rgba(0,200,255,0.6)] rounded-3xl`} data-theme={`${theme}`}>
 
 
 
-                            <div className="flex flex-row relative w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap  rounded-3xl" >
+                                <div className="flex flex-row relative w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap  " >
 
                                     <BorderBeam
                                         size={50}
@@ -839,12 +838,8 @@ const Formations = () => {
                                                 transition={{ duration: 0.5 }}
                                             >
 
-<<<<<<< HEAD
-                                                <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:translate-x-[0%] translate-y-[5%] md:translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
-=======
                                                 <img src={IdOpen == -1 ? "/assets/formation.webp" : searchCoursesResultCurrent[IdOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
->>>>>>> d53546f (petit plus)
-
+:
                                             </motion.div>
                                         </div>
                                     </div>
@@ -1223,12 +1218,12 @@ const Formations = () => {
                                 </div>
                             </div>
 
-                            
-                            <span className="h-fit flex items-center w-full flex-row justify-center"><p className="text-center  w-fit animate-zoom"><u><Title title="EPREUVES" className="text-4xl pt-2" id="papers" /></u></p></span>
+                          
+                             <span className="h-fit flex items-center w-full flex-row justify-center"><p className="text-center  w-fit animate-zoom">  <u><Title title="EPREUVES" className="text-4xl pt-2" id="papers" /></u></p></span>
 
                             {/* Zone des Epreuves*/}
 
-                        <div className={` ${changePaperHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2  shadow-[0_5px_10px_rgba(0,200,255,0.6)]`} data-theme={`${theme}`}>
+                            <div className={` ${changePaperHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]`} data-theme={`${theme}`}>
 
                                 <div className="relative flex flex-row w-full justify-between  items-start p-4 md:space-x-10 space-y-7 flex-wrap md:flex-nowrap " >
                                     <BorderBeam
@@ -1255,7 +1250,7 @@ const Formations = () => {
                                                 opacity="opacity-60"
                                                 className='rounded-xl'
                                             />
-                                        <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl hover:translate-x-[0%] md:hover:translate-x-[2%] hover:translate-y-[0%] md:hover:-translate-y-[1%] hover:scale-104 md:hover:scale-100 transition-all duration-400"
+                                            <motion.div className="w-auto h-full md:h-fit flex items-center justify-center rounded-xl hover:-translate-x-[0%] md:hover:translate-x-[2%] hover:translate-y-[0%] md:hover:-translate-y-[1%] hover:scale-103 md:hover:scale-100 transition-all duration-400"
                                                 key={IdPaperOpen}
                                                 initial={{ opacity: "0%", x: 0, y: 0, scale: 0.8 }}
                                                 animate={{ opacity: "100%", x: "5%", y: "-5%", scale: 1 }}
@@ -1263,7 +1258,7 @@ const Formations = () => {
                                                 transition={{ duration: 0.5 }}
                                             >
 
-                                            <img src={IdPaperOpen == -1 ? "/assets/epreuve.jpeg" : searchPapersResultCurrent[IdPaperOpen].Img} alt="Formations en ligne" className="transition-all duration-400 md:transition-none  -translate-x-[5%] md:translate-x-[0%] translate-y-[5%] md:translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
+                                                <img src={IdPaperOpen == -1 ? "/assets/epreuve.jpeg" : searchPapersResultCurrent[IdPaperOpen].Img} alt="Formations en ligne" className="transition-all duration-400   -translate-x-[5%] md:-translate-x-[0%] translate-y-[5%] md:-translate-y-[0%] object-cover md:w-full md:h-auto  w-auto h-80   rounded-xl hover:shadow-[0_0_3px_3px_rgba(0,200,255,0.6)]"></img>
 
                                             </motion.div>
                                         </div>
@@ -1277,21 +1272,6 @@ const Formations = () => {
                                                 animate={{ opacity: "100%", x: "0%", y: "0%" }}
                                                 exit={{ x: "10%", y: "0%", opacity: "0%", scale: 0.8 }}
                                                 transition={{ duration: 0.5, ease: "easeInOut" }}
-<<<<<<< HEAD
-                                                className="h-fit w-full rounded-4xl" >
-                                                <CardHeader>
-                                                <CardTitle className=" text-3xl whitespace-pre-wrap"> {IdPaperOpen == -1 ? (
-                                                    <TextType
-                                                        text={["Preparez vos concours de la meilleure facon.", "Obtennez nos epreuves gratuitement pour vos revisions.", "Le choisissez le meilleur pour la reussite."]}
-                                                        typingSpeed={90}
-                                                        pauseDuration={3000}
-                                                        showCursor={true}
-                                                        cursorCharacter="|"
-                                                        // onSentenceComplete={(sentence = "Votre Divlab space a ete cree avec succes.", index = 0) => setSide("open")}
-                                                        className="text-4xl font-bold"
-                                                    />
-                                                ) : searchPapersResultCurrent[IdPaperOpen].Title}</CardTitle>
-=======
                                                 className="h-fit w-full border-x rounded-4xl" >
                                                <CardHeader>
                                                     <CardTitle className=" text-3xl whitespace-pre-wrap"> {IdOpen == -1 ? (
@@ -1305,7 +1285,6 @@ const Formations = () => {
                                                             className="text-4xl font-bold"
                                                         />
                                                     ) : searchCoursesResultCurrent[IdOpen].Title}</CardTitle>
->>>>>>> d53546f (petit plus)
                                                     <hr />
                                                     <CardDescription className="flex flex-col flex-wrap gap-2 items-start" >
                                                         <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
@@ -1326,41 +1305,25 @@ const Formations = () => {
                                                 <p>{IdPaperOpen == -1 ? "Decouvrez les epreuves qui vous permettrons enfin de reviser facilement, de manière ludique et interactive." : searchPapersResultCurrent[IdPaperOpen].Description} </p>
                                             </CardContent> */}
                                             </motion.div>
-                                            <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-8 w-full mt-5">
+                                            <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 items-align md:space-x-2 w-full mt-5">
 
-                                            {IdPaperOpen === -1 ? (
-                                                <Link href={`${openPaperCollapse == 0 ? "#formationslist" : "#formations"}`} className="h-12 rounded-xl w-full  transition-transform duration-400 hover:scale-105  hover:-translate-y-1  font-bold">
-                                                    <ShineButton className="w-full h-full p-2 flex items-center justify-center"
-                                                        label={`${openPaperCollapse == 0 ? "Afficher toutes les epreuves" : "Fermer les epreuves"}`}
-                                                        size="lg"
-                                                        bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
-                                                        onClick={() => handleOpenCollapse("epreuve")}
-                                                    />
-                                                </Link>
-                                            ) : (searchPapersResultCurrent[IdPaperOpen].Class != "premium" ? (
+                                                {IdPaperOpen === -1 ? (
+                                                    <Button onClick={() => handleOpenCollapse("epreuve")} className="h-12 rounded-xl w-auto md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                                        <a href={`${openPaperCollapse == 1 ? "#paperslist" : "#papers"}`} className="w-full h-full p-2 flex items-center justify-center">{openPaperCollapse == 0 ? "Afficher toutes les epreuves" : "Fermer les epreuves"}</a>
+                                                    </Button>
+                                                ) : (searchPapersResultCurrent[IdPaperOpen].Class != "premium" ? (
 
-                                                <Link href={searchPapersResultCurrent[IdPaperOpen].Location} download={searchPapersResultCurrent[IdPaperOpen].Location.split("/").pop()} className="font-bold h-12 rounded-xl w-full   transition-transform duration-400 hover:scale-105  hover:-translate-y-1 p-0 shadow-4xl">
-                                                    <ShineButton
-                                                        className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/40 via-cyan-400 to-blue-500 "
-                                                        label="Télécharger"
-                                                        size="lg"
-                                                        bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
-                                                    //onClick={() => alert('Thanks for your support!')}
-                                                    />
-                                                </Link>
-                                            ) : (
-                                                <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
-                                                    <Link href="https://layidgpo.mychariow.com" target="_blank" className="font-bold h-12 w-full hover:scale-105 hover:-translate-y-1 shadow-xl transition-all duration-400 bg-linear-to-tr rounded-xl">
-                                                        <ShineButton
-                                                            className="w-full h-full rounded-xl p-2 flex items-center justify-center"
-                                                            label="Acheter (via chariow)"
-                                                            size="lg"
-                                                            bgColor="linear-gradient(325deg, hsl(24 100% 50%) 0%, hsl(34 100% 60%) 55%, hsl(24 100% 50%) 90%)"
-                                                        />
-                                                    </Link>
-                                                    {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
-                                                </div>)
-                                            )}
+                                                    <Button className="h-12 rounded-xl w-full md:w-2/3 bg-blue-500   transition-transform duration-400 hover:scale-99  hover:translate-y-1 p-0 ">
+                                                        <a href={searchPapersResultCurrent[IdPaperOpen].Location} download={searchPapersResultCurrent[IdPaperOpen].Location.split("/").pop()} className="w-full h-full flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-cyan-400 to-blue-500 ">Telecharger</a>
+                                                    </Button>
+                                                ) : (
+                                                    <div className="flex md:flex-row flex-wrap  space-y-2 md:space-y-0 md:space-x-2 w-full  items-center justify-center">
+                                                        <Button className="transition-all duration-300 h-12 w-auto md:w-2/3 hover:h-15  hover:w-full  shadow-4xl  bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 ">
+                                                            <Link href="https://layidgpo.mychariow.com" target="_blank" className="w-full h-full p-2 flex items-center justify-center">Acheter {"( via chariow )"}</Link>
+                                                        </Button>
+                                                        {/* <PayButton amount={PromPrice} item_ref={searchPapersResultCurrent[IdPaperOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
+                                                    </div>)
+                                                )}
 
 
 
@@ -1456,7 +1419,7 @@ const Formations = () => {
                                                         </SelectContent>
                                                     </Select>
                                                 </span>
-                                                 {/* <span className="flex flex-row items-center gap-1">
+                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">classe: </p>
 
                                                     <Select onValueChange={(value) => {
@@ -1471,7 +1434,7 @@ const Formations = () => {
                                                         <SelectItem value="free">gratuit</SelectItem>
                                                         </SelectContent>
                                                     </Select>
-                                                </span> */}
+                                                </span>
                                                 <span className="flex flex-row items-center gap-1">
                                                     <p className="text-md font-medium">filiere : </p>
 
