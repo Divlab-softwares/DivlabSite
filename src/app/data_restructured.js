@@ -753,7 +753,7 @@ export const Papers = [
         "Description": " ",
         "Img": "/assets/epreuve/default.jpeg",
         "Group": "Epreuves",
-        "Category": "Autres",
+        "Category": "informatique",
         "School": "ENSPM (Ecole Normale et Superieure de Polythechnique de Maroua)",
         "Type": "Examen",
         "Level": "niveau 3 universitaire",
@@ -776,14 +776,14 @@ export const Papers = [
         "Level": "niveau 3 universitaire",
         "Year": "session 2021",
         "Cursus": "Ingenieur",
-        "Filiere": "GC (Geni civil), INFOTEL (Informatique et Telecommunication)"
+        "Filiere": "GC (Geni civil), INFOTEL (Informatique et Telecommunication)" 
     },
     {
         "Id": 6,
         "Title": "Epreuve de specialite ( Physique )",
         "Location": "/fichiers/epreuves/EPREUVE DE SPECIALITE 2 - GC - 2021.pdf",
         "Format": "pdf",
-        "Class": "premium",
+        "Class": "free",
         "Description": " ",
         "Img": "/assets/epreuve/default.jpeg",
         "Group": "Epreuves",
@@ -793,7 +793,7 @@ export const Papers = [
         "Level": "niveau 3 universitaire",
         "Year": "session 2021",
         "Cursus": " Ingenieur",
-        "Filiere": "GENIE CIVIL"
+        "Filiere": "GC (Geni civil), INFOTEL (Informatique et Telecommunication)"
     },
     {
         "Id": 7,
@@ -848,7 +848,7 @@ export const Papers = [
     },
     {
         "Id": 10,
-        "Title": "Epreuve de serie temporelle",
+        "Title": "Epreuve de serie temporelleEpreuve de serie temporelle",
         "Location": "/fichiers/epreuves/Epreuve_SN_24_Serie_Temp_2024.pdf",
         "Format": "pdf",
         "Class": "premium",
@@ -892,7 +892,7 @@ export const Papers = [
         "Category": "Autres",
         "School": "none",
         "Type": "Examen",
-        "Level": "nonr",
+        "Level": "niveau 3 universitaire",
         "Year": "none",
         "Cursus": "none",
         "Filiere": "none"
