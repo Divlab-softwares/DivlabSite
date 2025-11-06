@@ -29,10 +29,10 @@ export default function PayButton({ amount, item_ref, startPaymentCheck }:PayBut
             });
 
             const data = await res.json();
-            if (data.paymentUrl) {
+            if (data.link) {
                 // Redirige directement vers la page de paiement Monetbil
-                window.location.href = data.paymentUrl;
-
+                //window.location.href = data.link;
+                console.error("Test :", data);
                 // redirection Monetbil
             } else {
                 console.error("Erreur :", data);

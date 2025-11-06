@@ -165,67 +165,67 @@ const Formations = () => {
         localStorage.setItem('monetbilPaymentInProgress', 'true');
 
         //setIsChecking(true);
-        intervalRef.current = setInterval(async () => {
-            //if (isChecking) return;
-            if (hasNotified) return; // déjà traité
-            try {
-                const res = await fetch('/api/payment-status');
-                const data = await res.json();
+        // intervalRef.current = setInterval(async () => {
+        //     //if (isChecking) return;
+        //     if (hasNotified) return; // déjà traité
+        //     try {
+        //         const res = await fetch('/api/payment-status');
+        //         const data = await res.json();
 
-                if (data && data.status) {
-                    //setIsChecking(false);
-                    setPaymentStatus(data);
-                    setNotif({
-                        message: data.message || "Transaction traitée",
-                        type: data.status === "success" ? "success" : "failed",
-                        key: Date.now() // <- très important pour réafficher à chaque fois
-                    });
-                    hasNotified = true; // bloque les suivants
+        //         if (data && data.status) {
+        //             //setIsChecking(false);
+        //             setPaymentStatus(data);
+        //             setNotif({
+        //                 message: data.message || "Transaction traitée",
+        //                 type: data.status === "success" ? "success" : "failed",
+        //                 key: Date.now() // <- très important pour réafficher à chaque fois
+        //             });
+        //             hasNotified = true; // bloque les suivants
 
-                    // Téléchargement automatique
-                    // Utilisation de item_ref pour construire le lien du document
-                    const itemRef = data.item_ref;
-                    const link = document.createElement('a');
-                    link.href = `/fichiers/${itemRef}.pdf`; // ton document sur le serveur
-                    link.download = `${itemRef}.pdf`;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+        //             // Téléchargement automatique
+        //             // Utilisation de item_ref pour construire le lien du document
+        //             const itemRef = data.item_ref;
+        //             const link = document.createElement('a');
+        //             link.href = `/fichiers/${itemRef}.pdf`; // ton document sur le serveur
+        //             link.download = `${itemRef}.pdf`;
+        //             document.body.appendChild(link);
+        //             link.click();
+        //             document.body.removeChild(link);
 
 
-                    await fetch('/api/clear-payment-status', { method: 'POST' });
+        //             await fetch('/api/clear-payment-status', { method: 'POST' });
 
-                    // 🧹 Arrêter la boucle quand on a une réponse
-                    if (intervalRef.current) {
-                        clearInterval(intervalRef.current);
-                        intervalRef.current = null;
-                    }
-                    // ✅ Si la transaction est terminée, on arrête la boucle
-                    // if (data.status === 'success' || data.status === 'failed' || data.status === 'cancelled') {
-                    //     clearInterval(interval);
-                    // }
-                    localStorage.removeItem('monetbilPaymentInProgress');
-                }
-                else if (data == null) {
-                    hasNotified = true; // bloque les suivants
-                    //setIsChecking(false);
-                    // setNotif({
-                    //     message: "Erreur de transaction, veuillez réessayer.",
-                    //     type: "failed",
-                    //     key: Date.now() // <- très important pour réafficher à chaque fois
-                    // });
+        //             // 🧹 Arrêter la boucle quand on a une réponse
+        //             if (intervalRef.current) {
+        //                 clearInterval(intervalRef.current);
+        //                 intervalRef.current = null;
+        //             }
+        //             // ✅ Si la transaction est terminée, on arrête la boucle
+        //             // if (data.status === 'success' || data.status === 'failed' || data.status === 'cancelled') {
+        //             //     clearInterval(interval);
+        //             // }
+        //             localStorage.removeItem('monetbilPaymentInProgress');
+        //         }
+        //         else if (data == null) {
+        //             hasNotified = true; // bloque les suivants
+        //             //setIsChecking(false);
+        //             // setNotif({
+        //             //     message: "Erreur de transaction, veuillez réessayer.",
+        //             //     type: "failed",
+        //             //     key: Date.now() // <- très important pour réafficher à chaque fois
+        //             // });
 
-                    await fetch('/api/clear-payment-status', { method: 'POST' });
-                    // localStorage.removeItem('monetbilPaymentInProgress');
-                    //console.log(" localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
-                    // console.error("Statut vide:", data);
-                    localStorage.removeItem('monetbilPaymentInProgress');
-                    // console.log("Nouveau localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
-                }
-            } catch (err) {
-                console.error('Erreur checkStatus:', err);
-            }
-        }, 3000);
+        //             await fetch('/api/clear-payment-status', { method: 'POST' });
+        //             // localStorage.removeItem('monetbilPaymentInProgress');
+        //             //console.log(" localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
+        //             // console.error("Statut vide:", data);
+        //             localStorage.removeItem('monetbilPaymentInProgress');
+        //             // console.log("Nouveau localstorage:", localStorage.getItem('monetbilPaymentInProgress'));
+        //         }
+        //     } catch (err) {
+        //         console.error('Erreur checkStatus:', err);
+        //     }
+        // }, 3000);
     };
 
 
@@ -1335,7 +1335,7 @@ const Formations = () => {
                                                             bgColor="linear-gradient(325deg, hsl(24 100% 50%) 0%, hsl(34 100% 60%) 55%, hsl(24 100% 50%) 90%)"
                                                         />
                                                     </Link>
-                                                    {/* <PayButton amount={PromPrice} item_ref={searchCoursesResultCurrent[IdOpen].location.split("DIVLAB_").pop()?.split(".")[0] ?? ""} startPaymentCheck={startPaymentCheck} /> */}
+                                                    <PayButton amount={PromPrice} item_ref={searchPapersResultCurrent[IdPaperOpen].Title} startPaymentCheck={startPaymentCheck} />
                                                 </div>)
                                             )}
 
@@ -1800,7 +1800,7 @@ const Formations = () => {
                                 <div className="flex flex-row  justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)] " key={site.id} data-theme={`${theme}`}>
                                     <Image height={30} width={30} src="/assets/promo.svg" alt="promo" className="absolute w-30 h-30 top-0 right-10 -rotate-10 animate-zoom z-5"></Image>
 
-                                    <div className="relative flex flex-row w-full justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7 shadow-[0_5px_10px_rgba(0,200,255,0.6)]" >
+                                    <div className="relative flex flex-row w-full rounded-3xl justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7 shadow-[0_5px_10px_rgba(0,200,255,0.6)]" >
 
                                         <BorderBeam
                                             size={50}
