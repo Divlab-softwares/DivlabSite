@@ -1,4 +1,6 @@
-import { Eye, EyeOff } from "lucide-react";
+"use client";
+
+import { Eye, EyeOff, Link } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -21,6 +23,7 @@ interface Sign {
     setSignResult?: React.Dispatch<React.SetStateAction<SignResult | null>>;
     setSign?: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
+
 
 
 
@@ -90,17 +93,21 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
     };
 
     return (
-        <div className="w-full h-full flex items-center justify-center bg-blue-400 rounded-2xl p-2 shadow-lg">
-            <TopLoader isLoading={isLoading} color="#33C3F0" height={2} />
-            <div className="w-full  p-8 bg-white rounded-xl shadow-md">
-                <p className="text-2xl font-bold text-center text-gray-800">Connectez vous a votre compte Div<span className="text-info">lab</span></p>
+                <div className="flex flex-col justify-center  items-align m-10 md:px-[30%] px-[5%]  " id="contact">
+                <TopLoader isLoading={isLoading} color="#9dd7e9ff" height={2} />
+                 <div className="flex flex-col justify-center  items-align m-10 md:px-[30%] px-[5%]  " id="contact">
+                    <div className='pb-5 flex-col flex items-align justify-center'>
+                    <h1 className='font-bold uppercase  text-xl'> Connectez vous a votre compte Div<span className="text-info">lab</span></h1>
+                    <hr />
+                </div>
+                <p className="text-2xl font-bold text-center text-gray-800"></p>
                 <hr className="my-4" />
                 <p className="text-sm text-center text-gray-600">Veuillez remplir les informations ci-dessous pour vous connecter.</p>
 
                 <form onSubmit={handleLogin} className="space-y-4 mt-6">
                     {/* Email Input */}
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email" className='font-bold uppercase  text-xl'>
                             Email
                         </label>
                         <input
@@ -109,7 +116,7 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
                             name="email"
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500  border-transparent"
+                            className="w-full px-4 py-2 mt-1 text-gray-900 text-info border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500  border-transparent"
                             placeholder="Entrz votre email"
                         />
                     </div>
@@ -118,13 +125,13 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
                    
                     <div className="relative">
 
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="password" className='font-bold uppercase  text-xl'>
                             Mot de passe
                         </label>
                          <button
                         type="button"
                         onClick={() => setVisible(!visible)}
-                        className="absolute right-3 top-8 text-gray-500 hover:text-gray-700 cursor-pointer"
+                        className="absolute right-3 top-8  text-gray-500 hover:text-gray-700 cursor-pointer"
                     >
                         {!visible ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
@@ -134,7 +141,7 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
                             name="password"
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500  border-transparent"
+                            className="w-full px-4 py-2 mt-1 text-info  text-gray-900 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500  border-transparent"
                             placeholder="Entrez votre mot de passe"
                         />
                     </div>
@@ -155,10 +162,18 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
                 {/* Additional Links */}
                 <div className="text-sm text-center text-gray-600 mt-4">
                     <p>
-                        Vous n'avez pas encore de compte ?{" "}
-                        <button onClick={() => { setSign && setSign(prev => (prev === 0 ? undefined : 0)) }} className="text-blue-500 hover:underline">
-                            S'inscrire
+                     <div className="text-sm text-center text-gray-600 mt-4">
+                     <p className="mt-4 text-sm text-center text-gray-600">
+                                Vous avez déjà un compte ?{" "}
+                    <button
+                            onClick={() => setSign?.(prev => (prev === 1 ? undefined : 1))}
+                            className="text-blue-500 hover:underline"
+                        >
+                            s'inscrire
                         </button>
+                        </p>
+                        </div>
+
                     </p>
                 </div>
 

@@ -3,6 +3,9 @@ import Aos from "aos";
 
 import { Ref, useEffect, useRef, useState } from "react";
 import "aos/dist/aos.css";
+import { CardFooter } from "./lightswind/card";
+import Link from "next/dist/client/link";
+import { Button } from "./lightswind/button";
 
 type NavbarProps = {
     translateY: number;
@@ -30,7 +33,25 @@ const Navbar = ({ translateY }: NavbarProps) => {
                 <li><a href="#services">services</a></li>
                 <li><a href="#realisations">réalisations</a></li>
                 <li><a href="#contact">Nous contacter</a></li>
+                <li><a href=""><Link
+                    href="/DivlabSpaceLogin"
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="w-full h-full p-2 text-center block"
+                    >
+                    se connecter
+                    </Link></a>
+                    
+                </li>
 
+                <li><a href=""><Link
+                    href="/DivlabSpaceSignUp"
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="w-full h-full p-2 text-center block"
+                    >
+                    S’inscrire
+                    </Link></a>
+                    
+                </li>
             </ul>
 
         </div>

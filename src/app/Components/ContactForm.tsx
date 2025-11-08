@@ -47,7 +47,7 @@ const ContactForm = () => {
             <form onSubmit={handleSubmit} method="POST" className="relative flex flex-col justify-between  w-full h-fit p-10 m-2 border border-info rounded-xl bg-black/80 shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
 
                 <div className='pb-5 flex-col flex items-align justify-center'>
-                    <h1 className='font-bold uppercase  text-xl'> Formulaire </h1>
+                    <h1 className='font-bold uppercase  text-xl'> Formulaire</h1>
                     <hr />
                 </div>
 

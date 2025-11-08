@@ -12,6 +12,7 @@ import Services from "./Components/Services";
 import Footer from "./Components/Footer";
 import { Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import DivlabSpaceSignUp from "./Components/DivlabSpaceSignUp";
 
 // import img1 from "@/app;
 //   import img2 from "@/app/assets/ImgCarousel/2.jpg";
