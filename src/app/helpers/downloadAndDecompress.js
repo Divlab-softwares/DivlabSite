@@ -2,9 +2,30 @@ import { unzipSync } from "fflate";
 // import { createClient } from "@supabase/supabase-js";
 import { getSupabaseSignedLink } from "./getSupabaseSignedLink.ts";
 
+function blobToDataURL(blob) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+    });
+}
+
+function getMimeType(ext) {
+    const types = {
+        pdf: "application/pdf",
+        docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        doc: "application/msword",
+        jpg: "image/jpeg",
+        jpeg: "image/jpeg",
+        png: "image/png",
+        txt: "text/plain",
+        zip: "application/zip",
+    };
+    return types[ext.toLowerCase()] || "application/octet-stream";
+}
+
 async function downloadAndDecompress(url , title) {
-
-
+  
     let signedUrl = await getSupabaseSignedLink("documents", url, 600);
 
 
@@ -37,25 +58,38 @@ async function downloadAndDecompress(url , title) {
 
         // Détecter l’extension réelle (par ex: .pdf)
         const ext = name.split('.').pop() || 'pdf';
+        const mime = getMimeType(ext);
         const fileName = `${title}.${ext}`;
 
         // // Créer un blob du fichier décompressé (binaire pur)
         // const blob = new Blob([content], { type: "application/pdf" });
 
         // On crée un blob du fichier décompressé
-        const blob = new Blob([content]);
-        const fileUrl = URL.createObjectURL(blob);
+        const blob = new Blob([content], {type: mime});
+        // const fileUrl = URL.createObjectURL(blob);
+
+       
+
+
+        // Convertir en DataURL (OBLIGATOIRE POUR MOBILE)
+        const dataUrl = await blobToDataURL(blob);
 
         // On simule le téléchargement
         const link = document.createElement("a");
-        link.href = fileUrl;
+        link.href = dataUrl;
         link.download = fileName;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
 
+        // Mise du PDF dans le nouvel onglet
+        // if (ext === "pdf") {
+        //     const newTab = window.open(dataUrl, "_blank"); // doit être avant tout fetch
+
+        // }
+
         // On libère la mémoire du blob
-        URL.revokeObjectURL(fileUrl);
+        URL.revokeObjectURL(dataUrl);
     }
 }
 export default downloadAndDecompress;
