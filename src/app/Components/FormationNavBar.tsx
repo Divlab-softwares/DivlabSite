@@ -30,8 +30,9 @@ const FormationNavBar = () => {
                     <Image height={50} width={50} alt="logo" src="/assets/logo.jpg" className="w-10 h-10 rounded-full"></Image>
                     Services
                 </div>
-                <div className="space-x-3 h-full items-center hidden md:flex px-4 mr-6">
+                <div className="space-x-3 h-full items-center hidden md:flex px-5 mr-6">
                     <a href="#formations" className="hover:text-info"><span>Formations </span></a>
+                    <a href="#papers" className="hover:text-info"><span>Epreuves </span></a>
                     <a href="#solutions web" className="hover:text-info"><span>Web</span></a>
                     <a href="#ia" className="hover:text-info"><span>IA</span></a>
                     <a href="#design" className="hover:text-info"><span>Design</span></a>
@@ -42,9 +43,10 @@ const FormationNavBar = () => {
                 <TextScrollMarquee
                     baseVelocity={1}
                     direction="right"
-                    className="text-sm font-bold  text-blue-500  w-full border-t rounded-t-md border-gray-600 "
+                    className="text-sm font-bold  text-blue-500  w-full rounded-t-md border-gray-600 "
                     scrollDependent={false}
                     delay={300}
+                    
                 >
                     🚀 Super promotion actuellement sur la conception des sites web, valable jusqu'au 1er janvier ! Venez en profiter 🚀
 

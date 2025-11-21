@@ -39,7 +39,7 @@ export default function RootLayout({
       >
         <Providers>{children}</Providers>
         <PageLoader />
-        <script type="text/javascript" src="https://fr.monetbil.com/widget/v2/monetbil.min.js"></script>
+        {/* <script type="text/javascript" src="https://fr.monetbil.com/widget/v2/monetbil.min.js"></script> */}
 
       </body>
     </html>

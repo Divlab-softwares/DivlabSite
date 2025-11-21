@@ -96,9 +96,9 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 100, opacity: 0 }}
                         transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
-                        className={`h-85 w-full backdrop-blur-lg shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] -top-85 absolute z-45  `}>
+                        className={`h-80 w-full backdrop-blur-lg shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] -top-70 absolute z-45  `}>
                         <div className="relative w-full h-full">
-                            <Button onClick={() => { setCloseEv("hidden") }} className="rounded-full w-fit h-fit p-2 bg-gray-600/50 absolute -top-9 left-1">
+                            <Button onClick={() => { setCloseEv("hidden") }} className="rounded-full w-fit h-fit p-2 bg-gray-600/50 absolute -top-9 left-1 hover:bg-red-500">
                                 < X />
                             </Button>
                             <div className="overflow-hidden  flex flex-col h-full justify-between pb-3 pt-1">
@@ -109,22 +109,16 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                 </div>
                                 <AnimatePresence >
                                     <motion.hr
-                                        initial={{ opacity: 1, width: "5%" }}
+                                        initial={{ opacity: 1, width: "0%" }}
                                         animate={{ opacity: 1, width: "100%" }}
                                         exit={{ width: "20%", opacity: 0 }}
-                                        transition={{ duration: 0.7, delay: 0.5, ease: "easeInOut" }}
+                                        transition={{ duration: 0.7, delay: 0.8, ease: "easeInOut" }}
                                     />
                                 </AnimatePresence>
-                                <div className=" flex flex-row items-center rounded-3xl mx-5 h-fit  overflow-hidden   backdrop-blur-lg bg-white/3 shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] gap-0 ">
-                                    <DotBackground
-                                        dotSize={1}
-                                        dotColor="#d4d4d4"
-                                        darkDotColor="#404040"
-                                        spacing={15}
-                                        showFade={true}
-                                        fadeIntensity={40}
-                                        className="h-full"
-                                    />
+                                <div className=" flex flex-row items-center rounded-xl mx-15 h-fit  overflow-hidden   backdrop-blur-lg bg-black/5 shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] gap-0 ">
+                                    
+                                    {/* <DotBackground dotSize={1} dotColor="#404040" darkDotColor="#404040" spacing={15} showFade={true} fadeIntensity={40} className="h-full" /> */}
+                                    
                                     <div className=" marquee-content w-fit h-fit  items-center justify-center flex flex-row text-white py-3  animate-marquee ">
                                         <Link
                                             href={`whatsapp://send?phone=237652509674&text=${encodeMessage}`}
@@ -133,7 +127,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 if ("/Evenements".startsWith("/")) {
                                                     window.scrollTo(0, 0);
                                                 }
-                                            }} className=" relative flex h-fit w-130 flex-row ml-10 bg-gray-300 justify-between rounded-xl shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] bg-gradient-to-br  from-purple-900 to-black/30 ">
+                                            }} className=" relative flex h-fit w-130 flex-row ml-10 bg-gray-300 justify-between rounded-xl  bg-linear-to-br  from-purple-900 to-black/30 ">
                                             <div className="  w-full flex flex-col justify-between  px-5 pt-5 pb-2 gap-5">
                                                 <h1 className="text-3xl font-bold ">Divlab portfolio<hr /></h1>
                                                 <div className="flex flex-row justify-center items-align">
@@ -145,7 +139,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
 
                                                     </div>
-                                                    <div className=" h-full w-80">
+                                                    <div className=" h-full w-75">
                                                         <Image src={img} width={500} height={500} alt="image" className=" absolute top-2 right-0 w-70 h-70  " />
 
                                                     </div>
@@ -166,7 +160,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 if ("/Services".startsWith("/")) {
                                                     window.scrollTo(0, 0);
                                                 }
-                                            }} className=" relative flex h-fit w-130 flex-row ml-80 bg-gray-300 justify-between rounded-xl shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] bg-gradient-to-b  from-yellow-700 via-yellow-500 to-black/10 ">
+                                            }} className=" relative flex h-fit w-130 flex-row ml-80 bg-gray-300 justify-between rounded-xl  bg-linear-to-b  from-yellow-700 via-yellow-500 to-black/10 ">
                                             <div className="  w-full flex flex-col justify-between  px-5 pt-5 pb-2 gap-5">
                                                 <h1 className="text-3xl font-bold ">Formations ( ebooks )<hr /></h1>
                                                 <div className=" rounded-2xl flex flex-row justify-between items-align">
@@ -177,7 +171,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                         <p className="text-md">
                                                            Nos formations sur mesures adaptées a la lecture et la comprehension facile
                                                         </p>
-                                                        <span className="text-[13px] text-red-800">Les formations sont adaptées à ceux ayant peu de budget, donc nous avons mis sur pied des formations à bas prix et d'autres gratuites </span>
+                                                        {/* <span className="text-[13px] text-red-800">Les formations sont adaptées à ceux ayant peu de budget, donc nous avons mis sur pied des formations à bas prix et d'autres gratuites </span> */}
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
 
                                                     </div>
@@ -199,19 +193,19 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 if ("/Services#solutions web".startsWith("/")) {
                                                     window.scrollTo(0, 0);
                                                 }
-                                            }} className=" relative flex h-fit w-130 flex-row ml-80 bg-gray-300 justify-between rounded-xl shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] bg-gradient-to-t  from-green-700 via-green-500 to-black/20 ">
+                                            }} className=" relative flex h-fit w-130 flex-row ml-80 bg-gray-300 justify-between rounded-xl  bg-linear-to-t  from-green-700 via-green-500 to-black/20 ">
                                             <div className="  w-full flex flex-col justify-between  px-5 pt-5 pb-2 gap-5">
                                                 <h1 className="text-3xl font-bold text-right ">Conception de sites web<hr /></h1>
                                                 <div className="text-black  rounded-xl flex flex-row justify-between items-align">
                                                     <div className="relative h-full w-60">
-                                                        <Image src={img2} width={500} height={500} alt="image" className="object-cover rounded-xl absolute -top-10 left-2 w-35 h-50 rotate-[15deg] shadow-[-10px_8px_9px_rgba(0,0,0,0.8)] " />
+                                                        <Image src={img2} width={500} height={500} alt="image" className="object-cover rounded-xl absolute -top-10 left-2 w-35 h-50 rotate-15 shadow-[-10px_8px_9px_rgba(0,0,0,0.8)] " />
 
                                                     </div>
                                                     <div className="w-100 relative flex flex-col justify-between gap-4">
                                                         <p className="text-md">
                                                             Des sites web conҫus sur des délais bref et respectant vos attentes et choix. conҫus par nos experts, offrant une architecture scalable et customizable.
                                                         </p>
-                                                        <span className="text-sm text-red-600">Vous avez besoin d'un site web fait sur mesure pour votre structure ? </span>
+                                                        {/* <span className="text-sm text-red-600">Vous avez besoin d'un site web fait sur mesure pour votre structure ? </span> */}
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
 
                                                     </div>
@@ -230,7 +224,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 if ("/Services#ia".startsWith("/")) {
                                                     window.scrollTo(0, 0);
                                                 }
-                                            }} className=" relative flex h-fit w-130 flex-row ml-60 bg-gray-300 justify-between rounded-xl shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] bg-gradient-to-br  from-blue-900 via-blue-800 to-black/20 ">
+                                            }} className=" relative flex h-fit w-130 flex-row ml-60 bg-gray-300 justify-between rounded-xl bg-linear-to-br  from-blue-900 via-blue-800 to-black/20 ">
                                             <div className="  w-full flex flex-col justify-between  px-5 pt-5 pb-2 gap-5">
                                                 <h1 className="text-3xl font-bold ">Modeles IA <hr /></h1>
                                                 <div className="flex flex-row justify-center items-align">
@@ -238,7 +232,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                         <p className="text-md">
                                                             Les IA sont des outils actuellements tres utilisés, grâce à leur aide et le gain de temps qu'ils apportent 
                                                         </p>
-                                                        <span className="text-sm">Nous conҫevons des modèles d'IA adaptés à vos besoins et critères de perfectionnement.</span>
+                                                        {/* <span className="text-sm">Nous conҫevons des modèles d'IA adaptés à vos besoins et critères de perfectionnement.</span> */}
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
 
                                                     </div>
@@ -266,7 +260,8 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
 
                         </div>
 
-                    </motion.div>)}</AnimatePresence>
+                    </motion.div>)}
+                    </AnimatePresence>
 
             <div className=" h-auto flex flex-col overflow-hidden relative " id="about">
                 {/* <Separator /> */}

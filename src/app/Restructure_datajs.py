@@ -7,7 +7,7 @@ from PyPDF2 import PdfReader
 # CONFIGURATION DE BASE
 # ============================
 input_file = "data.js"
-output_file = "data_restructured.js"
+output_file = "data_restructured1.js"
 pdf_base_path = "../../public/fichiers"  # dossier où sont stockés les PDFs
 
 # ============================
@@ -79,19 +79,82 @@ def extract_group_from_location(location: str) -> str:
 
 def categorize(title: str, description: str) -> str:
     """
-    Détermine la catégorie à partir du titre ou de la description.
+    Détermine automatiquement une catégorie professionnelle à partir
+    d’un titre et d’une description.
+    Fonction extensible, basée sur un dictionnaire de mots-clés.
     """
-    text = (title + " " + description).lower()
-    if any(k in text for k in ["python", "django", "data", "pandas", "numpy"]):
-        return "Data Science"
-    elif any(k in text for k in ["react", "javascript", "html", "css", "web"]):
-        return "Développement Web"
-    elif any(k in text for k in ["ai", "deep learning", "neural", "machine learning", "yolo", "cnn"]):
-        return "Intelligence Artificielle"
-    elif any(k in text for k in ["excel", "finance", "gestion", "analyse"]):
-        return "Business / Analyse"
-    else:
-        return "Autres"
+    
+    text = f"{title} {description}".lower()
+
+    # Dictionnaire professionnel et extensible de catégories → mots-clés
+    categories_keywords = {
+        "Intelligence Artificielle / Machine Learning": [
+            "ai", "artificial intelligence", "machine learning", "deep learning",
+            "neural", "neural network", "tensorflow", "pytorch", "yolo", "cnn",
+            "rnn", "nlp", "computer vision", "reinforcement learning"
+        ],
+        "Data Science / Data Engineering": [
+            "data", "pandas", "numpy", "python", "jupyter", "etl",
+            "data engineer", "pipeline", "spark", "hadoop", "data mining",
+            "data analysis", "extraction", "big data"
+        ],
+        "Développement Web": [
+            "web", "javascript", "js", "react", "vue", "angular",
+            "html", "css", "sass", "tailwind", "bootstrap",
+            "nextjs", "node", "express", "frontend", "backend",
+            "php", "laravel", "django", "flask"
+        ],
+        "Développement Mobile": [
+            "mobile", "android", "ios", "kotlin", "swift",
+            "flutter", "react native", "app", "apk"
+        ],
+        "Cybersécurité": [
+            "cyber", "cybersecurity", "security", "pentest",
+            "vulnerability", "attack", "malware", "defense",
+            "cryptography", "forensics", "ethical hacking"
+        ],
+        "DevOps / Cloud": [
+            "devops", "docker", "kubernetes", "ci/cd",
+            "aws", "azure", "gcp", "cloud", "terraform", "ansible"
+        ],
+        "Réseaux & Télécommunications": [
+            "network", "réseau", "switch", "routeur", "tcp", "udp",
+            "cisco", "telecom", "5g", "4g", "fiber"
+        ],
+        "Hardware / Électronique": [
+            "hardware", "arduino", "raspberry", "capteur", "sensor",
+            "microcontroller", "pcb", "electronics"
+        ],
+        "Mathématiques / Statistiques": [
+            "stat", "statistic", "probability", "probabilités",
+            "linear algebra", "optimisation", "math", "equation"
+        ],
+        "Business / Finance / Gestion": [
+            "business", "excel", "finance", "gestion", "market",
+            "entreprise", "budget", "analyse financière", "comptabilité",
+            "management", "marketing"
+        ],
+        "Design / UI-UX": [
+            "figma", "design", "ui", "ux", "interface",
+            "graphisme", "photoshop", "illustrator"
+        ],
+        "Cloud / Systèmes": [
+            "linux", "windows server", "sysadmin", "administration",
+            "virtualization", "vmware", "hyper-v"
+        ],
+        "Jeux Vidéo / Game Development": [
+            "unity", "unreal", "game", "gaming", "godot"
+        ],
+        "Autres": []
+    }
+
+    # Parcourt le dictionnaire et retourne la première catégorie correspondante
+    for category, keywords in categories_keywords.items():
+        if any(k in text for k in keywords):
+            return category
+
+    return "Autres"
+
 
 
 def normalize_text(text: str) -> str:
@@ -190,15 +253,19 @@ for item in data:
     category = categorize(title, description)
     author, pages = extract_pdf_metadata(location)
     class_type, format_type = extract_class_and_format_from_location(location)
+    same_class = item.get("class", "")
+    same_format = item.get("format", "")
     image_name = extract_image_from_location(location)
-    group = extract_group_from_location(image_name)
+    # group = extract_group_from_location(image_name)
+    group = "Formations"
+
 
     new_item = {
         "Id": item.get("id"),
         "Title": title,
         "Location": location,
-        "Format": format_type,
-        "Class": class_type,
+        "Format": same_format,
+        "Class": same_class,
         "Description": description,
         "Img": image_name,
         "Group": group,

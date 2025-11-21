@@ -1,4 +1,4 @@
-// 🚀 Auto-generated file list (updated)
+// Auto-generated file list (updated)
 export const OnlineFormations = [
     {
         Id: 1,
@@ -28,29 +28,29 @@ export const OnlineFormations = [
     },
     {
         Id: 3,
-        Title: "None 7 Strategies Pour Monter Une Entreprise De Succes",
-        Location: "/fichiers/DIVLAB_NONE_7-strategies-pour-monter-une-entreprise-de-succes_premium.pdf",
+        Title: "7 Strategies Pour Monter Une Entreprise De Succes",
+        Location: "/fichiers/DIVLAB_7-strategies-pour-monter-une-entreprise-de-succes_premium.pdf",
         Format: "pdf",
-        Class: "premium",
+        Class: "licensed",
         Description: "Indisponible (sous licence)",
-        Img: "/assets/formations/DIVLAB_NONE_7-strategies-pour-monter-une-entreprise-de-succes_premium.jpeg",
+        Img: "/assets/formations/DIVLAB_7-strategies-pour-monter-une-entreprise-de-succes_premium.jpeg",
         Group: "Formations",
         Category: "Autres",
-        Author: "Inconnu",
-        Pages: 0
+        Author: "MAXIME VICTOR",
+        Pages: 120
     },
     {
         Id: 4,
-        Title: "None Améliorez Votre Efficacité",
-        Location: "/fichiers/DIVLAB_NONE_Améliorez-votre-efficacité_premium.pdf",
+        Title: "Améliorez Votre Efficacité",
+        Location: "/fichiers/DIVLAB_Améliorez-votre-efficacité_premium.pdf",
         Format: "pdf",
-        Class: "premium",
-        Description: "Indisponible (sous licence)",
-        Img: "/assets/formations/DIVLAB_NONE_Améliorez-votre-efficacité_premium.jpeg",
+        Class: "licensed",
+        Description: " Etre indépendant ou entrepreneur est le plus souvent une vocation. On s’installe soit en libéral, soit en commerçant, soit en indépendant, soit en société, seul ou avec un partenaire ou avec un petit nombre de collaborateurs. On choisit un métier qui devient souvent une passion.On accepte parfois des garanties inférieures à celles des salariés en matière de retraite, d’indemnités chômage et de couverture en cas de longue maladie ou d’accident.  On accepte aussi une certaine fluctuation de ses revenus.On accepte tout cela car le métier est passionnant et on est libre.Comment se plaindrait- on de ces contraintes qui sont la contrepartie d’un choix de vie ? ",
+        Img: "/assets/formations/DIVLAB_Améliorez-votre-efficacité_premium.jpeg",
         Group: "Formations",
         Category: "Autres",
-        Author: "Inconnu",
-        Pages: 0
+        Author: "Gilles Barouch",
+        Pages: 85
     },
     {
         Id: 5,
@@ -62,7 +62,7 @@ export const OnlineFormations = [
         Img: "/assets/formations/DIVLAB_Apprendre-le-Machine-Learning-en-Une-Semaine_Guillaume_SAINT-CIRGUE_free.jpeg",
         Group: "Formations",
         Category: "Intelligence Artificielle",
-        Author: "Author",
+        Author: "Guilloaume SAINT CIRGUE",
         Pages: 91
     },
     {
@@ -96,7 +96,7 @@ export const OnlineFormations = [
         Title: "Building Microservices With Nodejs",
         Location: "/fichiers/DIVLAB_Building-Microservices-with-Nodejs_premium.pdf",
         Format: "pdf",
-        Class: "premium",
+        Class: "licensed",
         Description: "Indisponible (sous licence)",
         Img: "/assets/formations/DIVLAB_Building-Microservices-with-Nodejs_premium.jpeg",
         Group: "Formations",
@@ -128,7 +128,7 @@ export const OnlineFormations = [
         Group: "Formations",
         Category: "Intelligence Artificielle",
         Author: "Inconnu",
-        Pages: 0
+        Pages: 77
     },
     {
         Id: 11,
@@ -166,8 +166,8 @@ export const OnlineFormations = [
         Img: "/assets/formations/DIVLAB_Comment-trouver-quelqu’un-à-aimer_free.jpeg",
         Group: "Formations",
         Category: "Intelligence Artificielle",
-        Author: "Inconnu",
-        Pages: 0
+        Author: "Jean d`Auriac",
+        Pages: 76
     },
     {
         Id: 14,
@@ -408,13 +408,13 @@ export const OnlineFormations = [
         Title: "La Technique Du Succès Nouvelle Édition Du Manuel Pratique D`Organisation De Soi Même",
         Location: "/fichiers/DIVLAB_La-technique-du-succès_nouvelle-édition-du-manuel-pratique-d`organisation-de-soi-même_premium.pdf",
         Format: "pdf",
-        Class: "premium",
+        Class: "licensed",
         Description: "André Muller / Ce document est la propriété exclusive de Mafinza Monika (s8t@hotmail.com) - 9 Septembre 2010 à 06:09 / www.diateino.com / ISBN 2-915142-00-9",
         Img: "/assets/formations/DIVLAB_La-technique-du-succès_nouvelle-édition-du-manuel-pratique-d`organisation-de-soi-même_premium.jpeg",
         Group: "Formations",
         Category: "Intelligence Artificielle",
         Author: "Inconnu",
-        Pages: 0
+        Pages: 188
     },
     {
         Id: 33,
@@ -445,28 +445,28 @@ export const OnlineFormations = [
     {
         Id: 35,
         Title: "Les 5 Blessures Qui Empêchent D`Être Soi Même",
-        Location: "/fichiers/DIVLAB_Les-5-blessures-qui-empêchent-d`être-soi-même_premium.pdf",
+        Location: "/fichiers/DIVLAB_Les-5-blessures-qui-empêchent-d-être-soi-même_premium.pdf",
         Format: "pdf",
-        Class: "premium",
-        Description: "ISBN:978-2-920932-43-2 / www.leseditionsetc.com",
-        Img: "/assets/formations/DIVLAB_Les-5-blessures-qui-empêchent-d`être-soi-même_premium.jpeg",
+        Class: "licensed",
+        Description: "ISBN:978-2-920932-43-2 / www.leseditionsetc.com   La	rédaction	de	ce	livre	a	été	possible	grâce	à	la	persévérance	de	nombreux chercheurs	qui, comme	moi, n`ont	pas	hésité	à	oser	rendre	public	le	fruit	de	leurs recherches	et	synthèses	malgré	la	controverse	et	le	scepticisme	que	celles- ci suscitent. D`ailleurs,	les	chercheurs	savent	qu`en	général	ils	seront	critiqués, ainsi que	leurs	publications, et	ils	se	préparent	à	vivre	avec	cette	adversité. Ils	sont motivés	par	leur	désir	de	favoriser	l`évolution	de	l`humain	et	par	ceux	qui acceptent	leurs	découvertes. Parmi	les	chercheurs, le	premier	que	je	tiens	à remercier	est	le	psychiatre	autrichien	SIGMUND	FREUD	pour	sa	découverte monumentale	de	l`inconscient	et	pour	avoir	osé	affirmer	que	le	physique	pouvait avoir	un	lien	avec	les	dimensions	émotionnelle	et	mentale	de	l`être	humain. Mes	remerciements	s`adressent	ensuite	à	un	de	ses	élèves,	WILHELM	REICH",
+        Img: "/assets/formations/DIVLAB_Les-5-blessures-qui-empêchent-d-être-soi-même_premium.jpeg",
         Group: "Formations",
         Category: "Autres",
-        Author: "Inconnu",
-        Pages: 0
+        Author: "Lise Bourbeau",
+        Pages: 189
     },
     {
         Id: 36,
-        Title: "Www.Alexandrenadeau.Com",
-        Location: "www.alexandrenadeau.com",
-        Format: "com",
-        Class: "premium",
+        Title: "Les secrets du developpement personnel",
+        Location: "/fichiers/DIVLAB_les-secrets-du-developpement-personnel_premium",
+        Format: "pdf",
+        Class: "licensed",
         Description: "Alexandre Nadeau / Ce que j’ai appris après avoir investi 10 ans de ma vie et 45 000 $ dans le monde du développement personnel et spirituel",
-        Img: "/assets/formations/www.alexandrenadeau.com.jpeg",
+        Img: "/assets/formations/DIVLAB_les-secrets-du-developpement-personnel_premium.jpeg",
         Group: "Formations",
         Category: "Intelligence Artificielle",
-        Author: "Inconnu",
-        Pages: 0
+        Author: "Alexandre Nadeau ",
+        Pages: 107
     },
     {
         Id: 37,
@@ -647,7 +647,7 @@ export const OnlineFormations = [
         Img: "/assets/formations/DIVLAB_Travailler-en-équipe-de-manière-positive-avec-des-personnes-difficiles_premium.jpeg",
         Group: "Formations",
         Category: "Intelligence Artificielle",
-        Author: "IndirectObject(280, 0, 1690431993600)",
+        Author: "Margot Phaneuf, inf.,PhD",
         Pages: 15
     },
     {
@@ -696,7 +696,7 @@ export const Papers = [
     {
         "Id": 1,
         "Title": "Groupe d'epreuves d'introduction a l'Inteligence artificiel",
-        "Location": "/fichiers/epreuves/anciennes épreuves introduction à L'intelligence artificielle .pdf",
+        "Location": "/fichiers/epreuves/anciennes épreuves introduction à L'intelligence artificielle.pdf",
         "Format": "pdf",
         "Class": "premium",
         "Description": " ",
@@ -776,7 +776,7 @@ export const Papers = [
         "Level": "niveau 3 universitaire",
         "Year": "session 2021",
         "Cursus": "Ingenieur",
-        "Filiere": "GC (Geni civil), INFOTEL (Informatique et Telecommunication)" 
+        "Filiere": "GC (Geni civil), INFOTEL (Informatique et Telecommunication)"
     },
     {
         "Id": 6,
@@ -899,8 +899,7 @@ export const Papers = [
     }
 ];
 
-
-export const Websites = [
+export const Website = [
     {
         id: 1, value: "Portfolio  personalisable ", content: "Presentations + Responsive + Design pro + Assistance et suivi", Delai: "7-10 jours", prixAv: " 25 000 FCFA", prixAp: " 10 500FCFA", img: "/assets/Portfolio.png"
     },
@@ -913,9 +912,25 @@ export const Websites = [
     {
         id: 4, value: "E-commerce / Blog pro", content: "Paiement, tableau de bord, gestion produits,SEO", Delai: "14-25 jours", prixAv: " 120 000 FCFA", prixAp: " 99 500FCFA", img: "/assets/Blog.jpeg"
     },
-    { id: 5, value: "Site vitrine", content: "Presentations + Responsive + Design pro", Delai: "7-10 jours", prixAv: " 60 000 FCFA", prixAp: " 49 000FCFA", img: "/assets/SiteVitrine.jpeg" }
+    {
+        id: 5, value: "Site vitrine", content: "Presentations + Responsive + Design pro", Delai: "7-10 jours", prixAv: " 60 000 FCFA", prixAp: " 49 000FCFA", img: "/assets/SiteVitrine.jpeg"
+    }
 ]
 
+export const Templates = [
+    { id: 1, name: "Portfolio", link: "https://osamajavaid.vercel.app", image_pc: "/assets/Templates/1_0.png", image_mobile: "/assets/Templates/1_1.png" },
+    { id: 2, name: "Portfolio", link: "https://portfolio-jirihofman.vercel.app", image_pc: "/assets/Templates/2_0.png", image_mobile: "/assets/Templates/2_1.png" },
+    { id: 3, name: "Portfolio", link: "https://www.alvalens.my.id", image_pc: "/assets/Templates/3_0.png", image_mobile: "/assets/Templates/3_1.png" },
+    { id: 4, name: "Portfolio", link: "https://nbarkiya.xyz", image_pc: "/assets/Templates/4_0.png", image_mobile: "/assets/Templates/4_1.png" },
+    { id: 5, name: "Portfolio", link: "https://project-3-d-portfolio-mu.vercel.app", image_pc: "/assets/Templates/5_0.png", image_mobile: "/assets/Templates/5_1.png" },
+    { id: 6, name: "Portfolio", link: "https://miteshtagadiya.js.org", image_pc: "/assets/Templates/6_0.png", image_mobile: "/assets/Templates/6_1.png" },
+    { id: 7, name: "Portfolio", link: "https://sakayet.vercel.app", image_pc: "/assets/Templates/7_0.png", image_mobile: "/assets/Templates/7_1.png" },
+    { id: 8, name: "Portfolio", link: "https://nextjs-dev-portfolio.netlify.app", image_pc: "/assets/Templates/8_0.png", image_mobile: "/assets/Templates/8_1.png" },
+    { id: 9, name: "Portfolio", link: "https://fazle-rabbi-dev.vercel.app/?source=portfolio_repo", image_pc: "/assets/Templates/9_0.png", image_mobile: "/assets/Templates/9_1.png" },
+    { id: 10, name: "Portfolio", link: "https://nextjs-minimalist-portfolio.vercel.app", image_pc: "/assets/Templates/10_0.png", image_mobile: "/assets/Templates/10_1.png" },
+    { id: 11, name: "Portfolio", link: "https://maktech-divlab.vercel.app", image_pc: "/assets/Templates/11_0.png", image_mobile: "/assets/Templates/11_1.png" },
+    { id: 12, name: "Portfolio", link: "https://resume-getnextjs.vercel.app", image_pc: "/assets/Templates/12_0.png", image_mobile: "/assets/Templates/12_1.png" },
+]
 
 export const IA = [
 
@@ -936,7 +951,7 @@ export const IA = [
 export const design = [
 
 
-    { id: 1, value: "Offre Basique", content: "Modélisation simple d'un objet ou personnage low-poly / Animation courte (rotation d'un logo, mouvement simple )", Delai: "2-3 jours", Livraison: " Formats .fbx / .ob / .blend ou video mp4 ...", prixfcfa: " 49 000FCFA", prixeur: "  89 €", img: "/assets/Videos/bounce.mp4" },
+    { id: 1, value: "Offre Basique", content: "Modélisation simple d'un objet ou personnage low-poly / Animation courte (rotation d'un logo, mouvement simple)", Delai: "2-3 jours", Livraison: " Formats .fbx / .ob / .blend ou video mp4 ...", prixfcfa: " 49 000FCFA", prixeur: "  89 €", img: "/assets/Videos/bounce.mp4" },
     {
         id: 2, value: "Offre Standard", content: "Modélisation + rigging + animation(personage ou objet complexe) / Durees de 15 a 30 sec / Textures basique, eclairages travailles ", Delai: "", Livraison: "Utilisable dans un projet de jeu / video ...", prixfcfa: " 99 900FCFA", prixeur: "  151.9 €", img: "/assets/R.jpeg"
     },
@@ -947,3 +962,47 @@ export const design = [
         id: 4, value: "plan publicitaire", content: "Conception d'animations pro pour la présentation de produit, spot publicitaire / jusqu'a 1 min d'animation / Accompagnement pour l'integration (site web, reseau sociaux, presentation). ", Delai: "7-10 jours", Livraison: " ", prixfcfa: " 149 500 FCFA", prixeur: " 230 €", img: "/assets/Sale.jpeg"
     },
 ]
+
+export const plans = [
+    {
+        id: "free",
+        name: "Plan free",
+        price: 0,
+        currency: "XAF",
+        duration_days: "-",
+        description: "Accès simple.",
+        plus: ["Accès simple au site"],
+        moins: ["Pas de support/maintenance", "pas de mise a jour","Pas de livraison du site", "securite de base","pas de nom de domaine"]
+    },
+    {
+        id: "basic",
+        name: "Basic",
+        price: 2000,
+        currency: "XAF",
+        duration_days: "30",
+        description: "Accès essentiel et support classique.",
+        plus: ["Accès au site"," mise a jour incluse"],
+        moins: ["Pas de support/assistance","Pas de livraison du site", "pas de nom de domaine"]
+        
+    },
+    {
+        id: "pro",
+        name: "Pro",
+        price: 5000,
+        currency: "XAF",
+        duration_days: "30",
+        description: "Idéal pour les professionnels exigeants.",
+        plus: ["Accès au site", " mise a jour incluse", "support rapide et assistance de qualite","securite avancee"],
+        moins: [ "Pas de livraison du site", "pas de nom de domaine"]
+    },
+    {
+        id: "business",
+        name: "Business",
+        price: 12000,
+        currency: "XAF",
+        duration_days: "90",
+        description: "Solution complète pour entreprises.",
+        plus: ["Accès au site", " mise a jour incluse", "support rapide et assistance de qualite", "livraison du site", "Nom de domaine inclus", "securiite avancee"],
+        moins: []
+    },
+];

@@ -30,7 +30,7 @@ const Footer=({ className } : Footerprops)=> {
                     <a href="#"><X /></a> 
                     <Link href=""><Youtube /></Link> */}
                     <Link href="whatsapp://send?phone=237652509674" target="_blank" className="">
-                        <img src={Whatsapp.src} alt="" className="w-7 h-7  mr-2" />
+                        <img src={Whatsapp1.src} alt="" className="w-7 h-7  mr-2" />
                     </Link>
                 </div>
                 

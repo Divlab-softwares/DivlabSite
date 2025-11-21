@@ -7,15 +7,19 @@ import Mtn from "../../../public/assets/MTN.jpg";
 
 interface PayButtonProps {
     amount: number;
-    item_ref: string;
-    startPaymentCheck: () => void;
+    filePath: string;
+    fileName: string;
+    currency?: string;
+    userId?: string;
+    theme?: string;
 }
 
-export default function PayButton({ amount, item_ref, startPaymentCheck }:PayButtonProps) {
+
+export default function PayButton({ amount, filePath, fileName, currency, userId, theme }:PayButtonProps) {
     const [loading, setLoading] = useState(false);
 
     const handlePay = async () => {
-        startPaymentCheck();
+        //startPaymentCheck();
         setLoading(true);
         try {
             const res = await fetch('/api/pay', {
@@ -23,16 +27,22 @@ export default function PayButton({ amount, item_ref, startPaymentCheck }:PayBut
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     amount: amount,
-                   // phone: '6XXXXXXXX',
-                    item_ref: item_ref
+                    currency: currency,
+                    filePath: filePath,
+                    fileName: fileName,
+                    userId: userId
                 })
             });
 
             const data = await res.json();
             if (data.link) {
                 // Redirige directement vers la page de paiement Monetbil
-                window.location.href = data.link;
-                console.log("Test :", data);
+                // window.location.href = data.link;
+                // Ou ouvre dans un nouvel onglet
+                //
+
+                console.log("reponse  :", data);
+                window.open(data.link, "_blank");
                 // redirection Monetbil
             } else {
                 console.error("Erreur :", data);
@@ -47,11 +57,9 @@ export default function PayButton({ amount, item_ref, startPaymentCheck }:PayBut
     };
 
     return (
-        <form action="" method="get" data-monetbil="form" className=''>
-            <Button type='submit' onClick={handlePay} disabled={loading} className=" h-12 hover:h-15  hover:w-full  shadow-4xl transition-all duration-400 bg-gradient-to-tr from-white/40 via-yellow-400 to-orange-500 flex flex-col justify-start items-center">
+            <Button type='submit' onClick={handlePay} disabled={loading} className="w-auto h-12 hover:h-15  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/30 via-yellow-400 to-orange-500 flex flex-col justify-start items-center" data-theme={theme ? theme : "light"}>
                 <div className='w-full h-full flex flex-row items-center justify-center'> <img src={Orange.src} alt="" className="w-20 " />  <img src={Mtn.src} alt="" className="w-20 rounded-md" /> </div>
                 <p>{loading ? 'Chargement, veuillez patienter...' : 'Payer via Mobile Money / OM'}</p>
             </Button>
-        </form>
     );
 }

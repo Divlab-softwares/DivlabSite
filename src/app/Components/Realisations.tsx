@@ -60,15 +60,15 @@ type realisationsProps = {
 const Realisations = ({ themeRealisations, cardColor }: realisationsProps) => {
     return (
         <div className="h-auto " data-theme={themeRealisations} id="realisations">
-            <div className="flex flex-col items-center justify-center p-4 h-100% relative " >
+            <div className="flex flex-col items-center justify-center p-4 h-100% relative shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)]" >
                 <Title className="z-50 my-10" title="Nos Réalisations" />
                 <p className="my-4" data-aos="fade-right">Voici quelques exemples de nos projets récents.</p>
                 <DotBackground
                     dotSize={1}
                     dotColor="#d4d4d4"
                     darkDotColor="#404040"
-                    spacing={20}
-                    showFade={true}
+                    spacing={15}
+                    showFade={false}
                     fadeIntensity={30}
                     className="h-full"
                 />
@@ -92,9 +92,9 @@ const Realisations = ({ themeRealisations, cardColor }: realisationsProps) => {
                 <div className="w-full">
                     <Carousel3D
                         items={items}
-                        autoRotate={true}
+                        autoRotate={false}
                         rotateInterval={4000}
-                        cardHeight={500}
+                        cardHeight={1000}
                         isMobileSwipe={true}
                         cardColor={cardColor}
                     />

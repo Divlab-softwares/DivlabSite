@@ -99,7 +99,7 @@ export const DotBackground = ({
   children,
   dotSize = 1,
   dotColor = "#000",
-  darkDotColor = "#fff",
+  darkDotColor = "#000",
   spacing = 20,
   showFade = true,
   fadeIntensity = 20,

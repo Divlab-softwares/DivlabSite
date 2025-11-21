@@ -93,7 +93,7 @@ const ContactForm = () => {
               
                 <div>
                     <Label htmlFor="text" className='h-100'>Votre message</Label>
-                    <Textarea required name="message" placeholder="Votre Message" value={formData.message}
+                    <Textarea rows={10} required name="message" placeholder="Votre Message" value={formData.message}
                         onChange={handleChange} className='bg-white/20' />
                     <ValidationError
                         prefix="Message"

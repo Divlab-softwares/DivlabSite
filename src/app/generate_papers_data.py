@@ -171,7 +171,7 @@ if __name__ == "__main__":
             "Title": title,
             "Location": f"/fichiers/epreuves/{file.name}",
             "Format": format_,
-            "Class": "premium",
+            "Class": "free",
             "Description": " ",
             "Img": img,
             "Group": "Epreuves",

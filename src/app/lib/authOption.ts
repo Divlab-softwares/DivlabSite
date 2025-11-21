@@ -1,74 +1,98 @@
 import  { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/app/lib/prisma";
+import bcrypt from "bcrypt";
+import { DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
-import { Session } from "next-auth";
-import { PrismaClient } from "@prisma/client";
-import { compare, hash } from "bcryptjs";
 
+// ✅ Types étendus
+declare module "next-auth" {
+    interface User {
+        role?: string;
+    }
+    interface Session {
+        user: {
+            id?: string;
+            email?: string;
+            name?: string;
+            image?: string;
+            role?: string;
+        } & DefaultSession["user"];
+    }
+}
+declare module "next-auth/jwt" {
+    interface JWT {
+        role?: string;
+    }
+}
 
-
-const prisma = new PrismaClient(); 
-
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
+    adapter: PrismaAdapter(prisma),
+    session: { strategy: "jwt"  },
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
         CredentialsProvider({
-            name: "Credentials",
+            name: "credentials",
             credentials: {
                 email: { label: "Email", type: "text" },
                 password: { label: "Password", type: "password" },
             },
-
-
-            async authorize(credentials, req) {
-
-                if (!credentials?.email) {
-                    return null; // ou gérer autrement
-                }
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials?.password) return null;
 
                 const user = await prisma.user.findUnique({
-                    where: { email: credentials.email }
+                    where: { email: credentials.email },
                 });
 
-                if (!user || !user.password) {
-                    return null; // ou throw une erreur si tu veux être explicite
-                }
+                if (!user || !user.password) return null;
 
-                const isValid = await compare(credentials!.password, user.password);
-                if (!isValid) return null;
+                const passwordMatch = await bcrypt.compare(
+                    credentials.password,
+                    user.password
+                );
 
-                const setUserConnected = await prisma.user.update({
-                    where: { id: user.id },
-                    data: {
-                        connected: true
-                    }
-                });
-
-                return { id: user.id.toString(), name: user.name, email: user.email };
+               return passwordMatch ? user : null;
             },
         }),
     ],
-    session: { strategy: "jwt" as const },
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            if (account?.provider === "google") {
+                // Vérifie si un user avec cet email existe déjà
+                const existingUser = await prisma.user.findUnique({
+                    where: { email: user.email ?? undefined },
+                });
+
+                // Si oui, autorise la connexion Google à ce même compte
+                if (existingUser) {
+                    return true;
+                }
+            }
+            return true;
+        },
         async jwt({ token, user }) {
             if (user) {
-                token.id = (user as any).id;
-                token.email = user.email;
+                //token.id = user.id;
+                token.role = user.role || "user";
             }
             return token;
         },
-
         async session({ session, token }) {
-            // Ici, session.user peut être undefined → faut sécuriser
-            if (session.user) {
-                (session.user as any).id = token.id as string;
-                session.user.email = token.email as string;
+            if (token.role) {
+                //session.user.id = token.id;
+                session.user.role = token.role;
             }
             return session;
         },
     },
-    pages: { signIn: "/DivlabSpace" },
-    secret: process.env.NEXTAUTH_SECRET,
-};
 
-// export const getServerAuthSession = (ctx: {
+    debug: process.env.NODE_ENV === "development", // pour voir les logs détaillés
+    secret: process.env.NEXTAUTH_SECRET,
+} satisfies NextAuthOptions;
+
 

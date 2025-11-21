@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import Services from "./Components/Services";
 // import Test from "./Components/test";
 import Footer from "./Components/Footer";
+import Footer1 from "./Components/Footer1";
 import { Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -99,7 +100,7 @@ const setThemes = () => {
     <>
       <div className="App flex  flex-col h-min-screen" data-theme={`${theme}`}>
         {/* <Test /> */}
-        <button onClick={() => setThemes()} className="overflow-hidden w-fit fixed bottom-2 right-2 z-50 bg-gray-800 text-white  rounded-full shadow-lg transition-all duration-500 hover:scale-106 hover:w-15 border-gray-700 border-1 ">
+        {/* <button onClick={() => setThemes()} className="overflow-hidden w-fit fixed bottom-2 right-2 z-50 bg-gray-800 text-white  rounded-full shadow-lg transition-all duration-500 hover:scale-106 hover:w-15 border-gray-700 border-1 ">
 
           {theme === "garden" ? (
             <motion.div
@@ -118,7 +119,7 @@ const setThemes = () => {
                 transition={{ duration: 0.3, ease: "easeIn" }}
                 className="py-[5px] px-2 rounded-full bg-black relative flex flex-row w-full justify-end"><Moon size={18} /></motion.div>)}
 
-        </button>
+        </button> */}
 
         <Navbar translateY={navbarTranslateY} />
 
@@ -133,7 +134,7 @@ const setThemes = () => {
         <Services waveColor={waveColor} textCol={textCol} theme={theme} cardCol={cardCol}/>
         <Realisations themeRealisations={themeRealisations} cardColor={cardColor} />
         <ContactForm/>
-        <Footer />
+        <Footer1 />
       </div>
     </>
   );

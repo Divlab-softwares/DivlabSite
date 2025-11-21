@@ -56,7 +56,7 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
 
             setSignResult?.({
                 data: [{ name: "Chez Divlab", email, password, confirmPassword: "" }],
-                message: "Inscription réussie",
+                message: "Connexion réussie",
                 status: "success"
             });
             setIsLoading(false);
@@ -64,7 +64,7 @@ const DivlabSpaceLogin = ({ setSignResult, setSign,  }: Sign) => {
             //window.location.href = "/dashboard";
         }
 
-        console.log("Response from /api/auth/register:", res);
+        // console.log("Response from /api/auth/register:", res);
 
         // if (res && !res.error) {
         //     // ✅ ici res est défini et pas d’erreur

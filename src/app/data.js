@@ -20,7 +20,7 @@ export const OnlineFormations = [
     },
     {
         'id': 3,
-        'location': '/fichiers/DIVLAB_NONE_7-strategies-pour-monter-une-entreprise-de-succes_premium.pdf',
+        'location': '/fichiers/DIVLAB_7-strategies-pour-monter-une-entreprise-de-succes_premium.pdf',
         'format': 'pdf',
         'type': 'premium',
         'description': 'Indisponible (sous licence)', 
@@ -29,7 +29,7 @@ export const OnlineFormations = [
     },
     {
         'id': 4,
-        'location': '/fichiers/DIVLAB_NONE_Améliorez-votre-efficacité_premium.pdf',
+        'location': '/fichiers/DIVLAB_Améliorez-votre-efficacité_premium.pdf',
         'format': 'pdf',
         'type': 'premium',
         'description': 'Indisponible (sous licence)',

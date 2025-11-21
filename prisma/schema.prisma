@@ -19,7 +19,9 @@ model User {
   connected     Boolean   @default(false)
   accounts      Account[]
   sessions      Session[]
+  payments Payment[] // un utilisateur a plusieurs paiements
 }
+
 
 model Account {
   id                String  @id @default(cuid())
@@ -53,4 +55,68 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Payment {
+  id                 String   @id @default(cuid())
+  reference          String   @unique
+  merchantReference  String
+  trxref             String?
+  amount             Int
+  currency           String
+  status             String
+  paymentMethod      String?
+  description        String?
+  metadata           Json?
+  filePath         String?                          // ex: "uploads/epreuves/lepreuve.pdf"
+  fileName         String?  
+  createdAt          DateTime @default(now())
+  user               User?    @relation(fields: [userId], references: [id])
+  userId             String?
+}
+
+model Formation {
+  id          String      @id @default(cuid())
+  title       String   @unique
+  location    String
+  format      String
+  classe       String   // "free" | "premium"
+  description String?
+  img         String?
+  group       String?
+  category    String?
+  author      String?
+  pages       Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  command_id    String?
+  name          String
+  email         String
+  contact       String?
+  country       String
+  projectType   String   // exemple: "website", "portfolio", etc
+  description   String?
+  budget        String?
+  status        String
+  template      String?
+  sessionId     String?  // si tu veux suivre un user connecté/non connecté
+  createdAt     DateTime @default(now())
+}
+
+model Subscription {
+  id            String   @id @default(cuid())
+  subscription_id String
+  name          String
+  email         String
+  contact       String?
+  country       String?
+  description   String?
+  price        String?
+  status        String
+  sessionId     String?  // si tu veux suivre un user connecté/non connecté
+  createdAt     DateTime @default(now())
 }
