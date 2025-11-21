@@ -11,7 +11,7 @@ import { group } from "console";
 export async function GET() {
     try {
         const formations = await prisma.formation.findMany({
-            orderBy: { createdAt: "desc" },
+            orderBy: { createdAt: "asc" },
             select: {
                 id: true,
                 title: true,

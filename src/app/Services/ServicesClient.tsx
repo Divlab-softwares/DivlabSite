@@ -1107,7 +1107,7 @@ const Formations = () => {
                                                         <CardTitle className=" text-3xl whitespace-pre-wrap "> {IdOpen == -1 ? (
                                                             <div>
                                                                 <TextType
-                                                                    text={["Vos formations en ligne sur mesure.", "Devellopez vos competences grace a un seul click.", "Obtenez le meilleur service qui puisse etre offert."]}
+                                                                    text={["Vos formations en ligne sur mesure.", "Devellopez vos competences grace à un seul click.", "Obtenez le meilleur service qui puisse etre offert."]}
                                                                     typingSpeed={90}
                                                                     pauseDuration={3000}
                                                                     showCursor={true}
@@ -2048,7 +2048,7 @@ const Formations = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2, delay: 0.3, ease: "easeInOut" }}
-                        className="flex flex-row justify-center items-center h-fit w-full " >
+                        className="flex flex-row justify-center items-center h-82/100 md:h-85/100 w-full " >
                         <UploaderFile />
                     </motion.div>
                 )}
