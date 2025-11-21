@@ -24,11 +24,11 @@ export async function POST(req) {
         // }
 
         // ✅ URLs de callback
-        const notifyUrl = `${process.env.NEXTAUTH_URL}/api/callback`;
-        const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/Services`;
-        const cancelUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`;
+        // const notifyUrl = `${process.env.NEXTAUTH_URL}/api/callback`;
+        // const returnUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/Services`;
+        // const cancelUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`;
         const success_url = `${process.env.NEXTAUTH_URL}/Services`;
-        const failure_url = `${process.env.NEXTAUTH_URL}/Services`;
+        // const failure_url = `${process.env.NEXTAUTH_URL}/Services`;
 
         
 
