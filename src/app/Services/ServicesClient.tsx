@@ -570,7 +570,9 @@ const Formations = () => {
         }
         let newBoard = searchCourses(e.target.value, OnlineFormations);
         setSearchCoursesResult(newBoard);
+       
         setDisplayedFormations(newBoard.slice(startIndex, startIndex + itemsPerPage));
+        setCurrentPage(1);
         //setSearchDataValue(searchData)
 
         if (searchData == "") {
