@@ -1229,7 +1229,7 @@ const Formations = () => {
                                         {IdOpen != -1 && (
                                             <div className="absolute md:bottom-50 bottom-20 right-0">
                                                 <div className={`flex flex-row rounded-l-xl h-fit  w-12   transition-all  duration-400 bg-linear-to-bl from-blue-500 via-white/80 to-blue-500   p-2 font-bold `}>
-                                                    <Link href="#formationslist" onClick={() => handleOpenCollapse("formation")} className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"> <span className="w-12 h-12 flex items-center justify-center text-black"><ArrowDown /></span> Voir les formations</Link>
+                                                    <Link href="#formationslist" onClick={() => setOpenCollapse(1)} className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"> <span className="w-12 h-12 flex items-center justify-center text-black"><ArrowDown /></span> Voir les formations</Link>
                                                 </div>
                                             </div>
                                         )}
