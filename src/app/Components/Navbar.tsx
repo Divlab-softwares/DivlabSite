@@ -18,7 +18,7 @@ const Navbar = ({ translateY }: NavbarProps) => {
         });
     }, []);
     return (
-        <div
+        <h1
             style={{
                 transform: `translate(0%, ${translateY - 12}px)`
             }}
@@ -33,7 +33,7 @@ const Navbar = ({ translateY }: NavbarProps) => {
 
             </ul>
 
-        </div>
+        </h1>
 
 
     )
