@@ -140,7 +140,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
 
                                                     </div>
                                                     <div className=" h-full w-75">
-                                                        <Image src={img} width={500} height={500} alt="image" className=" absolute top-2 right-0 w-70 h-70  " />
+                                                        <Image src={img} width={500} height={500} alt="Portfolio Image" className=" absolute top-2 right-0 w-70 h-70  " />
 
                                                     </div>
 
@@ -165,7 +165,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 <h1 className="text-3xl font-bold ">Formations ( ebooks )<hr /></h1>
                                                 <div className=" rounded-2xl flex flex-row justify-between items-align">
                                                     <div className="relative h-full w-80">
-                                                        <Image src={img1} width={500} height={500} alt="image" className="absolute left-10 -top-3 w-32 h-38 rounded-xl shadow-[-10px_8px_9px_rgba(0,0,0,0.8)]" />
+                                                        <Image src={img1} width={500} height={500} alt="Formations Image" className="absolute left-10 -top-3 w-32 h-38 rounded-xl shadow-[-10px_8px_9px_rgba(0,0,0,0.8)]" />
                                                     </div>
                                                     <div className="text-black w-120 relative flex flex-col justify-between gap-4 items-start">
                                                         <p className="text-md">
@@ -198,7 +198,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 <h1 className="text-3xl font-bold text-right ">Conception de sites web<hr /></h1>
                                                 <div className="text-black  rounded-xl flex flex-row justify-between items-align">
                                                     <div className="relative h-full w-60">
-                                                        <Image src={img2} width={500} height={500} alt="image" className="object-cover rounded-xl absolute -top-10 left-2 w-35 h-50 rotate-15 shadow-[-10px_8px_9px_rgba(0,0,0,0.8)] " />
+                                                        <Image src={img2} width={500} height={500} alt="Websites presentation Image" className="object-cover rounded-xl absolute -top-10 left-2 w-35 h-50 rotate-15 shadow-[-10px_8px_9px_rgba(0,0,0,0.8)] " />
 
                                                     </div>
                                                     <div className="w-100 relative flex flex-col justify-between gap-4">
@@ -237,7 +237,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
 
                                                     </div>
                                                     <div className="relative h-full w-80">
-                                                        <Image src={img3} width={500} height={500} alt="image" className="object-cover rounded-xl absolute -top-15 right-3 w-50 h-60  rotate-[-7deg] shadow-[10px_8px_20px_rgba(0,0,0,0.8)] animate-" />
+                                                        <Image src={img3} width={500} height={500} alt="AI PRESENTATION IMAGE" className="object-cover rounded-xl absolute -top-15 right-3 w-50 h-60  rotate-[-7deg] shadow-[10px_8px_20px_rgba(0,0,0,0.8)] animate-" />
 
                                                     </div>
 

@@ -125,7 +125,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                             <CardHeader>
                                 <div className="mb-5 w-full h-20 rounded-3xl bg-gray-500 transform duration-300 hover:h-50">
                                     <Image
-                                        alt=""
+                                        alt="Website conception Image presentation"
                                         width={320}
                                         height={420}
 
@@ -177,7 +177,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                             <CardHeader>
                                 <div className="mb-5 w-full h-20 rounded-3xl bg-gray-500 transform duration-300 hover:h-50">
                                     <Image
-                                        alt=""
+                                        alt="AI models conception Image presentation"
                                         width={320}
                                         height={420}
 
@@ -229,7 +229,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                             <CardHeader>
                                 <div className="mb-5 w-full h-20 rounded-3xl bg-gray-500 transform duration-300 hover:h-50">
                                     <Image
-                                        alt=""
+                                        alt="Design and creativity Image presentation"
                                         width={320}
                                         height={420}
 

@@ -57,7 +57,7 @@ function getSupabasePublicLink(path: string, bucket: string) {
 }
 
 
-const Formations = () => {
+const Services = () => {
 
 
     interface CategoryScore {
@@ -1715,6 +1715,8 @@ const Formations = () => {
                                     </div>
                                 ))}
 
+                                {/* Zone des Solutions IA */}
+
                                 <u><Title title="INTELLIGENCE ARTIFFICIELLE" className="text-4xl pt-2" id="ia" /></u>
                                 {IA.map((ia, index) => (
                                     <div className="flex flex-row justify-center rounded-3xl relative p-2 pt-6 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]  " key={ia.id} data-theme={`${theme}`}>
@@ -1811,6 +1813,8 @@ const Formations = () => {
 
                                     </div>
                                 ))}
+
+                                {/* Zone des Solutions Design et creativite */}
                                 <u><Title title="DESIGN ET CREATIVITE" className="text-4xl pt-2" id="design" /></u>
                                 {design.map((des, index) => (
                                     <div className="flex flex-row justify-center rounded-3xl relative p-2 pt-6 md:ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]  " key={des.id} data-theme={`${theme}`}>
@@ -1933,6 +1937,7 @@ const Formations = () => {
 
                                     </div>
                                 ))}
+
                                 <Footer />
                             </div>
 
@@ -2060,4 +2065,4 @@ const Formations = () => {
     );
 }
 
-export default Formations;
+export default Services;

@@ -11,7 +11,7 @@ const FormationNavBar = () => {
     return (
         <nav className="h-9/100 w-full flex flex-col relative bg-black text-white  ">
             <div className="flex justify-between flex-row w-full items-center">
-                <Button className="w-fit h-full flex items-center justify-center p-0  bg-transparent" >
+              <Button className="w-fit h-full flex items-center justify-center p-0  bg-transparent" >
                     <a
                         href="/"
                         onClick={() => {
@@ -27,12 +27,12 @@ const FormationNavBar = () => {
 
                 </Button>
                 <div className="flex flex-row justify-center items-center mx-5 gap-2">
-                    <Image height={50} width={50} alt="logo" src="/assets/logo.jpg" className="w-10 h-10 rounded-full"></Image>
-                    Services
+                    <Image height={50} width={50} alt="Logo DIVLAB" src="/assets/logo.jpg" className="w-10 h-10 rounded-full"></Image>
+                    <h2 className="text-xl font-bold">Services DIVLAB</h2>
                 </div>
                 <div className="space-x-3 h-full items-center hidden md:flex px-5 mr-6">
                     <a href="#formations" className="hover:text-info"><span>Formations </span></a>
-                    <a href="#papers" className="hover:text-info"><span>Epreuves </span></a>
+                    {/* <a href="#papers" className="hover:text-info"><span>Epreuves </span></a> */}
                     <a href="#solutions web" className="hover:text-info"><span>Web</span></a>
                     <a href="#ia" className="hover:text-info"><span>IA</span></a>
                     <a href="#design" className="hover:text-info"><span>Design</span></a>

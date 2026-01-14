@@ -275,42 +275,41 @@ export async function POST(req) {
                 const StaticAuthor = staticEntry?.Author || staticEntry?.author || "Inconnu";
 
                 // Upsert into Prisma (title must be unique in schema)
-                const upsertData = await prisma.formation.upsert({
-                    where: { title }, // requires title @unique in schema.prisma
-                    update: {
-                        location: zipPath,
-                        img: imgPath,
-                        pages,
-                        author,
-                        format,
-                        classe: classType,
-                        description,
-                        group,
-                        category,
-                    },
-                    create: {
-                        id,
-                        title,
-                        location: zipPath,
-                        img: imgPath,
-                        pages: staticPage || pages,
-                        author: StaticAuthor || author,
-                        format,
-                        classe: classType,
-                        description,
-                        group,
-                        category,
-                    },
-                });
+                // const upsertData = await prisma.formation.upsert({
+                //     where: { title }, // requires title @unique in schema.prisma
+                //     update: {
+                //         location: zipPath,
+                //         img: imgPath,
+                //         pages,
+                //         author,
+                //         format,
+                //         classe: classType,
+                //         description,
+                //         group,
+                //         category,
+                //     },
+                //     create: {
+                //         id,
+                //         title,
+                //         location: zipPath,
+                //         img: imgPath,
+                //         pages: staticPage || pages,
+                //         author: StaticAuthor || author,
+                //         format,
+                //         classe: classType,
+                //         description,
+                //         group,
+                //         category,
+                //     },
+                // });
 
                 results.push({
                     fileName: originalName,
                     title,
                     ok: true,
                     publicZipUrl,
-                    zipPath,
                     imagePublicUrl,
-                    upsert: { id: upsertData.id, title: upsertData.title },
+                    // upsert: { id: upsertData.id, title: upsertData.title },
                 });
             } catch (innerErr) {
                 console.error("Erreur traitement fichier :", innerErr);

@@ -281,7 +281,7 @@ const Commande = (props: CommandePageProps) => {
                     </Button>
 
                     <div className="flex flex-row justify-center items-center mx-5 gap-2">
-                        <Image height={50} width={50} alt="logo" src="/assets/logo.jpg" className="w-10 h-10 rounded-full"></Image>
+                        <Image height={50} width={50} alt="Logo divlab" src="/assets/logo.jpg" className="w-10 h-10 rounded-full"></Image>
                         Initier votre commande
                     </div>
 

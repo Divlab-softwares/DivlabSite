@@ -43,7 +43,7 @@ const items: Carousel3DItem[] = [
         id: 5,
         title: "DIVLAB Client Dashboard",
         brand: "Developpement web",
-        description: "ERP concu pour la gestion complete des activites de DIVLAB. Il possede tous les elements neccessaires au bon fonctionnement de l'entreprise.",
+        description: "ERP concu pour la gestion complete des activites de DIVLAB. Il possede tous les elements neccessaires.",
         tags: ["React", "JSX", "Vs code"],
         imageUrl: "/assets/projects/1.png",
         link: "/projects/firecat"
@@ -59,7 +59,7 @@ type realisationsProps = {
 
 const Realisations = ({ themeRealisations, cardColor }: realisationsProps) => {
     return (
-        <div className="h-auto " data-theme={themeRealisations} id="realisations">
+        <div className="h-auto overflow-x-hidden" data-theme={themeRealisations} id="realisations">
             <div className="flex flex-col items-center justify-center p-4 h-100% relative shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)]" >
                 <Title className="z-50 my-10" title="Nos Réalisations" />
                 <p className="my-4" data-aos="fade-right">Voici quelques exemples de nos projets récents.</p>
@@ -89,12 +89,12 @@ const Realisations = ({ themeRealisations, cardColor }: realisationsProps) => {
 
 
 
-                <div className="w-full">
+                <div className="w-full ">
                     <Carousel3D
                         items={items}
                         autoRotate={false}
                         rotateInterval={4000}
-                        cardHeight={1000}
+                        cardHeight={500}
                         isMobileSwipe={true}
                         cardColor={cardColor}
                     />

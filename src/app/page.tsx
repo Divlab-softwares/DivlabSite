@@ -9,10 +9,10 @@ import { useEffect, useRef, useState } from "react";
 
 import Services from "./Components/Services";
 // import Test from "./Components/test";
-import Footer from "./Components/Footer";
+// import Footer from "./Components/Footer";
 import Footer1 from "./Components/Footer1";
-import { Moon, Sun } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+// import { Moon, Sun } from "lucide-react";
+// import { AnimatePresence, motion } from "motion/react";
 
 // import img1 from "@/app;
 //   import img2 from "@/app/assets/ImgCarousel/2.jpg";
@@ -97,7 +97,6 @@ const setThemes = () => {
 }
 
   return (
-    <>
       <div className="App flex  flex-col h-min-screen" data-theme={`${theme}`}>
         {/* <Test /> */}
         {/* <button onClick={() => setThemes()} className="overflow-hidden w-fit fixed bottom-2 right-2 z-50 bg-gray-800 text-white  rounded-full shadow-lg transition-all duration-500 hover:scale-106 hover:w-15 border-gray-700 border-1 ">
@@ -127,15 +126,12 @@ const setThemes = () => {
           <Hero />
 
           <About themeAbout={themeAbout} sepColor={sepColor} textCol ={textCol}/>
-
         </div>
-
 
         <Services waveColor={waveColor} textCol={textCol} theme={theme} cardCol={cardCol}/>
         <Realisations themeRealisations={themeRealisations} cardColor={cardColor} />
         <ContactForm/>
         <Footer1 />
       </div>
-    </>
   );
 }

@@ -54,7 +54,7 @@ const MyCarousel = ({ questions, questionHome, index, setIndex }: AboutQuestions
                                 transform: getTransform(id)
                             }}>
                                  <Image
-                                    alt=""
+                                    alt={`Carousel Image ${id}`}
                                     width={500}
                                     height={420}
 
