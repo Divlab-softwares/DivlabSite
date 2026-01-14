@@ -1,5 +1,11 @@
 // Condition generale de vente
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Conditions generales de vente - CGV",
+  description:
+    "Conditions generales de vente pour les services de formation en data science, IA, création de sites web et support informatique proposés par DIVLAB au Cameroun.",
+};
 // app/cgv/page.tsx
 export default function CGVPage() {
     return (

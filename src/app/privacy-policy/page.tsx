@@ -1,3 +1,11 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Politique de Confidentialité - DIVLAB",
+  description:
+    "Politique de confidentialité pour les services de formation en data science, IA, création de sites web et support informatique proposés par DIVLAB au Cameroun.",
+};
+
 export default function PrivacyPolicy() {
     return (
         <div className="min-h-screen bg-gray-50 py-16 px-6 md:px-20 lg:px-40 text-gray-800" data-theme="garden">
