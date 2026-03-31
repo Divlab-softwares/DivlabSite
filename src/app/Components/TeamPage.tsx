@@ -53,7 +53,7 @@ const teamMembers = [
     // },
     {
         id: "6",
-        name: "DONGMO MICHAEL-VEURT",
+        name: "DONGMO TATSADJEU MICHAEL-VEURT",
         role: "DATA ANALYST",
         image: "/assets/team/michael.jpg",
         bio: "Expert de la data et prompt analyst proffessionel."
