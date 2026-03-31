@@ -26,10 +26,11 @@ const Navbar = ({ translateY }: NavbarProps) => {
         px-6 py-3 rounded-full transition-transform duration-300 ease-in-out `} data-aos="fade-down">
             <a href="#footer" className="flex items-center font-bold text-2xl md:text-xl text-black"><img src={DIVLABLogo.src} alt="" className="w-8 h-8 rounded-full mr-1" />DIV<span className="text-info ">LAB</span></a>
             <ul className="flex flex-row  hidden md:flex space-x-4 ">
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#services">services</a></li>
-                <li><a href="#realisations">réalisations</a></li>
-                <li><a href="#contact">Nous contacter</a></li>
+                <li><a href="#about" className="hover:underline">À propos</a></li>
+                <li><a href="#services" className="hover:underline">services</a></li>
+                <li><a href="#team-section" className="hover:underline">Notre equipe</a></li>
+                <li><a href="#realisations" className="hover:underline">réalisations</a></li>
+                <li><a href="#contact" className="hover:underline">Nous contacter</a></li>
 
             </ul>
 

@@ -14,7 +14,7 @@ const Footer=({ className } : Footerprops)=> {
     return ( 
         <footer className={`footer footer-horizontal footer-center  relative  p-10 ${className}`} id="footer">
             {/* <SmokeyCursor /> */}
-            <aside>
+            <aside className="flex items-center justify-center flex-col">
                 <a href="#home" className="gap-2"><img src={DIVLABLogo.src} alt="" className="w-16 h-16 rounded-full mt-1" />
                 <p className="font-bold">
                    DIVLAB

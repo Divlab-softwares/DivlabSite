@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const FormationNavBar = () => {
     const router = useRouter();
     return (
-        <nav className="h-9/100 w-full flex flex-col relative bg-black text-white  ">
+        <nav className="h-10/100 w-full flex flex-col relative bg-black text-white  ">
             <div className="flex justify-between flex-row w-full items-center">
               <Button className="w-fit h-full flex items-center justify-center p-0  bg-transparent" >
                     <a
@@ -48,7 +48,7 @@ const FormationNavBar = () => {
                     delay={300}
                     
                 >
-                    🚀 Super promotion actuellement sur la conception des sites web, valable jusqu'au 1er janvier ! Venez en profiter 🚀
+                    🚀 Le chemin de la reussite commence par un prise de conscience personnelle et dont l'evolution de votre culture personnelle, DIVLAB vous accompagne vers le success 🚀
 
                 </TextScrollMarquee>
             </a>

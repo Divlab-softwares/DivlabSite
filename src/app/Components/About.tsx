@@ -61,7 +61,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
 
     const encodeMessage = encodeURIComponent("Bonjour/Bonsoir, je vous ecrit car je voudrais beneficier de la promotion DIVLAB portfolio, ouvez vous me donner olus de details sur celle si?");
 
-    const [closeEv, setCloseEv] = useState("")
+    const [closeEv, setCloseEv] = useState("hidden")
 
 
     // const location = useLocation();
@@ -83,7 +83,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                         exit={{ y: -100, opacity: 0 }}
                         transition={{ duration: 0.8, delay: 0.5, ease: "easeInOut" }}
                         onClick={() => { setCloseEv("open") }}
-                        className="text-left text-sm h-fit w-full backdrop-blur-lg bg-gray-900 rounded-full px-[10px] text-gray-400 -top-6 absolute z-45 ">
+                        className="text-left text-sm h-fit w-full backdrop-blur-lg bg-gray-900 rounded-full px-[10px] text-gray-400 -top-6 absolute z-45 cursor-pointer">
                         Voir les Evenements
                     </motion.button>)}
             </AnimatePresence>

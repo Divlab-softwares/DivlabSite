@@ -52,9 +52,9 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
             <p data-aos="fade-right">Voici un aperçu des services que nous proposons.</p>
 
 
-            <div className={` flex flex-row justify-center gap-5 m-5 mt-10 w-full  flex-wrap md:flex-nowrap  `}>
+            <div className={` flex flex-row justify-center gap-5 m-5 mt-10 w-full  flex-wrap md:flex-nowrap `}>
 
-                <div className=" h-100% "  data-aos="fade-right">
+                <div className=" h-100% "  data-aos="fade-right ">
                     <InteractiveGradient
 
                         color="#4890ff"
@@ -89,7 +89,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                                 <p className="">Développez vos compétences avec nos programmes de formation adaptés aux besoins du marché. Nous proposons des parcours pratiques en développement web, cloud computing, data science et intelligence artificielle, conçus pour renforcer votre expertise et accélérer votre carrière.</p>
                             </CardContent>
                             <CardFooter className="">
-                                <Button className="rounded-2xl w-5/6 bg-[#ffc40050]  text-md p-0 transition-transform duration-400 hover:scale-99 hover:bg-[#755b06a6] hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
+                                <Button className="rounded-2xl w-5/6 bg-[#fffb00af]  text-md p-0 transition-transform duration-400 hover:scale-99 hover:bg-[#755b06a6] hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
                                     <Link
                                         href="/Services"
                                         onClick={() => {
@@ -108,6 +108,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
 
                     </InteractiveGradient>
                 </div>
+
                 <div data-aos="fade-down" className="h-100% ">
                     <InteractiveGradient
 
@@ -142,7 +143,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                                 <p>Nous concevons et déployons des solutions modernes pour vos applications web et cloud. De la création de sites performants à l’intégration de services cloud sécurisés et évolutifs, nous vous aidons à digitaliser vos processus et à gagner en efficacité.</p>
                             </CardContent>
                             <CardFooter>
-                                <Button className=" p-0  rounded-2xl w-5/6 bg-[#1076675d] hover:bg-[#0a4b4171]  text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
+                                <Button className=" p-0  rounded-2xl w-5/6 bg-[#09a890bd] hover:bg-[#08776671]  text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
                                     <Link
                                         href="/Services#solutions web"
                                         onClick={() => {
@@ -161,6 +162,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
 
                     </InteractiveGradient>
                 </div>
+
                 <div data-aos="fade-up" className=" h-100%">
                     <InteractiveGradient
                         color="#1890ff"
@@ -194,7 +196,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                                 <p>Exploitez la puissance des données grâce à nos solutions en intelligence artificielle. Nous développons des modèles sur mesure pour l’automatisation, la prédiction et l’optimisation, afin de transformer vos données en leviers stratégiques pour votre entreprise.</p>
                             </CardContent>
                             <CardFooter>
-                                <Button className="p-0 rounded-2xl w-5/6 bg-[#0074d956] hover:bg-[#003c70a1]  text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
+                                <Button className="p-0 rounded-2xl w-5/6 bg-[#0181f1d2] hover:bg-[#3b9aecf5]  text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
                                     <Link
                                         href="/Services#ia"
                                         onClick={() => {
@@ -210,6 +212,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                         </Card>
                     </InteractiveGradient>
                 </div>
+
                 <div data-aos="fade-up" className="h-100% ">
                     <InteractiveGradient
 
@@ -246,7 +249,7 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                                 <p> Donnez vie à vos idées avec des designs modernes et percutants. Notre équipe combine créativité et technologies pour concevoir des interfaces ergonomiques, des identités visuelles uniques et des expériences utilisateurs engageantes.</p>
                             </CardContent>
                             <CardFooter>
-                                <Button className={` p-0 rounded-2xl w-5/6 bg-[#8f0f4459] hover:bg-[#3f081fb2] text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] `} >
+                                <Button className={` p-0 rounded-2xl w-5/6 bg-[#f71372cc] hover:bg-[#ff2f86f1] text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] `} >
                                     <Link
                                         href="/Services#design"
                                         onClick={() => {
@@ -263,13 +266,6 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                         </Card>
                     </InteractiveGradient>
                 </div>
-
-
-
-
-
-
-
             </div>
 
 
@@ -282,7 +278,6 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                     backWaveOpacity={0.28}
                     waveDuration={10}
                 />
-
 
             </div>
 

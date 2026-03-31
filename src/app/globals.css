@@ -1,7 +1,7 @@
 /* @source ./node_modules/lightwindcss/ */
 @layer base {
   html {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 /*@import "lightwindcss";*/

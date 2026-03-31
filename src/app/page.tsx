@@ -11,6 +11,7 @@ import Services from "./Components/Services";
 // import Test from "./Components/test";
 // import Footer from "./Components/Footer";
 import Footer1 from "./Components/Footer1";
+import TeamPage from "./Components/TeamPage";
 // import { Moon, Sun } from "lucide-react";
 // import { AnimatePresence, motion } from "motion/react";
 
@@ -129,6 +130,7 @@ const setThemes = () => {
         </div>
 
         <Services waveColor={waveColor} textCol={textCol} theme={theme} cardCol={cardCol}/>
+        <TeamPage />
         <Realisations themeRealisations={themeRealisations} cardColor={cardColor} />
         <ContactForm/>
         <Footer1 />

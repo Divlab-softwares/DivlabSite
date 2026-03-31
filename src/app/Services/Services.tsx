@@ -45,6 +45,7 @@ import AppSidebar from "../Components/AppSidebar"
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import UploaderFile from "../Components/UploaderFile";
+import { Dropdown } from "../Components/Dropdown";
 
 
 // 🔹 Fonction pour récupérer le lien public Supabase
@@ -156,7 +157,7 @@ const Services = () => {
         }
     }, [OnlineFormations]);
 
-    // ✅ Maintenant, ici tu peux dépendre de onlineFormations en toute sécurité
+    // ✅ Maintenant, ici on peux dépendre de onlineFormations en toute sécurité
     // if (loading) return <p>Chargement des formations...</p>;
     // if (error) return <p>Erreur : {error}</p>;
     // if (!onlineFormations.length) return <p>Aucune formation disponible.</p>;
@@ -570,7 +571,7 @@ const Services = () => {
         }
         let newBoard = searchCourses(e.target.value, OnlineFormations);
         setSearchCoursesResult(newBoard);
-       
+
         setDisplayedFormations(newBoard.slice(startIndex, startIndex + itemsPerPage));
         setCurrentPage(1);
         //setSearchDataValue(searchData)
@@ -907,6 +908,52 @@ const Services = () => {
         }
     }
 
+    const [isSignInOpen, setIsSignInOpen] = useState(false);
+    const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+    const [isOutOpen, setIsSignOutOpen] = useState(false);
+    // const router = useRouter();
+
+    function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>, state: string) {
+        console.log("user", User)
+
+
+        e.stopPropagation();
+
+        switch (state) {
+            case "signIn":
+                setIsSignInOpen((prev) => !prev);
+                setIsSignUpOpen(false);
+                break;
+            case "signUp":
+                setIsSignUpOpen((prev) => !prev);
+                setIsSignInOpen(false);
+                break;
+            case "signOut":
+                setIsSignOutOpen((prev) => !prev);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    function closeDropdown(state: string) {
+        switch (state) {
+            case "signIn":
+                setIsSignInOpen(false);
+                break;
+            case "signUp":
+                setIsSignUpOpen(false);
+                break;
+            case "signOut":
+                setIsSignOutOpen(false);
+                break;
+
+            default:
+                break;
+        }
+    }
+
     return (
         <article className="relative flex flex-col h-screen" >
             {/* {notif && (
@@ -944,6 +991,7 @@ const Services = () => {
                             className="py-[5px] px-2 rounded-full bg-black relative flex flex-row w-full justify-end"><Moon size={18} /></motion.div>)}
 
             </button>
+
             <FormationNavBar />
             <div className="w-full 9/100 md:h-6/100 p-1 flex flex-col md:flex-row items-end  md:items-center md:justify-center gap-2  border border-transparent shadow-sm backdrop-blur-lg" data-theme={`${theme}`}>
                 <div className="relative w-full h-1/2 md:h-full bg-white/30  gap-1 flex flex-row items-center justify-center  rounded-2xl">
@@ -971,7 +1019,7 @@ const Services = () => {
                                     {load ? (<Home size={18} />) : (<Share size={18} />)}
                                     {/* <a className="text-sm">Publier votre document</a> */}
                                 </motion.button>
-                                <div className=" text-black flex flex-col justify-center items-end bg-white/50 hover:bg-black/20 cursor-pointer px-2 rounded-xl" onClick={() => setSign(prev => (prev === -1 ? undefined : -1))}>
+                                <div className=" text-black flex flex-col justify-center items-end bg-white/50 hover:bg-black/20 cursor-pointer px-2 rounded-xl" onClick={(e) => { toggleDropdown(e, "signOut"); setSign(prev => (prev === -1 ? undefined : -1))}}>
                                     <p className="font-bold text-xd">{session.user?.name}</p>
                                     <p className="text-sm">{session.user?.email}</p>
                                 </div>
@@ -980,9 +1028,9 @@ const Services = () => {
                         ) : (
                             <motion.div initial={{ scale: 1, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="h-full flex flex-row items-center justify-center gap-2">
 
-                                <button className={`text-bold cursor-pointer ${sign == 1 ? "bg-blue-700 " : "hover:bg-blue-300"}    border font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 1 ? undefined : 1)) }} >Se connecter</button>
+                                <button className={`text-bold cursor-pointer dropdown-toggle ${sign == 1 ? "bg-blue-700 " : "hover:bg-blue-300"}    border font-bold rounded-xl h-full text-sm px-2`} onClick={(e) => { toggleDropdown(e, "signIn"); setSign(prev => (prev === 1 ? undefined : 1)) }} >Se connecter</button>
                                 <span> | </span>
-                                <button className={`text-bold cursor-pointer ${sign == 0 ? "bg-blue-700" : "bg-blue-500 hover:bg-blue-700"}   font-bold rounded-xl h-full text-sm px-2`} onClick={() => { setSign(prev => (prev === 0 ? undefined : 0)) }}>S'inscrire</button>
+                                <button className={`text-bold cursor-pointer dropdown-toggle ${sign == 0 ? "bg-blue-700" : "bg-blue-500 hover:bg-blue-700"}   font-bold rounded-xl h-full text-sm px-2`} onClick={(e) => { toggleDropdown(e, "signUp"); setSign(prev => (prev === 0 ? undefined : 0)) }}>S'inscrire</button>
                             </motion.div>
                         )}
 
@@ -996,29 +1044,21 @@ const Services = () => {
             </div>
 
             <AnimatePresence>
-                {sign == 1 && (
-                    <motion.div
-                        initial={{ x: 20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -20, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="w-100 h-fit rounded-xl  flex flex-col gap-5 items-center justify-center fixed right-6 md:top-33 top-50 z-50">
+                    <Dropdown
+                        isOpen={isSignInOpen}
+                        onClose={() => closeDropdown("signIn")}
+                        className="">
                         <DivlabSpaceLogin setSign={setSign} setSignResult={setSignResult} />
-                    </motion.div >
-                )}
+                    </Dropdown >
             </AnimatePresence>
             <AnimatePresence>
-                {sign == 0 && (
-                    <motion.div
-                        initial={{ x: 20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -20, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="w-100 h-fit rounded-2xl bg-yellow-600 flex flex-col gap-5 items-center justify-center fixed right-6 md:top-33 top-50 z-50">
+                    <Dropdown
+                        isOpen={isSignUpOpen}
+                        onClose={() => closeDropdown("signUp")}
+                        className="">
                         <DivlabSpaceSignUp setSignResult={setSignResult} setSign={setSign} />
 
-                    </motion.div>
-                )}
+                    </Dropdown>
             </AnimatePresence>
             <AnimatePresence>
                 {sign == -1 && (
@@ -1040,7 +1080,7 @@ const Services = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="flex flex-row justify-between h-82/100 md:h-85/100 w-full  gap-3 " data-theme={`${theme}`}>
+                        className="flex flex-row justify-between h-81/100 md:h-84/100 w-full  gap-3 " data-theme={`${theme}`}>
                         {/* <SidebarProvider> */}
                         {/* <AppSidebar /> */}
                         <div className={`flex flex-col   ${sideBar ? "md:w-3/4" : "md:w-full w-full"}  transition-all duration-300 h-full flex-wrap md:flex-nowrap  `}>
@@ -1525,16 +1565,16 @@ const Services = () => {
                                                     className='rounded-3xl z-2'
                                                 />
                                                 <div className="w-full md:w-1/3 relative h-60 hidden md:flex items-center justify-center rounded-3xl shadow-[0_5px_20px_rgba(0,200,255,0.6)] ">
-                                                    <Image height={40} width={50} src="/assets/indisponible.svg" alt="Formations Presentiel" className="  w-full h-full shadow-[inset_0_0_80px_rgba(0,0,0,0.6)] rounded-3xl "></Image>
+                                                    <Image height={40} width={50} src="/assets/indisponible.svg" alt="Formations en ligne" className="  w-full h-full shadow-[inset_0_0_80px_rgba(0,0,0,0.6)] rounded-3xl "></Image>
 
                                                 </div>
 
                                                 <div className="flex flex-col gap-3 h-fit md:w-2/3 w-full ">
                                                     <Card className="w-100% relative h-full rounded-4xl border-none flex flex-col justify-center">
                                                         <CardHeader>
-                                                            <CardTitle className=" text-3xl uppercase"> Formation en Ligne</CardTitle>
+                                                            <CardTitle className=" text-3xl uppercase"> Formation en Ligne | DIVLAB train</CardTitle>
                                                             <hr />
-                                                            <CardDescription><i><b>indisponible pour le moment...</b></i></CardDescription>
+                                                            <CardDescription><i><b>DIVLAB train era bientot connecte aux services DIVLAB, mais pour le moment vous y avez access sur le lien : https://train.divlabs-tech.com</b></i></CardDescription>
 
                                                         </CardHeader>
                                                         <CardContent className="">

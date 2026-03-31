@@ -12,9 +12,10 @@ interface Footer1props {
 
 const Footer1 = ({ className }: Footer1props) => {
     return (
-        <footer className={`footer sm:footer-horizontal bg-base-200 text-base-content p-10 ${className} relative`} id="footer">
+        <footer className={`footer sm:footer-horizontal bg-base-200 text-base-content p-20 md:p-10 ${className} relative`} id="footer">
             <aside>
-                <a href="#home" className="gap-2"><img src={DIVLABLogo.src} alt="" className="w-16 h-16 rounded-full mt-1" />
+                <a href="#home" className="flex items-center font-bold text-2xl md:text-xl text-white flex-col space-y-3">
+                    <img src={DIVLABLogo.src} alt="" className="w-16 h-16 rounded-full  border border-info shadow-[0_5px_20px_rgba(0,200,255,0.6)]" />
                     <p className="font-bold">
                         DIVLAB
                     </p>
@@ -29,7 +30,7 @@ const Footer1 = ({ className }: Footer1props) => {
                     <a href="#"><X /></a> 
                     <Link href=""><Youtube /></Link> */}
                     <Link href="whatsapp://send?phone=237652509674" target="_blank" className="">
-                        <img src={Whatsapp1.src} alt="" className="w-7 h-7  mr-2" />
+                        <img src={Whatsapp.src} alt="" className="w-7 h-7  mr-2" />
                     </Link>
                 </div>
 

@@ -303,26 +303,29 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
   return (
     <div
       id="team-carousel-container"
-      className={cn(`min-h-screen flex flex-col items-center justify-center overflow-hidden relative 
+      className={cn(`min-h-screen pb-6 flex flex-col items-center justify-center overflow-hidden relative 
         transparent`, className)}
       style={{ background: background }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      <div className="absolute top-0 w-full bg-linear-to-b from-black/40 to-transparent h-50 z-0">
+
+      </div>
+
       {/* Title */}
       {title && (
         <h1
           className={cn(
-            "font-black uppercase tracking-tight absolute top-12 left-1/2 transform -translate-x-1/2 pointer-events-none whitespace-nowrap",
+            "bg-clip-text text-transparent font-black uppercase tracking-tight absolute top-12 left-1/2 -translate-x-1/2 pointer-events-none whitespace-nowra",
             titleSizeClasses[titleSize],
             titleClassName
           )}
           style={{
-            color: 'transparent',
-            background: `linear-gradient(to bottom, ${titleColor}75 40%, transparent 76%)`,
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
+            backgroundImage: `linear-gradient(to bottom, ${titleColor} 70%, transparent 80%)`,
+            WebkitBackgroundClip: 'text', // Force le clip sur le moteur Webkit
+            backgroundClip: 'text'
           }}
         >
           {title}
@@ -331,7 +334,7 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
 
       {/* Carousel Container */}
       <div
-        className="w-full max-w-6xl relative mt-20"
+        className="w-full max-w-6xl relative mt-20 z-2"
         style={{
           height: cardHeight + 100,
           perspective: '1000px',
@@ -342,17 +345,17 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
           <>
             <motion.button
               onClick={() => paginate(-1)}
-              className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all duration-300 hover:scale-110"
+              className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-15 h-15 rounded-full flex items-center justify-center z-20 transition-all duration-300 hover:scale-110"
               whileTap={{ scale: 0.9 }}
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-8 h-8 " />
             </motion.button>
             <motion.button
               onClick={() => paginate(1)}
-              className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all duration-300 hover:scale-110"
+              className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-15 h-15 rounded-full flex items-center justify-center z-20 transition-all duration-300 hover:scale-110"
               whileTap={{ scale: 0.9 }}
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-8 h-8 " />
             </motion.button>
           </>
         )}
@@ -432,7 +435,7 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="text-center mt-10"
+          className="text-center mt-10 z-2"
         >
           <h2
             className="text-4xl font-bold mb-3 relative inline-block"
@@ -451,7 +454,7 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
             {members[currentIndex].role}
           </p>
           {members[currentIndex].bio && (
-            <p className="text-base mt-4 max-w-lg mx-auto opacity-70">
+            <p className="text-black mt-4 max-w-lg mx-auto opacity-70">
               {members[currentIndex].bio}
             </p>
           )}
@@ -460,7 +463,7 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
 
       {/* Dots Indicator */}
       {showDots && (
-        <div className="flex justify-center gap-3 mt-15 ">
+        <div className="flex justify-center gap-3 mt-15 z-2">
           {members.map((_, index) => (
             <motion.button
               key={index}
@@ -488,6 +491,13 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
           ))}
         </div>
       )}
+
+      <div className="absolute bottom-0 w-full bg-linear-to-t from-white to-transparent h-100 z-0">
+
+      </div>
+      <div className="absolute bottom-0 w-full bg-linear-to-t from-blue-400 to-transparent h-50 z-1">
+
+      </div>
     </div>
   );
 };
