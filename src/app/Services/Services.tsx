@@ -83,7 +83,7 @@ const Services = () => {
     }
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 4;
     const startIndex = (currentPage - 1) * itemsPerPage;
 
     const [OnlineFormations, setOnlineFormations] = useState<Formation[]>([]);
@@ -1460,7 +1460,7 @@ const Services = () => {
                                                                                             src={Formations.img} // https://picsum.photos/500/350?image=${(id + 5) * 11}
                                                                                         />
                                                                                     </div>
-                                                                                    <CardTitle className=""><p className="text-sm font-bold"><i>{Formations.title?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
+                                                                                    <CardTitle className=""><p className="text-sm font-ultrabold"><i>{Formations.title?.split("DIVLAB_").pop()?.split(".")[0] ?? ""}</i></p></CardTitle>
                                                                                     <CardDescription><span className="text-sm flex flex-row gap-3"><i>{Formations.format}</i><i className={`${Formations.classe == "premium" ? "text-yellow-500" : "text-info"}`} >{Formations.classe}</i><i className={`text-info`} >{Formations.pages} pages</i></span></CardDescription>
                                                                                     <hr />
                                                                                 </CardHeader>

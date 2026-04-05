@@ -57,7 +57,7 @@ export default function PayButton({ amount, filePath, fileName, currency, userId
     };
 
     return (
-            <Button type='submit' onClick={handlePay} disabled={loading} className="w-auto h-12 hover:h-15  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/30 via-yellow-400 to-orange-500 flex flex-col justify-start items-center" data-theme={theme ? theme : "light"}>
+            <Button type='submit' onClick={handlePay} disabled={loading} className="w-auto h-12 hover:h-15  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/30 via-yellow-400 to-orange-500 flex flex-col justify-start items-center cursor-pointer" data-theme={theme ? theme : "light"}>
                 <div className='w-full h-full flex flex-row items-center justify-center'> <img src={Orange.src} alt="" className="w-20 " />  <img src={Mtn.src} alt="" className="w-20 rounded-md" /> </div>
                 <p>{loading ? 'Chargement, veuillez patienter...' : 'Payer via Mobile Money / OM'}</p>
             </Button>

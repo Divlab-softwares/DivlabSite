@@ -28,6 +28,10 @@ declare module "next-auth/jwt" {
     }
 }
 
+const useSecureCookies = process.env.NODE_ENV === 'production';
+const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+const domain = ".divlabs-tech.com"; // Votre domaine commun
+
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt"  },
@@ -60,6 +64,18 @@ export const authOptions = {
             },
         }),
     ],
+    cookies: {
+        sessionToken: {
+            name: `${cookiePrefix}next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: useSecureCookies,
+                domain: useSecureCookies ? domain : undefined, // Ne pas mettre de domain en local
+            },
+        },
+    },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
             if (account?.provider === "google") {
