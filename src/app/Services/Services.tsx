@@ -900,8 +900,14 @@ const Services = () => {
     const handleDownload = async (fileUrl: string, fileName: string) => {
         try {
             setDownloading(true)
-            addNotification("Votre telechargement demarre", "success", Date.now())
-            await downloadAndDecompress(fileUrl, fileName);
+
+            const res = await downloadAndDecompress(fileUrl, fileName);
+
+            if (res.ok) {
+                addNotification("Votre telechargement est en cours", "success", Date.now())
+            } else {
+                addNotification("Erreur lors du telechargement, veuillez reesayer plus tard", "failed", Date.now())
+            }
             setDownloading(false)
         } catch (error) {
             console.error("Download and decompress failed:", error);
@@ -1019,7 +1025,7 @@ const Services = () => {
                                     {load ? (<Home size={18} />) : (<Share size={18} />)}
                                     {/* <a className="text-sm">Publier votre document</a> */}
                                 </motion.button>
-                                <div className=" text-black flex flex-col justify-center items-end bg-white/50 hover:bg-black/20 cursor-pointer px-2 rounded-xl" onClick={(e) => { toggleDropdown(e, "signOut"); setSign(prev => (prev === -1 ? undefined : -1))}}>
+                                <div className=" text-black flex flex-col justify-center items-end bg-white/50 hover:bg-black/20 cursor-pointer px-2 rounded-xl" onClick={(e) => { toggleDropdown(e, "signOut"); setSign(prev => (prev === -1 ? undefined : -1)) }}>
                                     <p className="font-bold text-xd">{session.user?.name}</p>
                                     <p className="text-sm">{session.user?.email}</p>
                                 </div>
@@ -1044,21 +1050,21 @@ const Services = () => {
             </div>
 
             <AnimatePresence>
-                    <Dropdown
-                        isOpen={isSignInOpen}
-                        onClose={() => closeDropdown("signIn")}
-                        className="">
-                        <DivlabSpaceLogin setSign={setSign} setSignResult={setSignResult} />
-                    </Dropdown >
+                <Dropdown
+                    isOpen={isSignInOpen}
+                    onClose={() => closeDropdown("signIn")}
+                    className="">
+                    <DivlabSpaceLogin setSign={setSign} setSignResult={setSignResult} />
+                </Dropdown >
             </AnimatePresence>
             <AnimatePresence>
-                    <Dropdown
-                        isOpen={isSignUpOpen}
-                        onClose={() => closeDropdown("signUp")}
-                        className="">
-                        <DivlabSpaceSignUp setSignResult={setSignResult} setSign={setSign} />
+                <Dropdown
+                    isOpen={isSignUpOpen}
+                    onClose={() => closeDropdown("signUp")}
+                    className="">
+                    <DivlabSpaceSignUp setSignResult={setSignResult} setSign={setSign} />
 
-                    </Dropdown>
+                </Dropdown>
             </AnimatePresence>
             <AnimatePresence>
                 {sign == -1 && (
@@ -1201,7 +1207,7 @@ const Services = () => {
                                                         <div className="font-bold h-12 rounded-xl w-full   transition-transform duration-400 hover:scale-105  hover:-translate-y-1 p-0 shadow-4xl">
                                                             <ShineButton
                                                                 className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/40 via-cyan-400 to-blue-500 "
-                                                                // disable= {downloading}
+                                                                disabled={downloading}
                                                                 label={`${!downloading ? `Télécharger` : `Veuillez patienter...`}`}
                                                                 size="lg"
                                                                 bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
@@ -1214,6 +1220,7 @@ const Services = () => {
                                                                 className="w-full h-full rounded-xl flex items-center justify-center shadow-4xl transition-all duration-400"
                                                                 label={`Document sous license...`}
                                                                 size="lg"
+                                                                disabled={true}
                                                                 bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
                                                             // onClick={() => handleDownload(searchCoursesResultCurrent[IdOpen].location, searchCoursesResultCurrent[IdOpen].title)}
                                                             />

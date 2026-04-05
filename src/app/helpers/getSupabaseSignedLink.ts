@@ -8,7 +8,7 @@ export async function getSupabaseSignedLink(
     expiresInSeconds: number = 600
 ): Promise<string> {
 
-    const SUPABASE_S3_ENDPOINT = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const SUPABASE_S3_ENDPOINT = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_URL;
     const SUPABASE_S3_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     const SUPABASE_S3_SECRET = process.env.NEXT_PUBLIC_SUPABASE_ACCESS_KEY;
 
@@ -32,5 +32,6 @@ export async function getSupabaseSignedLink(
     });
 
     const signedUrl = await getSignedUrl(client, cmd, { expiresIn: expiresInSeconds });
+    console.log("Generated signed URL:", signedUrl);
     return signedUrl;
 }
