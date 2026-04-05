@@ -8,16 +8,17 @@ export async function getSupabaseSignedLink(
     expiresInSeconds: number = 600
 ): Promise<string> {
 
-    const SUPABASE_S3_ENDPOINT = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_URL;
+    const SUPABASE_S3_ENDPOINT = process.env.SUPABASE_S3_ENDPOINT || process.env.NEXT_PUBLIC_SUPABASE_URL;
     const SUPABASE_S3_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     const SUPABASE_S3_SECRET = process.env.NEXT_PUBLIC_SUPABASE_ACCESS_KEY;
+    const SUPABASE_S3_REGION = process.env.SUPABASE_S3_REGION || "eu-west-3";
 
     if (!SUPABASE_S3_ENDPOINT || !SUPABASE_S3_KEY || !SUPABASE_S3_SECRET) {
         console.error("Missing Supabase S3 environment variables", {SUPABASE_S3_ENDPOINT, SUPABASE_S3_KEY, SUPABASE_S3_SECRET  } );
     }
 
     const client = new S3Client({
-        region: process.env.SUPABASE_S3_REGION || "eu-north-1",
+        region: SUPABASE_S3_REGION,
         endpoint: SUPABASE_S3_ENDPOINT,
         credentials: {
             accessKeyId: SUPABASE_S3_KEY!,

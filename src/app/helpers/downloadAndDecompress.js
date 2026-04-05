@@ -93,7 +93,7 @@ async function downloadAndDecompress(url , title) {
             // On libère la mémoire du blob
             // URL.revokeObjectURL(dataUrl);
             setTimeout(() => {
-                URL.revokeObjectURL(fileUrl);
+                URL.revokeObjectURL(dataUrl);
                 document.body.removeChild(link);
             }, 150);
         }
