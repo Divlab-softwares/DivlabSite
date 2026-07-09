@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import "./scroll.css"
 import RippleGrid from '@/app/Components/RippleGrid';
-import { ChevronUpCircle, X, ChevronUp } from "lucide-react"
+import { X, ChevronUp, BrainCircuit, Code2, GraduationCap } from "lucide-react"
 import Image from "next/image";
 import { Button } from "./lightswind/button";
 import img from "../../../public/assets/Group.webp";
@@ -20,20 +20,143 @@ import { DotBackground } from "./lightswind/grid-dot-background";
 // import ImgCarousel_3 from "@/app/assets/ImgCarousel/3.jpg";
 // import ImgCarousel_4 from "@/app/assets/ImgCarousel/4.jpg";
 
-
 const Questions = [
-    { id: 1, value: "Qui sommes  nous ?", answer: "DivLab est un laboratoire de solutions numériques et d’intelligence artificielle. Nous accompagnons les entreprises et les particuliers dans la création de sites web, le développement de modèles IA, la formation en data science et la maintenance informatique. Notre mission est de rendre la technologie accessible, efficace et rentable pour tous.", img: "/assets/ImgCarousel/1.jpg" },
     {
-        id: 2, value: "Quels services offrons nous ?", answer: "Nous proposons principalement :\n * Formation en Data Science et Intelligence Artificielle(Python, R, Machine Learning, Deep Learning, Excel avancé…).\n  * Développement de sites web et applications sur mesure.\n * Assistance à projets IA et consulting technique.\n  * Maintenance et dépannage informatique pour particuliers et entreprises.\n  * Exposition et accompagnement pour vos projets technologiques et idées de recherche.", img: "/assets/ImgCarousel/2.png"
+        id: 1,
+        value: "Qui sommes-nous ?",
+        answer: `DIVLAB est un laboratoire de solutions numériques spécialisé dans le développement web, l'intelligence artificielle, la data science et la transformation digitale.
+
+Notre objectif est d'accompagner les particuliers, les entreprises, les étudiants et les organisations dans la conception de solutions technologiques modernes, performantes et adaptées à leurs besoins.
+
+Au-delà de la réalisation de projets, nous accordons une grande importance à la transmission des compétences grâce à nos formations, masterclass et programmes d'accompagnement.
+
+Notre mission est de rendre les technologies numériques et l'intelligence artificielle accessibles, utiles et créatrices de valeur, afin d'aider chacun à innover, gagner en productivité et concrétiser ses idées.`,
+        img: "/assets/ImgCarousel/1.jpg"
     },
+
     {
-        id: 3, value: "Pourquoi nous choisir ?", answer: "Expertise en data science, IA et développement web. Approche pratique et adaptée aux besoins réels des clients. Accompagnement de A à Z pour les projets, de la conception à la mise en production. Service rapide, fiable et accessible même pour les débutants.", img: "/assets/ImgCarousel/5.jpeg"
+        id: 2,
+        value: "Quels services proposons-nous ?",
+        answer: `DIVLAB met à votre disposition une large gamme de services numériques pour répondre aux besoins des particuliers, des startups, des entreprises et des établissements de formation.
+
+Nos principaux domaines d'expertise sont :
+
+• Développement de sites web modernes, applications web et plateformes sur mesure.
+
+• Conception de solutions basées sur l'intelligence artificielle et la data science (Machine Learning, Deep Learning, automatisation, analyse de données...).
+
+• Formations, masterclass et accompagnement en développement web, programmation, Python, R, Intelligence Artificielle, Data Science, Excel avancé et outils numériques.
+
+• Conseil, assistance technique et accompagnement dans vos projets numériques ou de recherche.
+
+• Maintenance, optimisation, sécurisation et dépannage de systèmes informatiques.
+
+• Accompagnement des entrepreneurs, étudiants et porteurs de projets dans la réalisation de leurs idées technologiques.
+
+Chaque solution est conçue en tenant compte de vos objectifs, de votre budget et de vos besoins spécifiques.`,
+        img: "/assets/ImgCarousel/2.png"
     },
+
     {
-        id: 4, value: "Comment nous contacter ?", answer: "Vous pouvez nous joindre via : WhatsApp: 237652509674  \nEmail: divlabsoftware@gmail.com \nVia notre formulaire de contact sur ce site web", img: "/assets/ImgCarousel/14.webp"
+        id: 3,
+        value: "Pourquoi choisir DIVLAB ?",
+        answer: `Choisir DIVLAB, c'est bénéficier d'un partenaire qui privilégie la qualité, l'innovation et l'accompagnement.
+
+Nous nous distinguons par :
+
+• Une expertise en développement web, intelligence artificielle et data science.
+
+• Des solutions entièrement personnalisées selon vos besoins.
+
+• Une approche pratique, orientée vers des résultats concrets et mesurables.
+
+• Un accompagnement complet, depuis l'étude du projet jusqu'au déploiement et au suivi.
+
+• Des formations accessibles aussi bien aux débutants qu'aux professionnels souhaitant renforcer leurs compétences.
+
+• Une écoute permanente afin de proposer les technologies les plus adaptées à chaque projet.
+
+Notre ambition est de construire des solutions fiables, évolutives et durables qui contribuent réellement à votre réussite.`,
+        img: "/assets/ImgCarousel/5.jpeg"
     },
+
     {
-        id: 5, value: "Ou sommes nous situes ?", answer: "DivLab est basé au Cameroun, mais nous intervenons également en ligne pour les clients internationaux.\nVous pouvez nous rencontrer sur rendez- vous dans nos locaux ou échanger à distance via nos plateformes numériques.", img: "/assets/ImgCarousel/6.jpeg"
+        id: 4,
+        value: "Comment pouvons-nous vous accompagner ?",
+        answer: `Que vous soyez étudiant, entrepreneur, chercheur, startup, PME ou grande entreprise, DIVLAB vous accompagne à chaque étape de votre projet.
+
+Nous pouvons intervenir pour :
+
+• Transformer une idée en projet concret.
+
+• Développer une application ou un site web professionnel.
+
+• Intégrer des solutions d'intelligence artificielle à vos activités.
+
+• Former vos équipes ou développer vos compétences techniques.
+
+• Vous conseiller dans le choix des meilleures technologies.
+
+Nous adaptons notre accompagnement selon votre niveau d'avancement, vos objectifs et vos contraintes afin de garantir une collaboration efficace.`,
+        img: "/assets/ImgCarousel/14.webp"
+    },
+
+    {
+        id: 5,
+        value: "Comment nous contacter ?",
+        answer: `Notre équipe est disponible pour répondre à toutes vos questions, discuter de votre projet ou vous orienter vers la solution la plus adaptée.
+
+Vous pouvez nous contacter par :
+
+• WhatsApp : +237 652 50 96 74
+
+• E-mail : divlabsoftware@gmail.com
+
+• Le formulaire de contact disponible sur ce site.
+
+Nous nous engageons à répondre dans les meilleurs délais et à vous accompagner tout au long de votre projet.`,
+        img: "/assets/ImgCarousel/14.webp"
+    },
+
+    {
+        id: 6,
+        value: "Où sommes-nous situés ?",
+        answer: `DIVLAB est basé au Cameroun et accompagne également des clients à distance dans plusieurs pays.
+
+Grâce à nos outils de collaboration en ligne, nous pouvons assurer le suivi de vos projets, organiser des réunions, dispenser des formations et fournir une assistance technique où que vous soyez.
+
+Des rencontres en présentiel peuvent également être organisées sur rendez-vous lorsque cela est nécessaire.`,
+        img: "/assets/ImgCarousel/6.jpeg"
+    },
+
+    {
+        id: 7,
+        value: "À qui s'adressent nos services ?",
+        answer: `Nos services sont destinés à un large public :
+
+• Étudiants souhaitant acquérir des compétences en développement web, intelligence artificielle ou data science.
+
+• Entrepreneurs et startups désirant créer ou développer leurs solutions numériques.
+
+• Entreprises recherchant des outils sur mesure, des solutions d'automatisation ou des formations pour leurs collaborateurs.
+
+• Chercheurs et porteurs de projets innovants nécessitant un accompagnement technique.
+
+Quel que soit votre niveau ou votre secteur d'activité, nous vous aidons à concrétiser vos objectifs numériques.`,
+        img: "/assets/ImgCarousel/8.jpg"
+    },
+
+    {
+        id: 8,
+        value: "Proposez-vous des formations en ligne ?",
+        answer: `Oui.
+
+DIVLAB propose des formations accessibles en ligne afin de permettre à chacun d'apprendre où qu'il se trouve.
+
+Nos formations privilégient la pratique à travers des exercices, des projets réels, des études de cas et un accompagnement personnalisé.
+
+Les participants peuvent progresser à leur rythme tout en bénéficiant d'un suivi par nos formateurs.`,
+        img: "/assets/ImgCarousel/10.jpg"
     }
 ]
 
@@ -74,7 +197,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
     // }, [location]);
 
     return (
-        <div className=" relative   z-20" data-theme={themeAbout} id="about" >
+        <div className="divlab-section-shell relative z-20" data-theme={themeAbout} id="about" >
             <AnimatePresence>
                 {(closeEv == "hidden") && (
                     <motion.button
@@ -116,9 +239,9 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                     />
                                 </AnimatePresence>
                                 <div className=" flex flex-row items-center rounded-xl mx-15 h-fit  overflow-hidden   backdrop-blur-lg bg-black/5 shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)] gap-0 ">
-                                    
+
                                     {/* <DotBackground dotSize={1} dotColor="#404040" darkDotColor="#404040" spacing={15} showFade={true} fadeIntensity={40} className="h-full" /> */}
-                                    
+
                                     <div className=" marquee-content w-fit h-fit  items-center justify-center flex flex-row text-white py-3  animate-marquee ">
                                         <Link
                                             href={`whatsapp://send?phone=237652509674&text=${encodeMessage}`}
@@ -169,7 +292,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                     </div>
                                                     <div className="text-black w-120 relative flex flex-col justify-between gap-4 items-start">
                                                         <p className="text-md">
-                                                           Nos formations sur mesures adaptées a la lecture et la comprehension facile
+                                                            Nos formations sur mesures adaptées a la lecture et la comprehension facile
                                                         </p>
                                                         {/* <span className="text-[13px] text-red-800">Les formations sont adaptées à ceux ayant peu de budget, donc nous avons mis sur pied des formations à bas prix et d'autres gratuites </span> */}
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
@@ -209,7 +332,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
 
                                                     </div>
-                                  
+
                                                 </div>
 
 
@@ -230,7 +353,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                                                 <div className="flex flex-row justify-center items-align">
                                                     <div className="w-100 relative flex flex-col justify-between gap-4">
                                                         <p className="text-md">
-                                                            Les IA sont des outils actuellements tres utilisés, grâce à leur aide et le gain de temps qu'ils apportent 
+                                                            Les IA sont des outils actuellements tres utilisés, grâce à leur aide et le gain de temps qu'ils apportent
                                                         </p>
                                                         {/* <span className="text-sm">Nous conҫevons des modèles d'IA adaptés à vos besoins et critères de perfectionnement.</span> */}
                                                         <span className="text-sm text-right flex flex-col items-center justify-center animate-bounce"> <ChevronUp className="m-0 p-0 w-5 h-5 " /> cliquez pour acceder</span>
@@ -261,16 +384,38 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
                         </div>
 
                     </motion.div>)}
-                    </AnimatePresence>
+            </AnimatePresence>
 
             <div className=" h-auto flex flex-col overflow-hidden relative " id="about">
                 {/* <Separator /> */}
-                <div className={`w-full h-20 absolute  ${sepColor} border-none`} >
+                <div className={`w-full h-24 absolute ${sepColor} border-none opacity-80`} >
 
                 </div>
 
 
-                <Title title="A Propos" className="mb-50 mt-20" dataAos="fade-down" />
+                <div className="relative z-10 mx-auto max-w-6xl px-5 pt-20 text-center">
+                    <Title title="A Propos" className="mb-5" dataAos="fade-down" />
+                    <p className="mx-auto max-w-2xl text-base leading-7 text-[var(--divlab-muted)]" data-aos="fade-up">
+                        DIVLAB transforme les idees techniques en experiences utiles: apprendre, lancer, automatiser et faire grandir des projets avec une execution propre.
+                    </p>
+                    <div className="mt-8 grid gap-3 md:grid-cols-3">
+                        {[
+                            { icon: Code2, label: "Web & Cloud", value: "produits scalables" },
+                            { icon: BrainCircuit, label: "IA appliquee", value: "modeles utiles" },
+                            { icon: GraduationCap, label: "Training", value: "competences mesurables" },
+                        ].map((item) => (
+                            <div key={item.label} className="divlab-glass divlab-card-hover flex items-center gap-3 rounded-2xl p-4 text-left">
+                                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-400/15 text-cyan-300">
+                                    <item.icon size={22} />
+                                </div>
+                                <div>
+                                    <p className="text-sm uppercase text-[var(--divlab-muted)]">{item.label}</p>
+                                    <p className="font-bold">{item.value}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 <div className="absolute h-full w-full overflow-hidden" >
                     <RippleGrid
@@ -287,7 +432,7 @@ const About = ({ themeAbout, sepColor, textCol }: AboutProps) => {
 
                     />
                 </div>
-                <div className="mb-50 px-5 md:px-15">
+                <div className="relative z-10 mb-36 px-5 pt-14 md:px-15">
                     <AboutQuestions questions={Questions} questionHome={QuestionsHome} textCol={textCol} />
                 </div>
             </div>

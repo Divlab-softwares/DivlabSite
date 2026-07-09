@@ -11,7 +11,7 @@ const teamMembers = [
     },
     {
         id: "2",
-        name: "TSAGUE GOMO EUGENE JUNIOR",
+        name: "TSAGUE EUGENE",
         role: "UX/UI designer",
         image: "/assets/team/junior.jpg",
         bio: "Entrepreuneur aguerrit avec de l'experience professionnelle en tant que designer web | Fondateur de John Tech"
@@ -65,30 +65,44 @@ const teamMembers = [
         image: "/assets/team/raoult.jpg",
         bio: "Graphiste et photograph talentueux | Fondateur de  Valor Nexus"
     },
-   
+
     // ... more members
 ];
 
 export default function TeamPage() {
     return (
-        <div className="relative h-fit" id="team-section">
+        <div className="divlab-section-shell relative h-fit overflow-hidden py-16" id="team-section">
+            <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[var(--divlab-bg)] to-transparent" />
+            <div className="absolute left-1/2 top-12 h-56 w-[70%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(245,197,66,0.18),transparent_65%)] blur-2xl" />
             <FallBeamBackground
                 lineCount={40}
                 beamColorClass="blue-400"
 
                 className="h-full w-full absolute top-0 left-0 "
             />
-            <TeamCarousel
-                members={teamMembers}
-                title="EQUIPE DIVLAB"
-                titleColor="blue"
-                titleSize="xl"
-                // infoTextColor="black"
-                autoPlay={0}
-                onMemberChange={(member, index) => {
-                    console.log('Active member:', member.name);
-                }}
-            />
+            <div className="relative z-10 mx-auto max-w-7xl px-5">
+                <div className="mx-auto mb-8 max-w-3xl text-center">
+                    <span className="inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-sm font-bold uppercase text-amber-200">
+                        Fondateurs & talents cles
+                    </span>
+                    <p className="mt-4 text-[var(--divlab-muted)]">
+                        Une equipe presentee comme un socle: technique, design, data et vision produit.
+                    </p>
+                </div>
+                <div className="relative rounded-[2rem] border border-amber-300/20 bg-gradient-to-b from-amber-300/10 via-white/5 to-blue-500/10 p-2 shadow-[0_30px_90px_rgba(0,0,0,0.28)]">
+                    <TeamCarousel
+                        members={teamMembers}
+                        title="EQUIPE DIVLAB"
+                        titleColor="blue"
+                        titleSize="xl"
+                        autoPlay={0}
+                        className="rounded-[2rem]"
+                        onMemberChange={(member, index) => {
+                            console.log('Active member:', member.name);
+                        }}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

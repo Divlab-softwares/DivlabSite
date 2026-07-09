@@ -9,7 +9,7 @@ import {
 } from "@/app/Components/lightswind/hover-card";
 
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/app/Components/lightswind/button"
 import { Card, CardHeader, CardContent, CardTitle, CardDescription, CardFooter } from "@/app/Components/lightswind/card"
 import FormationNavBar from "@/app/Components/FormationNavBar"
@@ -22,7 +22,7 @@ import {
     CollapsibleContent
 } from "@/app/Components/lightswind/collapsible";
 import { v4 as uuidv4 } from "uuid";
-import { ArrowDown, ChevronLeft, ClosedCaption, Home, Moon, Search, SearchX, Share, Sun, User, UserCircle, X } from "lucide-react"
+import { ArrowDown, BarChart3, BookOpen, ChevronLeft, ExternalLink, Home, Moon, Search, Share, Sun, Users, Video, X } from "lucide-react"
 import Title from "@/app/Components/Title";
 import StripesBackground from '@/app/Components/lightswind/StripesBackground';
 import { Website, IA, design, Papers } from '@/app/data_restructured.js'
@@ -57,14 +57,51 @@ function getSupabasePublicLink(path: string, bucket: string) {
     return bucketUrl + path;
 }
 
+type Courses = {
+    id: string;
+    title: string;
+    description: string;
+    domain: string;
+    state: string;
+    roomCode: string;
+    date_start: Date;
+    date_end: Date;
+    type: string;
+    time: number;
+    price: number;
+    trainerId: string;
+    trainer: {
+        user: {
+            id: string;
+            name: string;
+            email: string;
+            image?: string | null;
+        };
+        valid: boolean;
+        reject: boolean;
+    };
+    createdAt: Date;
+    updatedAt: Date;
+    language: string;
+    currency: string;
+    frontCover: string;
+    backCover: string;
+};
 
-const Services = () => {
+type Props = {
+    initialRankedCourses?: Courses[];
+};
+
+const Services = ({ initialRankedCourses }: Props) => {
 
 
     interface CategoryScore {
         category: string;
         score: number; // 1 point = 1 mot-clé trouvé
     }
+
+
+
 
     interface Formation {
         id: number;
@@ -87,11 +124,13 @@ const Services = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
 
     const [OnlineFormations, setOnlineFormations] = useState<Formation[]>([]);
+    const [OnlineCourses, setOnlineCourses] = useState<Formation[]>([]);
     const [searchCoursesResult, setSearchCoursesResult] = useState<Formation[]>([]);
     const [searchCoursesResultCurrent, setSearchCoursesResultCurrent] = useState<Formation[]>([]);
     const [displayedFormations, setDisplayedFormations] = useState<Formation[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const rankedCourses = initialRankedCourses || [];
 
     // Chargement des formations
     useEffect(() => {
@@ -140,6 +179,16 @@ const Services = () => {
             isMounted = false; // annule les setState après un démontage
         };
     }, []);
+
+    const featuredStats = useMemo(() => {
+
+        return {
+            totalCourses: rankedCourses.length,
+            freeCourses: rankedCourses.filter((course) => course.price === 0).length,
+            premiumCourses: rankedCourses.filter((course) => course.price > 0).length,
+            videoCourses: rankedCourses.filter((course) => course.type === "video").length
+        };
+    }, [rankedCourses]);
 
 
     // 🔹 Synchroniser `searchCoursesResult` quand `onlineFormations` change
@@ -248,6 +297,14 @@ const Services = () => {
     const totalPages = Math.ceil(searchCoursesResult.length / itemsPerPage);
     const totalPaperPages = Math.ceil(searchPapersResult.length / itemsPerPaperPage);
     const [signResult, setSignResult] = useState<SignResult | null>(null);
+    const freeCoursesCount = OnlineFormations.filter((course) => course.classe?.toLowerCase().includes("free") || course.classe?.toLowerCase().includes("gratuit")).length;
+    const premiumCoursesCount = OnlineFormations.filter((course) => course.classe?.toLowerCase().includes("premium")).length;
+    const trainHighlights = [
+        { label: "Cours synchronises", value: featuredStats.totalCourses || "API", icon: BookOpen },
+        { label: "Formations gratuites", value: featuredStats.freeCourses || "-", icon: Users },
+        { label: "Parcours premium", value: featuredStats.premiumCourses || "-", icon: BarChart3 },
+        { label: "Videos & lecons", value: featuredStats.videoCourses || "YouTube", icon: Video },
+    ];
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -920,7 +977,6 @@ const Services = () => {
     // const router = useRouter();
 
     function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>, state: string) {
-        console.log("user", User)
 
 
         e.stopPropagation();
@@ -961,7 +1017,7 @@ const Services = () => {
     }
 
     return (
-        <article className="relative flex flex-col h-screen" >
+        <article className={`relative flex h-screen flex-col overflow-hidden ${theme === "garden" ? "divlab-light" : "divlab-dark"} divlab-section-shell`} >
             {/* {notif && (
                 <PaymentNotification
                     key={notif.key}
@@ -977,7 +1033,11 @@ const Services = () => {
                 notifications={notifications}
                 removeNotification={removeNotification}
             />
-            <button onClick={() => setThemes()} className="overflow-hidden w-fit fixed bottom-2 right-2 z-50 bg-gray-800 text-white  rounded-full shadow-lg transition-all duration-500 hover:scale-106 hover:w-15 border-gray-700 border">
+            <button
+                onClick={() => setThemes()}
+                aria-label={theme === "garden" ? "Activer le theme sombre" : "Activer le theme clair"}
+                className="divlab-theme-toggle fixed bottom-4 right-4 z-50 flex h-12 w-24 items-center rounded-full p-1 transition-all duration-500 hover:scale-105"
+            >
 
                 {theme === "garden" ? (
                     <motion.div
@@ -986,7 +1046,7 @@ const Services = () => {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: 20, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeIn" }}
-                        className="py-[5px] px-2 rounded-full relative w-full flex flex-row justify-start bg-gray-500"><Sun size={18} /></motion.div>)
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-amber-500 shadow-lg"><Sun size={18} /></motion.div>)
                     : (
                         <motion.div
                             key={theme}
@@ -994,15 +1054,15 @@ const Services = () => {
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: 20, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeIn" }}
-                            className="py-[5px] px-2 rounded-full bg-black relative flex flex-row w-full justify-end"><Moon size={18} /></motion.div>)}
+                            className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#071421] text-cyan-300 shadow-lg"><Moon size={18} /></motion.div>)}
 
             </button>
 
             <FormationNavBar />
-            <div className="w-full 9/100 md:h-6/100 p-1 flex flex-col md:flex-row items-end  md:items-center md:justify-center gap-2  border border-transparent shadow-sm backdrop-blur-lg" data-theme={`${theme}`}>
-                <div className="relative w-full h-1/2 md:h-full bg-white/30  gap-1 flex flex-row items-center justify-center  rounded-2xl">
+            <div className="divlab-glass mx-2 mt-2 flex w-[calc(100%-1rem)] flex-col items-end gap-2 rounded-2xl p-2 md:h-[7%] md:flex-row md:items-center md:justify-center" data-theme={`${theme}`}>
+                <div className="relative flex h-12 w-full flex-row items-center justify-center gap-1 rounded-2xl bg-white/80 dark:bg-white/20">
 
-                    <Input onKeyDown={handleKeyDown} type="text" value={searchData} className="bg-blue-200 w-full h-full  hover:bg-blue-300 text-gray-800" onChange={handleChange} placeholder="Vous cherchez une formation ? ..." data-theme={`${theme}`} />
+                    <Input onKeyDown={handleKeyDown} type="text" value={searchData} className="h-full w-full rounded-2xl border-none bg-white/80 text-gray-800 outline-none hover:bg-white" onChange={handleChange} placeholder="Vous cherchez une formation ? ..." data-theme={`${theme}`} />
                     <div className="absolute flex flex-row gap-1 right-2 top-1/2 transform -translate-y-1/2">
                         <button className="transition-all duration-200 hover:bg-red-300 rounded-md p-1" onClick={clearSearch} > <X size={18} /></button>
                         <button onClick={handleSubmit} className="transition-all duration-200 hover:bg-blue-400 rounded-md p-1"><Search size={18} /></button>
@@ -1011,7 +1071,7 @@ const Services = () => {
                     {/* <Button onClick={handleSubmit} type="submit" variant="ServicesSearch" className="h-full" >Rechercher</Button> */}
 
                 </div>
-                <div className="w-100 h-1/2 md:h-full rounded-xl flex flex-row items-center justify-end gap-2  px-2 bg-white/30 " data-theme={`${theme}`}>
+                <div className="flex h-12 w-full flex-row items-center justify-end gap-2 rounded-2xl bg-white/30 px-2 md:w-[28rem]" data-theme={`${theme}`}>
                     <div className="flex flex-row items-center justify-center h-full  font-medium">
                         {session ? (
                             <div className="flex flex-row items-center justify-center gap-1">
@@ -1091,8 +1151,36 @@ const Services = () => {
                         {/* <AppSidebar /> */}
                         <div className={`flex flex-col   ${sideBar ? "md:w-3/4" : "md:w-full w-full"}  transition-all duration-300 h-full flex-wrap md:flex-nowrap  `}>
                             {/* <SidebarTrigger size="sm" className="font-bold w-fit" /> */}
-                            <div className="h-full w-full overflow-auto space-y-4  scroll-smooth">
-                                <hr className="mb-4" />
+                            <div className="h-full w-full overflow-auto space-y-4 scroll-smooth px-2 pb-8">
+                                <section className="relative mx-auto mb-6 mt-4 max-w-7xl overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-cyan-500/18 via-white/8 to-amber-300/12 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.24)] md:p-8">
+                                    <div className="divlab-grid-mask absolute inset-0 opacity-25" />
+                                    <div className="relative z-10 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-center">
+                                        <div>
+                                            <span className="inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-bold uppercase text-cyan-200">
+                                                Catalogue DIVLAB
+                                            </span>
+                                            <h1 className="mt-5 text-4xl font-black leading-tight md:text-6xl">
+                                                Services, formations et produits numeriques dans un meme espace.
+                                            </h1>
+                                            <p className="mt-4 max-w-3xl text-[var(--divlab-muted)]">
+                                                Recherchez une ressource, commandez un site, explorez les offres IA ou accedez a DIVLAB TRAIN selon votre besoin.
+                                            </p>
+                                            <div className="mt-6 flex flex-wrap gap-3">
+                                                <Link href="#formations" className="rounded-full bg-white px-5 py-3 font-bold text-[#071421] transition hover:-translate-y-1">Voir les formations</Link>
+                                                <Link href="#solutions web" className="rounded-full border border-white/20 bg-white/10 px-5 py-3 font-bold text-white transition hover:-translate-y-1">Commander un service</Link>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {trainHighlights.map((item) => (
+                                                <div key={item.label} className="divlab-glass rounded-2xl p-4">
+                                                    <item.icon className="mb-4 text-cyan-300" size={22} />
+                                                    <p className="text-2xl font-black">{item.value}</p>
+                                                    <p className="text-xs uppercase text-[var(--divlab-muted)]">{item.label}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
                                 <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u>
 
                                 {/* Zone des formations en e-book*/}
@@ -1554,58 +1642,76 @@ const Services = () => {
 
                                 {/* Zone des formations en ligne */}
 
-                                <div id="formationsOnline" className="flex flex-row h-fit  md:p-4 space-y-4 ">
-                                    <HoverCard
-                                        openDelay={100}
-                                        closeDelay={0}
-                                        NewClassName="w-full h-fit "
-                                    >
-                                        <HoverCardTrigger asChild >
-                                            <div
-                                                className="flex flex-row relative h-fit  flex-wrap md:flex-nowrap justify-center w-full  rounded-3xl p-4 md:space-x-20 md:ml-2  shadow-[inset_7px_-7px_80px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)]"
-                                            >
-                                                <StripesBackground
-                                                    position="left"
-                                                    width="w-full"
-                                                    height="h-full"
-                                                    opacity="opacity-50"
-                                                    className='rounded-3xl z-2'
-                                                />
-                                                <div className="w-full md:w-1/3 relative h-60 hidden md:flex items-center justify-center rounded-3xl shadow-[0_5px_20px_rgba(0,200,255,0.6)] ">
-                                                    <Image height={40} width={50} src="/assets/indisponible.svg" alt="Formations en ligne" className="  w-full h-full shadow-[inset_0_0_80px_rgba(0,0,0,0.6)] rounded-3xl "></Image>
-
-                                                </div>
-
-                                                <div className="flex flex-col gap-3 h-fit md:w-2/3 w-full ">
-                                                    <Card className="w-100% relative h-full rounded-4xl border-none flex flex-col justify-center">
-                                                        <CardHeader>
-                                                            <CardTitle className=" text-3xl uppercase"> Formation en Ligne | DIVLAB train</CardTitle>
-                                                            <hr />
-                                                            <CardDescription><i><b>DIVLAB train era bientot connecte aux services DIVLAB, mais pour le moment vous y avez access sur le lien : https://train.divlabs-tech.com</b></i></CardDescription>
-
-                                                        </CardHeader>
-                                                        <CardContent className="">
-
-                                                            <p><i><b>indisponible pour le moment...</b></i></p>
-                                                        </CardContent>
-                                                        <CardFooter className="flex flex-row  space-x-2">
-
-                                                            <Button className="-z-2 text-white rounded-xl w-auto md:w-2/3 bg-blue-500  shadow-4xl  transition-transform duration-400 hover:scale-99  hover:translate-y-1">
-                                                                Veuillez patienter...</Button>
-                                                            <Button className="rounded-xl h-fit hover:w-1/3 w-12 hover:shadow-lg bg-linear-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold ">
-                                                                <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a></Button>
-
-                                                        </CardFooter>
-                                                    </Card>
-
-                                                </div>
+                                <div id="formationsOnline" className="flex h-fit flex-row space-y-4 md:p-4">
+                                    <div className="divlab-glass relative flex h-fit w-full flex-wrap justify-center overflow-hidden rounded-[2rem] p-4 md:ml-2 md:flex-nowrap md:space-x-8" >
+                                        <div className="divlab-grid-mask absolute inset-0 opacity-25" />
+                                        <div className="relative hidden h-80 w-full overflow-hidden rounded-[1.6rem] shadow-[0_20px_70px_rgba(0,116,217,0.28)] md:flex md:w-1/3">
+                                            <Image height={640} width={520} src="/assets/projects/divlabTrain.png" alt="DIVLAB TRAIN" className="h-full w-full object-cover"></Image>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/10 to-transparent" />
+                                            <div className="absolute bottom-4 left-4 right-4 text-white">
+                                                <p className="text-sm uppercase text-cyan-200">Plateforme de formation en ligne</p>
+                                                <h3 className="text-3xl font-black">DIVLAB TRAIN</h3>
                                             </div>
-                                        </HoverCardTrigger>
-                                        <HoverCardContent className=" p-2">
-                                            <h4 className="font-medium">Bientot disponible !</h4>
-                                        </HoverCardContent>
-                                    </HoverCard>
+                                        </div>
 
+                                        <div className="relative z-10 flex h-fit w-full flex-col gap-3 md:w-2/3">
+                                            <Card className="w-100% relative flex h-full flex-col justify-center rounded-[1.6rem] border-none bg-transparent">
+                                                <CardHeader>
+                                                    <CardTitle className="text-3xl uppercase md:text-5xl"> Formation en Ligne | DIVLAB TRAIN</CardTitle>
+                                                    <hr />
+                                                    <CardDescription className="text-base leading-7">
+                                                        DIVLAB TRAIN pensee pour aider les formateurs a gerer leurs cours, suivre les apprenants et ameliorer la qualite des parcours avec des tableaux de bord.
+                                                    </CardDescription>
+
+                                                </CardHeader>
+                                                <CardContent className="space-y-5">
+                                                    <div className="grid gap-3 md:grid-cols-4">
+                                                        {trainHighlights.map((item) => (
+                                                            <div key={item.label} className="rounded-2xl border border-white/10 bg-white/8 p-3">
+                                                                <item.icon className="mb-3 text-cyan-300" size={20} />
+                                                                <p className="text-xl font-black">{item.value}</p>
+                                                                <p className="text-xs text-[var(--divlab-muted)]">{item.label}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <div className="grid gap-2 md:grid-cols-3">
+                                                        {(OnlineFormations.length > 0 ? OnlineFormations.slice(0, 3) : displayedFormations.slice(0, 3)).map((course) => (
+                                                            <div key={course.id} className="flex items-center gap-3 rounded-2xl bg-black/10 p-2">
+                                                                <img src={course.img} alt={course.title} className="h-14 w-11 rounded-lg object-cover" />
+                                                                <div className="min-w-0">
+                                                                    <p className="truncate text-sm font-bold">{course.title}</p>
+                                                                    <p className="text-xs text-cyan-300">{course.classe || course.format}</p>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <p className="text-sm leading-6 text-[var(--divlab-muted)]">
+                                                        Les formations sont directement accesible sur DIVLAB TRAIN, vous pouvez y participer et/ou devemir formateur.
+                                                    </p>
+                                                </CardContent>
+                                                <CardFooter className="flex flex-col gap-3 md:flex-row">
+
+
+                                                    <Link href="https://train.divlabs-tech.com" target="_blank" className="font-bold h-12 rounded-xl w-full transition-transform duration-400 hover:scale-105  hover:-translate-y-1 p-0 shadow-4xl">
+                                                        <ShineButton
+                                                            className="w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 bg-linear-to-tr from-white/40 via-cyan-400 to-blue-500 "
+                                                            // disable= {downloading}
+                                                            label={`Acceder a DIVLAB TRAIN `}
+                                                            size="lg"
+                                                            bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
+                                                        // onClick={() => handleDownload(searchCoursesResultCurrent[IdOpen].location, searchCoursesResultCurrent[IdOpen].title)}
+                                                        />
+                                                        {/* <ExternalLink className="ml-2 h-4 w-4" /> */}
+                                                    </Link>
+                                                    <Button className={`rounded-xl h-fit ${sideBar ? "hover:w-1/2" : "hover:w-1/3"}  w-12 hover:shadow-lg bg-linear-to-br from-green-500 via-white/80 to-green-500   shadow-4xl  transition-all duration-400 hover:scale-99   p-0 text-green-900 font-bold `}>
+                                                        <a href="whatsapp://send?phone=237652509674 " className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold"><img src={Whatsapp.src} alt="" className="w-12 h-12 rounded-full " /> Discuter sur whatsapp</a>
+                                                    </Button>
+
+                                                </CardFooter>
+                                            </Card>
+
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {/* Zone des formations en presentiel*/}

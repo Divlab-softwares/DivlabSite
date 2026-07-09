@@ -1,276 +1,124 @@
 import Title from "./Title";
-import { AnimatedOceanWaves } from "@/app/Components/lightswind/AnimatedOceanWaves"
-import { InteractiveGradient } from "@/app/Components/lightswind/interactive-gradient-card"
+import { AnimatedOceanWaves } from "@/app/Components/lightswind/AnimatedOceanWaves";
 import Link from "next/link";
-import Wave from 'react-wavify'
-
+import Wave from "react-wavify";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-    CardContent,
-    CardFooter,
-} from "@/app/Components/lightswind/card";
-import { Button } from "@/app/Components/lightswind/button";
 import Image from "next/image";
-import { useEffect } from "react"
-type servicesProps = {
+import { useEffect } from "react";
+import { ArrowRight, BrainCircuit, Code2, GraduationCap, Palette } from "lucide-react";
 
+type servicesProps = {
     waveColor: string;
     textCol: string;
     theme: string;
     cardCol: string;
+};
 
-}
+const services = [
+    {
+        title: "Formations specialisees",
+        description: "Programmes pratiques en developpement, data science, IA et outils numeriques.",
+        image: "/assets/ImgCarousel/7.jpeg",
+        href: "/Services#formations",
+        accent: "from-amber-300 to-cyan-300",
+        icon: GraduationCap,
+    },
+    {
+        title: "Solutions Web & Cloud",
+        description: "Sites, portfolios, applications et architectures evolutives pour lancer proprement.",
+        image: "/assets/ImgCarousel/2.png",
+        href: "/Services#solutions web",
+        accent: "from-cyan-300 to-blue-500",
+        icon: Code2,
+    },
+    {
+        title: "Intelligence artificielle",
+        description: "Automatisation, prediction, analyse et modeles adaptes aux besoins reels.",
+        image: "/assets/ImgCarousel/13.jpg",
+        href: "/Services#ia",
+        accent: "from-blue-400 to-violet-400",
+        icon: BrainCircuit,
+    },
+    {
+        title: "Design & Creativite",
+        description: "Interfaces, identites visuelles et supports modernes pour rendre vos idees visibles.",
+        image: "/assets/ImgCarousel/4.jpeg",
+        href: "/Services#design",
+        accent: "from-pink-400 to-amber-300",
+        icon: Palette,
+    },
+];
 
-const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
-
+const Services = ({ waveColor, theme }: servicesProps) => {
     useEffect(() => {
         Aos.init({
             duration: 800,
             once: true,
         });
-    })
+    });
 
     return (
-        <div className="flex flex-col items-center justify-center  relative" id="services" data-theme={theme}>
-            <Wave fill={waveColor}
+        <div className="divlab-section-shell relative flex flex-col items-center justify-center overflow-hidden" id="services" data-theme={theme}>
+            <Wave
+                fill={waveColor}
                 paused={false}
-                style={{ display: 'flex' }}
+                style={{ display: "flex" }}
                 options={{
                     height: 20,
                     amplitude: 60,
                     speed: 0.15,
-                    points: 4
+                    points: 4,
                 }}
-                className="transform rotate-180"
+                className="rotate-180"
             />
-            <Title title="Nos Services" dataAos="fade-down" />
-            <p data-aos="fade-right">Voici un aperçu des services que nous proposons.</p>
 
-
-            <div className={` flex flex-row justify-center gap-5 m-5 mt-10 w-full  flex-wrap md:flex-nowrap `}>
-
-                <div className=" h-100% "  data-aos="fade-right ">
-                    <InteractiveGradient
-
-                        color="#4890ff"
-                        glowColor="#ffc40050"
-                        followMouse={true}
-                        hoverOnly={false}
-                        intensity={100}
-                        backgroundColor={cardCol}
-                        width="20rem"
-                        height="full"
-                        borderRadius="2.25rem"
-                        className={`h-full transition  duration-500  ease-in-out hover:border-info hover:scale-105 hover:-translate-y-5 hover:shadow-[0_5px_20px_rgba(0,0,0,0.6)] justify-center h-100% mt-5  shadow-[0_5px_20px_rgba(0,0,0,0.5)] `}>
-
-                        <Card className={`w-100%  relative h-100% rounded-4xl border-none flex flex-col justify-between bg-transparent ${textCol}`}>
-                            <CardHeader>
-                                <div className="mb-5 w-full h-20 rounded-3xl transform duration-300 hover:h-50">
-                                    <Image
-                                        alt=""
-                                        width={320}
-                                        height={420}
-
-                                        className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
-
-                                        src={`/assets/ImgCarousel/7.jpeg`} // https://picsum.photos/500/350?image=${(id + 5) * 11}
-                                    />
-                                </div>
-                                <CardTitle className={``} >Formations specialisées</CardTitle>
-                                <CardDescription >Langages de programmation et Machine learning a portée de main.</CardDescription>
-                                <hr />
-                            </CardHeader>
-                            <CardContent className="">
-                                <p className="">Développez vos compétences avec nos programmes de formation adaptés aux besoins du marché. Nous proposons des parcours pratiques en développement web, cloud computing, data science et intelligence artificielle, conçus pour renforcer votre expertise et accélérer votre carrière.</p>
-                            </CardContent>
-                            <CardFooter className="">
-                                <Button className="rounded-2xl w-5/6 bg-[#fffb00af]  text-md p-0 transition-transform duration-400 hover:scale-99 hover:bg-[#755b06a6] hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
-                                    <Link
-                                        href="/Services"
-                                        onClick={() => {
-                                            if ("/Services".startsWith("/")) {
-                                                window.scrollTo(0, 0);
-                                            }
-                                        }}
-                                        className="w-full h-full p-2"
-                                    >
-
-                                        Voir
-
-                                    </Link></Button>
-                            </CardFooter>
-                        </Card>
-
-                    </InteractiveGradient>
+            <div className="divlab-grid-mask absolute inset-0 opacity-30" />
+            <div className="relative z-10 w-full px-5 py-16 md:px-12">
+                <div className="mx-auto max-w-6xl text-center">
+                    <Title title="Nos Services" dataAos="fade-down" />
+                    <p className="mx-auto mt-3 max-w-2xl text-[var(--divlab-muted)]" data-aos="fade-right">
+                        Une entree plus claire vers les poles DIVLAB: apprendre, construire, automatiser et presenter.
+                    </p>
                 </div>
 
-                <div data-aos="fade-down" className="h-100% ">
-                    <InteractiveGradient
-
-                        color="#1890ff"
-                        glowColor="#1076675d"
-                        followMouse={true}
-                        hoverOnly={false}
-                        intensity={100}
-                        backgroundColor={cardCol}
-                        width="20rem"
-                        height="full"
-                        borderRadius="2.25rem"
-                        className=" h-full transition  duration-500  ease-in-out hover:border-info hover:scale-105 hover:-translate-y-5 hover:shadow-[0_5px_20px_rgba(0,0,0,0.6)] justify-center h-100% mt-5  shadow-[0_5px_20px_rgba(0,0,0,0.5)] ">
-                        <Card className={` w-100% relative h-100% rounded-4xl border-none flex flex-col justify-between  ${textCol}`}>
-                            <CardHeader>
-                                <div className="mb-5 w-full h-20 rounded-3xl bg-gray-500 transform duration-300 hover:h-50">
-                                    <Image
-                                        alt="Website conception Image presentation"
-                                        width={320}
-                                        height={420}
-
-                                        className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
-
-                                        src={`/assets/ImgCarousel/2.png`} // https://picsum.photos/500/350?image=${(id + 5) * 11}
-                                    />
-                                </div>
-                                <CardTitle className="">Solutions Web & Cloud</CardTitle>
-                                <CardDescription>Créez votre identité en ligne via votre propre site web ou portofolio.</CardDescription>
-                                <hr />
-                            </CardHeader>
-                            <CardContent className="">
-                                <p>Nous concevons et déployons des solutions modernes pour vos applications web et cloud. De la création de sites performants à l’intégration de services cloud sécurisés et évolutifs, nous vous aidons à digitaliser vos processus et à gagner en efficacité.</p>
-                            </CardContent>
-                            <CardFooter>
-                                <Button className=" p-0  rounded-2xl w-5/6 bg-[#09a890bd] hover:bg-[#08776671]  text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
-                                    <Link
-                                        href="/Services#solutions web"
-                                        onClick={() => {
-                                            if ("/Services".startsWith("/")) {
-                                                window.scrollTo(0, 0);
-                                            }
-                                        }}
-                                        className="w-full h-full p-2"
-                                    >
-                                        Voir
-
-                                    </Link>
-                                </Button>
-                            </CardFooter>
-                        </Card>
-
-                    </InteractiveGradient>
-                </div>
-
-                <div data-aos="fade-up" className=" h-100%">
-                    <InteractiveGradient
-                        color="#1890ff"
-                        glowColor="#0074d956"
-                        followMouse={true}
-                        hoverOnly={false}
-                        intensity={100}
-                        backgroundColor={cardCol}
-                        width="20rem"
-                        height="fit"
-                        borderRadius="2.25rem"
-                        className="  hover:border-info  h-full transition-transform mt-5 duration-500 hover:scale-105 hover:-translate-y-5 hover:shadow-[0_5px_20px_rgba(0,0,0,0.6)] shadow-[0_5px_20px_rgba(0,0,0,0.5)]">
-                        <Card className={`w-100% relative h-full rounded-4xl border-none flex flex-col justify-between bg-transparent ${textCol}`}>
-                            <CardHeader>
-                                <div className="mb-5 w-full h-20 rounded-3xl bg-gray-500 transform duration-300 hover:h-50">
-                                    <Image
-                                        alt="AI models conception Image presentation"
-                                        width={320}
-                                        height={420}
-
-                                        className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
-
-                                        src={`/assets/ImgCarousel/13.jpg`} // https://picsum.photos/500/350?image=${(id + 5) * 11}
-                                    />
-                                </div>
-                                <CardTitle className="">Intelligence artificielle</CardTitle>
-                                <CardDescription>Decouvrez le monde de l'IA et son fonctionnnent plus que mysterieux.</CardDescription>
-                                <hr />
-                            </CardHeader>
-                            <CardContent className="">
-                                <p>Exploitez la puissance des données grâce à nos solutions en intelligence artificielle. Nous développons des modèles sur mesure pour l’automatisation, la prédiction et l’optimisation, afin de transformer vos données en leviers stratégiques pour votre entreprise.</p>
-                            </CardContent>
-                            <CardFooter>
-                                <Button className="p-0 rounded-2xl w-5/6 bg-[#0181f1d2] hover:bg-[#3b9aecf5]  text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] " >
-                                    <Link
-                                        href="/Services#ia"
-                                        onClick={() => {
-                                            if ("/Services".startsWith("/")) {
-                                                window.scrollTo(0, 0);
-                                            }
-                                        }}
-                                        className="w-full h-full p-2"
-                                    >
-                                        Voir
-
-                                    </Link></Button> </CardFooter>
-                        </Card>
-                    </InteractiveGradient>
-                </div>
-
-                <div data-aos="fade-up" className="h-100% ">
-                    <InteractiveGradient
-
-                        color="#1890ff"
-                        glowColor="#8f0f4459"
-                        followMouse={true}
-                        hoverOnly={false}
-                        intensity={100}
-                        backgroundColor={cardCol}
-                        width="20rem"
-                        height="fit"
-                        borderRadius="2.25rem"
-                        className="h-full hover:border-info transition-transform mt-5 duration-500 hover:scale-105 hover:-translate-y-5 hover:shadow-[0_5px_20px_rgba(0,0,0,0.9)] shadow-[0_5px_20px_rgba(0,0,0,0.5)] ">
-
-                        <Card className={`w-100% relative h-100% rounded-4xl border-none flex flex-col justify-between bg-transparent ${textCol}`}
+                <div className="mx-auto mt-12 grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-4">
+                    {services.map((service, index) => (
+                        <Link
+                            key={service.title}
+                            href={service.href}
+                            onClick={() => window.scrollTo(0, 0)}
+                            className="divlab-glass divlab-card-hover group relative min-h-[430px] overflow-hidden rounded-[2rem]"
+                            data-aos={index % 2 === 0 ? "fade-up" : "fade-down"}
                         >
-                            <CardHeader>
-                                <div className="mb-5 w-full h-20 rounded-3xl bg-gray-500 transform duration-300 hover:h-50">
-                                    <Image
-                                        alt="Design and creativity Image presentation"
-                                        width={320}
-                                        height={420}
-
-                                        className={" object-cover shadow-[0_5px_20px_rgba(0,200,255,0.6)] relative h-full w-full rounded-3xl "}
-
-                                        src={`/assets/ImgCarousel/4.jpeg`} // https://picsum.photos/500/350?image=${(id + 5) * 11}
-                                    />
+                            <div className="relative h-48 overflow-hidden">
+                                <Image
+                                    alt={service.title}
+                                    width={640}
+                                    height={420}
+                                    className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                                    src={service.image}
+                                />
+                                <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${service.accent}`} />
+                            </div>
+                            <div className="flex h-[calc(100%-12rem)] flex-col justify-between p-5">
+                                <div>
+                                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-cyan-200">
+                                        <service.icon size={24} />
+                                    </div>
+                                    <h3 className="text-2xl font-bold">{service.title}</h3>
+                                    <p className="mt-3 leading-7 text-[var(--divlab-muted)]">{service.description}</p>
                                 </div>
-                                <CardTitle className="">Design & Creativite</CardTitle>
-                                <CardDescription>Donnez vie a vos idées et pensées sous forme de visuel attractifs.</CardDescription>
-                                <hr />
-                            </CardHeader>
-                            <CardContent className="">
-                                <p> Donnez vie à vos idées avec des designs modernes et percutants. Notre équipe combine créativité et technologies pour concevoir des interfaces ergonomiques, des identités visuelles uniques et des expériences utilisateurs engageantes.</p>
-                            </CardContent>
-                            <CardFooter>
-                                <Button className={` p-0 rounded-2xl w-5/6 bg-[#f71372cc] hover:bg-[#ff2f86f1] text-md transition-transform duration-400 hover:scale-99  hover:translate-y-1 shadow-[inset_3px_-3px_20px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_50px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)] `} >
-                                    <Link
-                                        href="/Services#design"
-                                        onClick={() => {
-                                            if ("/Services".startsWith("/")) {
-                                                window.scrollTo(0, 0);
-                                            }
-                                        }}
-
-                                        className="w-full h-full p-2"
-                                    >
-                                        Voir
-
-                                    </Link></Button> </CardFooter>
-                        </Card>
-                    </InteractiveGradient>
+                                <span className="mt-6 inline-flex items-center font-bold text-cyan-200">
+                                    Explorer <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+                                </span>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
 
-
-            <div className="relative w-full h-48 rounded overflow-hidden ">
-
+            <div className="relative h-44 w-full overflow-hidden">
                 <AnimatedOceanWaves
                     height="50%"
                     oceanBackground={waveColor}
@@ -278,14 +126,9 @@ const Services = ({ waveColor, textCol, theme, cardCol }: servicesProps) => {
                     backWaveOpacity={0.28}
                     waveDuration={10}
                 />
-
             </div>
-
-
-
-
         </div>
     );
-}
+};
 
 export default Services;

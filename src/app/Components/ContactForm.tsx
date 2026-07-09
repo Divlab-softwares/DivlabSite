@@ -41,35 +41,35 @@ const ContactForm = () => {
 
 
     return (
-        <div className="flex flex-col justify-center  items-align m-10 md:px-[10%] px-[2%]  " id="contact">
+        <div className="divlab-section-shell flex flex-col justify-center px-[2%] py-16 md:px-[10%]" id="contact">
             <Title title="Vos avis et messages" />
 
-            <div className="flex flex-row justify-center items-start h-auto w-full ">
+            <div className="flex h-auto w-full flex-row items-start justify-center">
 
-                <div className='bg-slate-200 relative h-fit md:w-2/5   p-10 m-2 rounded-xl text-black md:flex hidden flex-col border border-info shadow-[0_5px_20px_rgba(0,200,255,0.6)]'>
+                <div className='divlab-glass relative m-2 hidden h-fit flex-col rounded-[2rem] p-10 text-[var(--divlab-text)] md:flex md:w-2/5'>
                     <h1 className='font-extrabold uppercase  text-3xl'> Contactez-nous</h1>
                     <hr />
-                    <p className='text-md mt-5'> Nous sommes la pour vous aider, notre equipe professionnelle vourepondra dans les 4h suivantes</p>
+                    <p className='text-md mt-5 text-[var(--divlab-muted)]'> Nous sommes la pour vous aider, notre equipe professionnelle vous repondra dans les 4h suivantes</p>
 
                     <div className='w-full flex flex-col items-start ml-10 mt-10 pb-5'>
-                        <p className='text-gray-600 font-bold'>Email</p>
+                        <p className='font-bold text-cyan-300'>Email</p>
                         <span className="font-bold text-md  mb-5 mt-1">divlabsoftwares@gmail.com</span>
 
-                        <p className='text-gray-600 font-bold'>Appelez nous</p>
+                        <p className='font-bold text-cyan-300'>Appelez nous</p>
                         <span className="font-bold text-md  mb-5 mt-1">+237 652509674</span>
 
-                        <p className='text-gray-600 font-bold'>Notre adresse</p>
+                        <p className='font-bold text-cyan-300'>Notre adresse</p>
                         <span className="font-bold text-md  mb-5 mt-1">Cameroun | Douala</span>
                     </div>
-                    <div className='absolute rounded-2xl bg-white/20 -bottom-30 -right-6 border border-info shadow-[0_5px_20px_rgba(0,200,255,0.6)] w-45 h-45'>
+                    <div className='absolute -bottom-30 -right-6 z-99 h-45 w-45 rounded-2xl border border-cyan-300/30 bg-white/10 shadow-[0_5px_20px_rgba(0,200,255,0.35)]'>
 
                     </div>
-                    <div className='absolute rounded-2xl bg-white/10 -bottom-50 right-25 border border-info shadow-[0_5px_20px_rgba(0,200,255,0.6)] w-35 h-35'>
+                    <div className='absolute -bottom-50 right-25 h-35 w-35 rounded-2xl border border-amber-300/30 bg-white/10 shadow-[0_5px_20px_rgba(0,200,255,0.25)]'>
 
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit} method="POST" className="relative flex flex-col justify-between w-full  md:w-3/5  h-fit p-10 m-2 border border-info rounded-xl bg-black/80 shadow-[0_5px_20px_rgba(0,200,255,0.6)]">
+                <form onSubmit={handleSubmit} method="POST" className="divlab-glass relative m-2 flex h-fit w-full flex-col justify-between rounded-[2rem] p-10 md:w-3/5">
 
                     <div className='pb-5 flex-col flex items-align justify-center'>
                         <h1 className='font-bold uppercase  text-xl'> Formulaire de contact</h1>
@@ -121,7 +121,7 @@ const ContactForm = () => {
                     <div className="mb-4">
                         <Label htmlFor="text" className='h-100'>Votre message</Label>
                         <Textarea rows={10} required name="message" placeholder="Votre Message" value={formData.message}
-                            onChange={handleChange} className='bg-white/40 text-black' />
+                            onChange={handleChange} className='bg-white/40 text-black text-md' />
                         <ValidationError
                             prefix="Message"
                             field="message"
@@ -130,7 +130,7 @@ const ContactForm = () => {
                     </div>
 
                     <div className='flex justify-center w-full mt-5'>
-                        <Button type="submit" variant='form' disabled={state.submitting} onClick={() => handleClick()} size="lg" className='form w-full'> Soumettre</Button>
+                        <Button type="submit" variant='form' disabled={state.submitting} onClick={() => handleClick()} size="lg" className='form w-full rounded-xl bg-cyan-300 font-black text-[#071421] hover:bg-cyan-200'> Soumettre</Button>
                     </div>
                     <div className={`w-full p-2  h-5 ${MessageColor} text-center text-black absolute bottom-0 left-0 rounded-b-xl flex flex-col justify-center items-center font-bold`}>  {succeed && <p>{succeed}</p>}</div>
                 </form>

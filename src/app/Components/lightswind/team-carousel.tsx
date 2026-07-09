@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence, TargetAndTransition} from 'framer-motion';
+import { motion, AnimatePresence, TargetAndTransition } from 'framer-motion';
 import { cn } from '../lib/utils'; // Assuming this utility correctly merges class names
 
 export interface TeamMember {
@@ -323,7 +323,7 @@ export const TeamCarousel: React.FC<TeamCarouselProps> = ({
             titleClassName
           )}
           style={{
-            backgroundImage: `linear-gradient(to bottom, ${titleColor} 70%, transparent 80%)`,
+            backgroundImage: `linear-gradient(to bottom, ${titleColor} 70%, via ${titleColor} 50%, transparent 95%)`,
             WebkitBackgroundClip: 'text', // Force le clip sur le moteur Webkit
             backgroundClip: 'text'
           }}

@@ -85,27 +85,28 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
     return (
 
 
-        <div className="flex md:flex-row flex-col-reverse  justify-between text-white w-full">
-            <div className="flex" data-aos="fade-right">
+        <div className="grid w-full gap-8 text-[var(--divlab-text)] lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.82fr)]">
+            <div className="divlab-glass relative flex overflow-hidden rounded-[2rem] p-3" data-aos="fade-right">
+                <div className="divlab-grid-mask pointer-events-none absolute inset-0 opacity-40" />
                 <MyCarousel questions={questions} questionHome={questionHome} index={ind} setIndex={setInd} />
             </div>
 
 
-            <div className="flex flex-row flex-start h-fit md:pl-4 relative" data-aos="fade-left">
+            <div className="relative flex h-fit flex-row flex-start md:pl-4" data-aos="fade-left">
                 {/* Colonne des questions */}
                 <motion.div
-                    className=" flex-row hidden md:flex "
+                    className="hidden flex-row md:flex"
                     animate={{ x: selected != -1 && !isMd ? "-100%" : "0%" }}
                     transition={isMd ? { duration: 0 } : { type: "spring", stiffness: 70, damping: 15 }}>
-                    <div className={`flex flex-col  items-center space-y-3 z-1 md:space-y-4 ${selected != -1 ? " md:transform  md:duration-500" : ""}`}>
+                    <div className={`z-1 flex flex-col items-center space-y-3 md:space-y-4 bg-black/50 rounded-2xl ${selected != -1 ? " md:transform  md:duration-500" : ""}`}>
 
                         {questions.map((item, index) => (
                             <div key={item.id} className="w-full" onClick={() => handleIndexToggle(index)}>
                                 <Collapsible className=" " open={openId === item.id.toString()} onOpenChange={() => handleToggle(item.id.toString())}>
 
                                     <CollapsibleTrigger asChild className="">
-                                        <div className={` flex justify-between shadow-lg  hover:shadow-lg items-center  font-medium rounded-3xl w-full  text-md  ${selected == index ? "bg-gradient-to-br  from-blue-600 via-blue-500 to-gray-900 transform transition-transform duration-300 scale-98 " : "bg-gradient-to-br  from-gray-600 to-gray-900 transform transition-transform duration-300 hover:scale-106"}   `} >
-                                            <div className={`  hover:bg-white/10   w-full rounded-4xl px-4 py-2 `}>
+                                        <div className={`flex w-full items-center justify-between rounded-2xl border text-md font-medium shadow-lg ${selected == index ? "border-cyan-300/60 bg-cyan-400/18 text-cyan-50" : "border-white/10 bg-white/8 transition duration-300 hover:scale-[1.03] hover:bg-white/14"}`}>
+                                            <div className="w-full rounded-2xl px-4 py-3 hover:bg-white/10">
                                                 {item.value}
                                                 <Button variant="perso" size="sm" >
 
@@ -126,11 +127,11 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
                                             initial={{ opacity: 0, y: 50 }}
                                             animate={{ opacity: 1, y: 10 }}
                                             transition={{ duration: 0.4, ease: "easeInOut" }}
-                                            className=" h-60 bg-gradient-to-br  from-gray-700 to-gray-800 rounded-2xl shadow-lg "
+                                            className=" h-60 bg-gradient-to-br  from-gray-700 to-gray-800 rounded-2xl shadow-lg"
                                         >
                                             <SpotlightCard className="custom-spotlight-card whitespace-normal h-full rounded-2xl w-auto" spotlightColor="rgba(0, 17, 255, 0.2)">
                                                 <h2 className="text-xl font-bold mb-2">{selected == -1 ? questionHome.value : questions[selected].value}</h2>
-                                                <p className=" text-md whitespace-pre-line">{selected == -1 ? questionHome.answer : questions[selected].answer}</p>
+                                                <p className=" text-md whitespace-pre-line p-4">{selected == -1 ? questionHome.answer : questions[selected].answer}</p>
                                             </SpotlightCard>
                                         </motion.div>
                                     </CollapsibleContent>
@@ -152,7 +153,7 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
 
 
                     </div>
-                    <div className=" mx-3 w-3 h-auto flex bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full">
+                    <div className="mx-3 flex h-auto w-2 rounded-full bg-gradient-to-b from-cyan-300 via-blue-500 to-amber-300">
 
                     </div>
                 </motion.div>
@@ -170,8 +171,8 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
                                     <Collapsible className="w-full " open={openId === item.id.toString()} onOpenChange={() => handleToggle(item.id.toString())}>
 
                                         <CollapsibleTrigger asChild className="">
-                                            <div className={` flex justify-between   shadow-lg  hover:shadow-lg items-center  font-medium rounded-4xl text-md  ${selected == index ? "bg-gradient-to-br  from-blue-600 via-blue-500 to-gray-900 transform transition-transform duration-300 scale-98 " : "bg-gradient-to-br  from-gray-600 to-gray-900 transform transition-transform duration-300 hover:scale-106"}   `} >
-                                                <div className={`   flex justify-between hover:bg-white/10 items-center pl-4 py-3 w-full h-full rounded-4xl `}>
+                                            <div className={`flex items-center justify-between rounded-2xl border text-md font-medium shadow-lg ${selected == index ? "border-cyan-300/60 bg-cyan-400/18 text-cyan-50" : "border-white/10 bg-white/8 transition duration-300 hover:scale-[1.02] hover:bg-white/14"}`}>
+                                                <div className="flex h-full w-full items-center justify-between rounded-2xl py-3 pl-4 hover:bg-white/10">
                                                     {item.value}
                                                     <Button variant="perso" size="sm" >
 
@@ -218,12 +219,12 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
 
 
                         </div>
-                        <div className=" mx-3 w-5 md:w-2 h-auto flex bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full">
+                        <div className="mx-3 flex h-auto w-2 rounded-full bg-gradient-to-b from-cyan-300 via-blue-500 to-amber-300 md:w-2">
 
                         </div>
                     </div>
                 </div>
-                
+
 
 
                 {/* Zone de réponse */}
@@ -240,7 +241,7 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
                             transition={{ duration: 0.6, ease: "easeInOut" }}>
 
                             <div className=" w-full h-150  ">
-                                <SpotlightCard data-theme="night" className="custom-spotlight-cardrelative  backdrop-blur-md bg-white/5 p-0 relative w-full h-full  rounded-2xl " spotlightColor="rgba(0, 116, 217, 1)">
+                                <SpotlightCard data-theme="night" className="custom-spotlight-cardrelative divlab-glass relative h-full w-full rounded-[2rem] p-0" spotlightColor="rgba(0, 116, 217, 1)">
                                     <AnimatePresence mode="sync">
                                         <motion.div
 
@@ -250,7 +251,7 @@ function FAQ({ questions, questionHome, textCol }: AboutQuestionsProps) {
                                             exit={{ opacity: 0, x: "-10%" }}
                                             transition={{ type: "spring", stiffness: 70, damping: 15 }}
 
-                                            className={`w-full h-50   rounded-2xl  absolute ${textCol}`}
+                                            className={`absolute h-50 w-full rounded-2xl ${textCol}`}
                                         >
                                             {/* <InteractiveCard > */}
                                             <div className="h-full relative  p-4">

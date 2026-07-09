@@ -12,8 +12,8 @@ import Services from "./Components/Services";
 // import Footer from "./Components/Footer";
 import Footer1 from "./Components/Footer1";
 import TeamPage from "./Components/TeamPage";
-// import { Moon, Sun } from "lucide-react";
-// import { AnimatePresence, motion } from "motion/react";
+import { Moon, Sun } from "lucide-react";
+import { motion } from "motion/react";
 
 // import img1 from "@/app;
 //   import img2 from "@/app/assets/ImgCarousel/2.jpg";
@@ -83,7 +83,7 @@ const setThemes = () => {
     setWaveColor("rgba(255,255,255,0.8)")
     setTextCol("text-black")
     setCardCol("#ffffff")
-    setCardColor("bg-gray-600")
+    setCardColor("bg-white/90")
     setThemeRealisations("corporate")
   } else {
     setThemeAbout("sunset")
@@ -98,9 +98,13 @@ const setThemes = () => {
 }
 
   return (
-      <div className="App flex  flex-col h-min-screen" data-theme={`${theme}`}>
+      <div className={`App flex flex-col h-min-screen ${theme === "garden" ? "divlab-light" : "divlab-dark"}`} data-theme={`${theme}`}>
         {/* <Test /> */}
-        {/* <button onClick={() => setThemes()} className="overflow-hidden w-fit fixed bottom-2 right-2 z-50 bg-gray-800 text-white  rounded-full shadow-lg transition-all duration-500 hover:scale-106 hover:w-15 border-gray-700 border-1 ">
+        <button
+          onClick={() => setThemes()}
+          aria-label={theme === "garden" ? "Activer le theme sombre" : "Activer le theme clair"}
+          className="divlab-theme-toggle fixed bottom-4 right-4 z-50 flex h-12 w-24 items-center rounded-full p-1 transition-all duration-500 hover:scale-105"
+        >
 
           {theme === "garden" ? (
             <motion.div
@@ -109,7 +113,7 @@ const setThemes = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 20, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeIn" }}
-              className="py-[5px] px-2 rounded-full relative w-full flex flex-row justify-start bg-gray-500"><Sun size={18} /></motion.div>)
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-amber-500 shadow-lg"><Sun size={18} /></motion.div>)
             : (
               <motion.div
                 key={theme}
@@ -117,9 +121,9 @@ const setThemes = () => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 20, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeIn" }}
-                className="py-[5px] px-2 rounded-full bg-black relative flex flex-row w-full justify-end"><Moon size={18} /></motion.div>)}
+                className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#071421] text-cyan-300 shadow-lg"><Moon size={18} /></motion.div>)}
 
-        </button> */}
+        </button>
 
         <Navbar translateY={navbarTranslateY} />
 

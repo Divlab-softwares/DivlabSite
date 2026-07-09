@@ -1,129 +1,180 @@
 import Title from "./Title";
-import Carousel3D, { type Carousel3DItem } from "@/app/Components/lightswind/carousel-3d";
-import { DotBackground } from "@/app/Components/lightswind/grid-dot-background"
+import Image from "next/image";
+import { ArrowUpRight, Layers } from "lucide-react";
+import { motion } from "motion/react";
 
-const items: Carousel3DItem[] = [
+const items = [
     {
         id: 1,
-        title: "Site vitrine",
-        brand: "Developpement Web",
-        description: "Site concu par les ingenieurs de Divlab afin de vous faciliter l'acces au different produits et offres.",
-        tags: ["React", "Next.js", "HTML/scss", "Tailwindcss"],
-        imageUrl: "/assets/projects/4.png",
-        link: "/projects/firecat"
-    },
-    {
+        title: "DIVLAB TRAIN",
+        brand: "FORMATIONS",
+        description: "DIVLAB-train est une plateforme gratuite et open-source construite sur Next.js et Tailwind CSS, conçue pour aider les formateurs, éducateurs et créateurs de cours à offrir des expériences d'apprentissage de haute qualité tout en augmentant leurs revenus.\nPlutôt que d'être un simple tableau de bord administratif, DIVLAB-train fournit aux formateurs les outils dont ils ont besoin pour gérer leurs cours, engager les apprenants et créer des relations durables. En combinant les technologies web modernes avec des tableaux de bord intuitifs, elle permet aux formateurs de se concentrer sur ce qui compte vraiment : enseigner et accroître leur impact.",
+        tags: ["Dashboard", "Formations", "Lives"],
+        imageUrl: "/assets/projects/divlabTrain.png",
+        url: "https://train.divlabs-tech.com/"
+    }, {
         id: 2,
-        title: "IA reconnaissance vocale",
+        title: "DIVLAB AI",
         brand: "Machine Learning",
-        description: "Une IA de reconnaissance vocale concu pour assister des projets personeles et les taches de bureau specifiques.",
-        tags: ["Python", "Jupiter", "Pycharm", "Sqlite 3"],
-        imageUrl: "/assets/projects/2.png",
-        link: "/projects/firecat"
+        description: "Projet d'IA de DIVLAB base sur des modeles LLM.",
+        tags: ["Python", "Jupyter", "Sqlite"],
+        imageUrl: "/assets/projects/divlabAi.png",
+        url: "https://github.com/Divlab-softwares/Divlab-AI"
     },
     {
         id: 3,
-        title: "Portofolio moderne personalisable",
-        brand: "Developpement web",
-        description: "Un portofolio modifiable a votre guise grace a une architecture bien concu et agreable a faconner.",
-        tags: ["React", "JSX", "Vs code"],
+        title: "Portfolios moderne",
+        brand: "Portfolio",
+        description: "Conception de plusieurs portfolios modernes adaptes aux besoisn des utilisateurs. Accessibles depuis notre repertoire Github",
+        tags: ["Portfolio", "UX", "UI"],
         imageUrl: "/assets/projects/5.png",
-        link: "/projects/firecat"
+        url: "https://github.com/Divlab-softwares"
     },
     {
         id: 4,
         title: "Site web deal flow",
         brand: "Developpement web",
-        description: "Site web concu pour la presentation et la vente des articles commestibles , recommendes par les restaurants.",
-        tags: ["React", "JSX", "Vs code"],
-        imageUrl: "/assets/projects/6.png",
-        link: "/projects/firecat"
+        description: "Plateforme de presentation et vente d'articles recommandes par des restaurants.",
+        tags: ["React", "Commerce", "UX"],
+        imageUrl: "/assets/projects/dealFlow.png",
+        url: "https://github.com/Divlab-softwares"
     },
     {
         id: 5,
-        title: "DIVLAB Client Dashboard",
-        brand: "Developpement web",
-        description: "ERP concu pour la gestion complete des activites de DIVLAB. Il possede tous les elements neccessaires.",
-        tags: ["React", "JSX", "Vs code"],
-        imageUrl: "/assets/projects/1.png",
-        link: "/projects/firecat"
-    }
+        title: "Ecosystem Divlab",
+        brand: "Plateforme multi outils",
+        description: "Plateforme locale de mini-outils web organisés par collections DIVLAB. Le projet est volontairement statique, rapide et compatible avec GitHub Pages ou tout hébergeur relié à GitHub.",
+        tags: ["Dashboard", "React", "Outils rapides"],
+        imageUrl: "/assets/projects/ecosystemDivlab.png",
+        url: "https://ecosystem.divlabs-tech.com/"
+    },
+    {
+        id: 6,
+        title: "Site vitrine DIVLAB",
+        brand: "Developpement Web",
+        description: "Site concu par les ingenieurs de Divlab afin de faciliter l'acces aux produits et offres principales de DIVLAB.",
+        tags: ["React", "Next.js", "Tailwind"],
+        imageUrl: "/assets/projects/siteVitrine.png",
+        url: "https://divlabs-tech.com"
+    },
+    {
+        id: 7,
+        title: "Genuka trust",
+        brand: "Dashboard (projet due a un hackathon)",
+        description: "Genuka Trust est une application intelligente qui devrait etre connectée à la plateforme Genuka, conçue pour automatiser entièrement la collecte, la gestion et la valorisation des avis clients.\nCe projet resulte de la participation de DIVLAB au hackathon lance par Genuka. \n Nous n'avons aucun droit de propriete sur la PME Genuka, ce projet est presente a titre d'exemple et de demonstration de nos competences en developpement web et mobile",
+        tags: ["Hackathon", "Genuka", "Solutions PME"],
+        imageUrl: "/assets/projects/genukaTrust.png",
+        url: "https://genuka-trust.vercel.app/"
+    },
+    {
+        id: 8,
+        title: "Mobile Zone AR Dashboard",
+        brand: "Version mobile WebXR du dashboard AR, sans marqueur ArUco.",
+        description: "Le telephone utilise le tracking AR natif du navigateur pour reconnaitre l'espace. L'utilisateur vise une surface, touche l'ecran, et le dashboard est ancre dans le monde reel.",
+        tags: ["Realite augmente", "Mobile", "Capteur ArUCo"],
+        imageUrl: "/assets/projects/capteurMobile.png",
+        url: "https://mobilera.divlabs-tech.com/"
+    },
+    {
+        id: 9,
+        title: "Echo-local",
+        brand: "Combating misinformation in cameroon",
+        description: "Projet qui resulte de l'hackathon lance par l'UNESCO en 2025 visant a reduire l'evolution des fakes new dans l'espace camerounais.",
+        tags: ["Desinformation", "Solution numerique", "hackathon"],
+        imageUrl: "/assets/projects/echoLocal.png",
+        url: "https://github.com/Divlab-softwares/Echo-local"
+    },
 ];
 
 type realisationsProps = {
+    themeRealisations: string;
+    cardColor: string;
+};
 
-   themeRealisations: string;
-   cardColor : string ;
+const Realisations = ({ themeRealisations }: realisationsProps) => {
+    const featured = items[0];
+    const rest = items.slice(1);
 
-}
-
-const Realisations = ({ themeRealisations, cardColor }: realisationsProps) => {
     return (
-        <div className="h-auto overflow-x-hidden" data-theme={themeRealisations} id="realisations">
-            <div className="flex flex-col items-center justify-center p-4 h-100% relative shadow-[inset_3px_3px_30px_rgba(0,0,0,0.7)]" >
-                <Title className="z-50 my-10" title="Nos Réalisations" />
-                <p className="my-4" data-aos="fade-right">Voici quelques exemples de nos projets récents.</p>
-                <DotBackground
-                    dotSize={1}
-                    dotColor="#d4d4d4"
-                    darkDotColor="#404040"
-                    spacing={15}
-                    showFade={false}
-                    fadeIntensity={30}
-                    className="h-full"
-                />
+        <div className="divlab-section-shell h-auto overflow-x-hidden" data-theme={themeRealisations} id="realisations">
+            <div className="relative overflow-hidden px-5 py-20 md:px-12">
+                <div className="divlab-grid-mask absolute inset-0 opacity-30" />
+                <div className="relative z-10 mx-auto max-w-7xl">
+                    <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <Title className="mb-4" title="Nos Realisations" />
+                            <p className="max-w-2xl text-[var(--divlab-muted)]" data-aos="fade-right">
+                                Des projets visibles d'un seul regard, avec les choix techniques et le contexte de chaque livraison.
+                            </p>
+                        </div>
+                        <div className="divlab-glass flex w-fit items-center gap-3 rounded-full px-4 py-3 text-sm font-bold">
+                            <Layers size={18} className="text-cyan-300" /> {items.length} projets exposes
+                        </div>
+                    </div>
 
-
-
-
-                {/* <ParticlesBackground
-                        colors={['#00ffff', '#ff00ff', '#ffaa00']}
-                        size={4}
-                        countDesktop={80}
-                        countTablet={60}
-                        countMobile={40}
-                        zIndex={0}
-                        height="100%"
-                    /> */}
-
-
-
-
-                <div className="w-full ">
-                    <Carousel3D
-                        items={items}
-                        autoRotate={false}
-                        rotateInterval={4000}
-                        cardHeight={500}
-                        isMobileSwipe={true}
-                        cardColor={cardColor}
-                    />
-                </div>
-
-
-                {/* <Carousel >
-                    <CarouselContent>
-                        {items.map((item) => (
-                            <CarouselItem key={item.id}>
-                                <div className="p-1">
-                                    <Card>
-                                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                                            <span className="text-4xl font-semibold">{item.title}</span>
-                                        </CardContent>
-                                    </Card>
+                    <motion.article
+                        initial={{ opacity: 0, y: 28 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.25 }}
+                        transition={{ duration: 0.6 }}
+                        className="divlab-glass divlab-card-hover group overflow-hidden rounded-[2rem]"
+                    >
+                        <div className="relative h-[360px] overflow-hidden md:h-[520px]">
+                            <Image src={featured.imageUrl} alt={featured.title} fill className="object-cover transition duration-700 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white md:p-8">
+                                <span className="rounded-full bg-cyan-300 px-3 py-1 text-xs font-bold uppercase text-[#071421]">{featured.brand}</span>
+                                <h3 className="mt-4 text-3xl font-bold md:text-5xl">{featured.title}</h3>
+                                <p className="mt-3 max-w-2xl text-white/78 whitespace-pre-line text-md">{featured.description}</p>
+                                <div className="mt-5 flex flex-wrap gap-2">
+                                    {featured.tags.map((tag) => (
+                                        <span key={tag} className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm">{tag}</span>
+                                    ))}
                                 </div>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                </Carousel> */}
+                            </div>
+                        </div>
+                    </motion.article>
+
+                    <div className="">
 
 
+                        <div className=" mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-2">
+                            {rest.map((item, index) => (
+                                <motion.a
+                                    key={item.id}
+                                    initial={{ opacity: 0, x: 24 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, amount: 0.25 }}
+                                    transition={{ duration: 0.45, delay: index * 0.08 }}
+                                    href={item.url}
+                                    className="divlab-glass divlab-card-hover group grid overflow-hidden rounded-[1.6rem] md:grid-cols-[160px_1fr]"
+                                >
+                                    <div className="relative h-44 overflow-hidden md:h-full">
+                                        <Image src={item.imageUrl} alt={item.title} fill className="object-cover transition duration-700 group-hover:scale-110" />
+                                    </div>
+                                    <div className="p-5">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div>
+                                                <p className="text-xs font-bold uppercase text-cyan-300">{item.brand}</p>
+                                                <h3 className="mt-1 text-xl font-bold">{item.title}</h3>
+                                            </div>
+                                            <ArrowUpRight className="h-5 w-5 text-[var(--divlab-muted)] transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-cyan-300" />
+                                        </div>
+                                        <p className="mt-3 text-sm leading-6 text-[var(--divlab-muted)] whitespace-pre-line">{item.description}</p>
+                                        <div className="mt-4 flex flex-wrap gap-2">
+                                            {item.tags.map((tag) => (
+                                                <span key={tag} className="rounded-full bg-white/8 px-2.5 py-1 text-xs">{tag}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     );
-}
+};
 
 export default Realisations;
