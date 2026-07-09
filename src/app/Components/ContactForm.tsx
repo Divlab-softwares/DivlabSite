@@ -61,7 +61,7 @@ const ContactForm = () => {
                         <p className='font-bold text-cyan-300'>Notre adresse</p>
                         <span className="font-bold text-md  mb-5 mt-1">Cameroun | Douala</span>
                     </div>
-                    <div className='absolute -bottom-30 -right-6 z-99 h-45 w-45 rounded-2xl border border-cyan-300/30 bg-white/10 shadow-[0_5px_20px_rgba(0,200,255,0.35)]'>
+                    <div className='absolute -bottom-30 -right-6  h-45 w-45 rounded-2xl border border-cyan-300/30 bg-white/10 shadow-[0_5px_20px_rgba(0,200,255,0.35)]'>
 
                     </div>
                     <div className='absolute -bottom-50 right-25 h-35 w-35 rounded-2xl border border-amber-300/30 bg-white/10 shadow-[0_5px_20px_rgba(0,200,255,0.25)]'>
