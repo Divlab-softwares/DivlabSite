@@ -19,9 +19,9 @@ const teamMembers = [
     {
         id: "3",
         name: " MONNY EMANDE FRANCK ALEX",
-        role: "UI/UX developer",
+        role: "UI/UX developer | expert en cybersecurite",
         image: "/assets/team/alex.jpg",
-        bio: "Designer web passionné et créatif. Esprit d'équipe et toujours à la recherche de nouvelles tendances dans l'informatique."
+        bio: "Designer web passionné et créatif, Responsable de la securité  des systemes d'informations chez DIVLAB. Passionné du domaine de la cybersecurité.  Esprit d'équipe et toujours à la recherche de nouvelles tendances dans l'informatique. "
     },
     {
         id: "4",
