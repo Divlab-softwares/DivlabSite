@@ -1,4 +1,8 @@
+
+import { prisma } from "@/app/lib/prisma";
 import { unstable_cache } from "next/cache";
+
+
 
 type Courses = {
     id: string;
