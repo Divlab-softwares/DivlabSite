@@ -1,6 +1,6 @@
 {
-  "name": "divlab_nextjs",
-  "version": "0.1.0",
+  "name": "divlab_site",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
