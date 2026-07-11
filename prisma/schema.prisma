@@ -1,0 +1,615 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Signup { 
+  id        Int      @id @default(autoincrement())
+  name      String
+  password  String
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model User {
+   id           String         @id @default(cuid())
+  name         String
+  surname       String    @default("")
+  password     String?  @default("")
+  email        String         @unique
+  emailVerified DateTime?
+  image        String?
+  sex         String?
+  location    String?
+  post        String?
+  phone       String?     
+  role         String         @default("user")
+  bio           String?  
+  purchases    Purchase[]
+  socialMedias   socialMedia[]
+  trainer         Trainer?
+  createdAt    DateTime       @default(now())
+  conversation Conversation[] @relation("UserConversation")
+  initiatedNotifications  Notification[]  @relation("initiator")
+  recievedNotifications   Notification[]  @relation("destinator")
+  receiverConversation  Conversation[] @relation("ReceiverConversation")
+  connected    Boolean       @default(false)
+  accounts     Account[]
+  sessions     Session[]
+  following     Follows[]     @relation("follower")
+  trainerSubscriptions TrainerSubscription[] @relation("SubscriptionUser")
+  trainerBlacklistEntries TrainerBlacklist[] @relation("BlacklistUser")
+  sentChatMessages ChatMessage[] @relation("ChatSender")
+  receivedChatMessages ChatMessage[] @relation("ChatReceiver")
+  provider      String?
+  payments Payment[] // un utilisateur a plusieurs paiements ( achats de formations e-books)
+  postalCode String?
+  city    String?
+  country   String?
+  moneyAccount    MoneyAccount?
+  videoAccessGrants VideoAccessGrant[] @relation("VideoAccessUser")
+  grantedVideoAccesses VideoAccessGrant[] @relation("VideoAccessGrantedBy")
+  erpTasksReceived  ErpTask[]     @relation("TasksReceived")
+  erpTasksGiven     ErpTask[]     @relation("TasksGiven")
+  revenuesReceived  AdminRevenue[] @relation("RevenuesReceived")
+  revenuesGiven     AdminRevenue[] @relation("RevenuesGiven")
+}
+
+// Table de jonction explicite pour SQLite
+model Follows {
+  followerId String
+  follower   User    @relation("follower", fields: [followerId], references: [id])
+  followedId String
+  followed   Trainer @relation("followed", fields: [followedId], references: [id])
+
+  @@id([followerId, followedId])
+}
+
+model Notification {
+  id        String     @id @default(cuid())
+  initiatorUserId    String
+  initiator   User    @relation("initiator",fields: [initiatorUserId], references: [id])
+  destinatorUserId    String
+  destinator  User    @relation("destinator",fields: [destinatorUserId], references: [id])
+  description String
+  subject     String
+  type        String
+  newNotif    Boolean @default(true)
+   createdAt    DateTime       @default(now())
+}
+
+
+model Trainer {
+id            String         @id @default(cuid())
+userId        String     @unique
+user          User     @relation(fields: [userId], references: [id])
+profession    String?
+country       String?
+domain                    String?
+course   Course[]
+justification             String?
+justificatifDocument      String?
+identificationPiece       String?
+valid   Boolean   @default(false)
+reject   Boolean   @default(false)
+rejectReason   String?
+followers    Follows[]  @relation("followed")
+subscriptions TrainerSubscription[] @relation("SubscriptionTrainer")
+blacklist TrainerBlacklist[] @relation("BlacklistTrainer")
+payoutMethods TrainerPayoutMethod[]
+}
+
+model MoneyAccount {
+  id    String  @id @default(cuid())
+  sold  Decimal  @default(0)
+  currency  String
+  personalFee  Int?
+  transactions  Transaction[]
+  suspension    Boolean @default(false)
+  valid       Boolean @default(true)
+  adminNote   String  @default("OK")
+  userId       String
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId])
+}
+
+model Transaction {
+   id    String  @id @default(cuid())
+   title String
+   type  String
+   date  DateTime @default(now())
+   status String
+   description String
+  moneyAccountId       String
+  moneyAccount          MoneyAccount    @relation(fields: [moneyAccountId], references: [id])
+}
+
+model TrainerSubscription {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  trainerId String   @map("trainer_id")
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User    @relation("SubscriptionUser", fields: [userId], references: [id], onDelete: Cascade)
+  trainer Trainer @relation("SubscriptionTrainer", fields: [trainerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, trainerId])
+  @@index([trainerId])
+  @@map("subscriptions")
+}
+
+model TrainerBlacklist { 
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  trainerId String   @map("trainer_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User    @relation("BlacklistUser", fields: [userId], references: [id], onDelete: Cascade)
+  trainer Trainer @relation("BlacklistTrainer", fields: [trainerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, trainerId])
+  @@index([trainerId])
+  @@map("blacklist")
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  senderId   String   @map("sender_id")
+  receiverId String   @map("receiver_id")
+  content    String   @db.Text
+  mediaUrl   String?  @map("media_url")
+  type       String   @default("text")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  sender   User @relation("ChatSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ChatReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId, receiverId, createdAt])
+  @@index([receiverId, senderId, createdAt])
+  @@map("messages")
+}
+
+model socialMedia {
+  id      String      @id @default(cuid())
+  userId  String
+  user    User     @relation(fields: [userId], references: [id])
+  name    String
+  link    String
+}
+
+model Client {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Files {
+  id        Int      @id @default(autoincrement())
+  file      Bytes
+  messageId Int
+  message   Message  @relation("MessageFile", fields: [messageId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+
+model Message {
+  id           Int          @id @default(autoincrement())
+  message      String
+  answer       String
+  files        Files[]      @relation("MessageFile")
+  conversation Conversation @relation("ConversationMessage", fields: [ConversationId], references: [id])
+  ConversationId    Int
+  score        Int
+  createdAt    DateTime     @default(now())
+}
+
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  input     String
+  request   Message[] @relation("ConversationMessage")
+  reqScore  Int
+  archived  Boolean
+  deleted   Boolean
+  warned    Boolean
+  ephemeral Boolean
+  createdAt DateTime  @default(now())
+  user      User      @relation("UserConversation", fields: [userId], references: [email])
+  receiver      User   @relation("ReceiverConversation", fields: [receiverId], references: [email])
+  receiverId    String   @default("chatBot") 
+  userId    String
+  convId    Int    @default(0) 
+
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Payment {
+  id                 String   @id @default(cuid())
+  reference          String   @unique
+  merchantReference  String
+  trxref             String?
+  amount             Int
+  platformFee         Int     @default(0)
+  trainerFee          Int     @default(0)
+  currency           String
+  status             String
+  paymentMethod      String?
+  description        String?
+  metadata           Json?
+  filePath         String?                          // ex: "uploads/epreuves/lepreuve.pdf"
+  fileName         String?  
+  createdAt          DateTime @default(now())
+  user               User?    @relation(fields: [userId], references: [id])
+  userId             String?
+}
+
+model Formation {
+  id          String      @id @default(cuid())
+  title       String   @unique
+  location    String  @default("Inconnu")
+  format      String
+  classe       String   // "free" | "premium"
+  description String?
+  img         String?
+  group       String?
+  category    String?
+  author      String?
+  pages       Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  command_id    String?
+  name          String
+  email         String
+  contact       String?
+  country       String
+  projectType   String   // exemple: "website", "portfolio", etc
+  description   String?
+  budget        String?
+  status        String
+  template      String?
+  sessionId     String?  // si tu veux suivre un user connecté/non connecté
+  createdAt     DateTime @default(now())
+}
+
+model Subscription {
+  id            String   @id @default(cuid())
+  subscription_id String
+  name          String
+  email         String
+  contact       String?
+  country       String?
+  description   String?
+  price        String?
+  status        String
+  sessionId     String?  // si tu veux suivre un user connecté/non connecté
+  createdAt     DateTime @default(now())
+}
+
+// Tables pour les Cours visio en ligne
+
+model Course {
+  id          String      @id @default(cuid())
+  title       String
+  domain      String
+  category    String    @default("LIVE")
+  courseType  String    @default("live")
+  youtubeVideoId  String?
+  youtubeVideo    YoutubeVideo? @relation(fields: [youtubeVideoId], references: [id])
+
+  youtubeEmbedUrl String?
+  videoAccessMode String @default("unlisted")
+  videoAccessEnabled Boolean @default(true)
+  videoAccessSource String @default("purchase")
+  // Nullable: uniquement pertinents pour les formations "live" (programmation, salle de visio).
+  // Une formation "video" (YouTube) n'a pas de creneau ni de salle, ces champs restent donc vides pour elle.
+  date_start  DateTime?
+  date_end    DateTime?
+  time        Float?
+  description String
+  price       Float
+  state       String   @default("upcoming")
+  roomCode    String?
+  trainerId   String
+  trainer     Trainer     @relation(fields: [trainerId], references: [id])
+  payoutMethodId String?
+  payoutMethod   TrainerPayoutMethod? @relation(fields: [payoutMethodId], references: [id])
+  createdAt   DateTime @default(now())
+   updatedAt   DateTime? 
+  purchases   Purchase[]
+  slots       CourseSlot[]
+  videoAccessGrants VideoAccessGrant[]
+  language    String    @default("Francais")
+  frontCover String?
+  backCover  String?
+   checked     Boolean  @default(false)
+  currency    String    @default("FCFA")
+  rank        Int   @default(1)
+  moderatorActif  Boolean @default(false)
+  reminderSent    Boolean @default(false)
+  courseLogs      CourseLog[]
+}
+
+model YoutubeVideo {
+  id                  String   @id @default(cuid())
+
+  youtubeId           String   @unique
+  url                 String   @db.Text
+
+  title               String
+  description         String?  @db.Text
+
+  channelId           String
+  channelTitle        String
+
+  thumbnailDefault    String?
+  thumbnailMedium     String?
+  thumbnailHigh       String?
+  thumbnailMax        String?
+
+  publishedAt         DateTime?
+
+  duration            String?
+  viewCount           Int?
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  courses            Course[]
+}
+
+enum CourseType {
+  YOUTUBE
+  ARTICLE
+  PDF
+  VIDEO
+}
+
+
+model VideoAccessGrant {
+  id          String   @id @default(cuid())
+  courseId    String
+  userId      String
+  grantedById String?
+  active      Boolean  @default(true)
+  note        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  course    Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user      User   @relation("VideoAccessUser", fields: [userId], references: [id], onDelete: Cascade)
+  grantedBy User?  @relation("VideoAccessGrantedBy", fields: [grantedById], references: [id])
+
+  @@unique([courseId, userId])
+  @@index([userId])
+  @@index([grantedById])
+}
+
+/// Créneaux horaires par jour (formation multi-jours).
+model CourseSlot {
+  id        String   @id @default(cuid())
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  startsAt  DateTime
+  endsAt    DateTime
+  sortOrder Int      @default(0)
+
+  @@index([courseId])
+}
+
+model Purchase {
+  id            Int      @id @default(autoincrement())
+  userId        String
+  formationId   String
+  accessToken   String   @unique
+  paymentStatus String   @default("pending")
+  presence_start  DateTime  @default(now())
+  presence_end   DateTime   @default(now())
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id])
+  course     Course @relation(fields: [formationId], references: [id])
+}
+
+model TrainerPayoutMethod {
+  id            String    @id @default(cuid())
+  trainerId     String
+  trainer       Trainer   @relation(fields: [trainerId], references: [id], onDelete: Cascade)
+  method        String    @default("mobile_money")
+  label         String
+  phone         String
+  country       String
+  isDefault     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+
+  courses       Course[]
+
+  @@index([trainerId])
+}
+
+
+model MeetEvent {
+  id              String   @id @default(cuid())
+  courseId        String
+  userId          String?
+  roomName        String
+  provider        String   @default("jaas")
+  role            String
+  participantId   String?
+  eventType       String
+  payload         Json?
+  clientSessionId String?
+  occurredAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  @@index([courseId, occurredAt])
+  @@index([userId, occurredAt])
+  @@index([eventType])
+  @@index([clientSessionId])
+}
+
+model MeetPresence {
+  id                    String    @id @default(cuid())
+  clientSessionId        String    @unique
+  courseId              String
+  userId                String?
+  roomName              String
+  provider              String    @default("jaas")
+  role                  String
+  participantId         String?
+  displayName           String?
+  email                 String?
+  avatarUrl             String?
+  joinedAt              DateTime  @default(now())
+  leftAt                DateTime?
+  lastSeenAt            DateTime  @default(now())
+  durationSeconds       Int       @default(0)
+  reconnectCount        Int       @default(0)
+  handRaiseCount        Int       @default(0)
+  chatOpenCount         Int       @default(0)
+  screenShareSeconds    Int       @default(0)
+  audioMutedSeconds     Int       @default(0)
+  videoMutedSeconds     Int       @default(0)
+  dominantSpeakerSeconds Int      @default(0)
+  attentionScore        Float     @default(0)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([courseId, joinedAt])
+  @@index([userId, joinedAt])
+  @@index([roomName])
+}
+
+model CourseLog {
+  id         String   @id @default(cuid())
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userId     String?
+  token      String?
+  role       String?
+  action     String?
+  ipAddress  String
+  userAgent  String
+  createdAt  DateTime @default(now())
+
+  @@index([courseId, createdAt])
+  @@index([userId, createdAt])
+}
+
+model AdminMessage {
+  id              String   @id @default(cuid())
+  adminUserId     String
+  recipientUserId String
+  subject         String
+  content         String
+  delivery        String   @default("internal")
+  status          String   @default("sent")
+  createdAt       DateTime @default(now())
+
+  @@index([recipientUserId])
+  @@index([adminUserId, createdAt])
+}
+
+model ErpTask {
+  id             String    @id @default(cuid())
+  title          String
+  description    String    @db.Text
+  assignedToId   String
+  assignedById   String
+  status         String    @default("pending") // pending | submitted | validated | rejected
+  submittedAt    DateTime?
+  validatedAt    DateTime?
+  validationNote String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  assignedTo User @relation("TasksReceived", fields: [assignedToId], references: [id])
+  assignedBy User @relation("TasksGiven", fields: [assignedById], references: [id])
+
+  @@index([assignedToId, status])
+  @@index([assignedById, createdAt])
+}
+
+model AdminRevenue {
+  id                String   @id @default(cuid())
+  recipientId       String
+  amount            Float
+  currency          String   @default("FCFA")
+  reason            String
+  addedById         String
+  isSuperAdminShare Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  recipient User @relation("RevenuesReceived", fields: [recipientId], references: [id])
+  addedBy   User @relation("RevenuesGiven", fields: [addedById], references: [id])
+
+  @@index([recipientId])
+  @@index([addedById, createdAt])
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  action       String
+  severity     String   @default("info")
+  entityType   String
+  entityId     String?
+  targetUserId String?
+  adminUserId  String?
+  adminEmail   String?
+  oldValue     Json?
+  newValue     Json?
+  metadata     Json?
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+
+  @@index([entityType, createdAt])
+  @@index([adminUserId, createdAt])
+  @@index([targetUserId, createdAt])
+}
