@@ -972,7 +972,7 @@ const Services = ({ initialRankedCourses }: Props) => {
         }
     }
 
-    const [isSignInOpen, setIsSignInOpen] = useState(false);
+    const [isSignInOpen, setIsSignInOpen] = useState<boolean>(false);
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
     const [isOutOpen, setIsSignOutOpen] = useState(false);
     // const router = useRouter();

@@ -19,7 +19,7 @@ interface SignResult {
 interface Sign {
     setSignResult?: React.Dispatch<React.SetStateAction<SignResult | null>>;
     setSign?: React.Dispatch<React.SetStateAction<number | undefined>>;
-    setIsSignUpOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSignUpOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DivlabSpaceSignUp: React.FC<Sign> = ({ setSignResult, setSign, setIsSignUpOpen }) => {
@@ -62,7 +62,7 @@ const DivlabSpaceSignUp: React.FC<Sign> = ({ setSignResult, setSign, setIsSignUp
                 status: "success"
             });
             setSign?.(-2);
-            setIsSignUpOpen(false);
+            setIsSignUpOpen?.(false);
         } else {
             setSignResult?.({
                 data: [],

@@ -17,10 +17,11 @@ interface SignResult {
     message: string;
     status: "success" | "failed";
 }
+
 interface Sign {
     setSignResult?: React.Dispatch<React.SetStateAction<SignResult | null>>;
     setSign?: React.Dispatch<React.SetStateAction<number | undefined>>;
-    setIsSignInOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSignInOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
@@ -62,7 +63,7 @@ const DivlabSpaceLogin = ({ setSignResult, setSign, setIsSignInOpen }: Sign) => 
             });
             setIsLoading(false);
             setSign?.(-2);
-            setIsSignInOpen(false)
+            setIsSignInOpen?.(false)
             //window.location.href = "/dashboard";
         }
 
