@@ -8,24 +8,24 @@ const items = [
         id: 1,
         title: "DIVLAB TRAIN",
         brand: "FORMATIONS",
-        description: "DIVLAB-train est une plateforme gratuite et open-source construite sur Next.js et Tailwind CSS, conçue pour aider les formateurs, éducateurs et créateurs de cours à offrir des expériences d'apprentissage de haute qualité tout en augmentant leurs revenus.\nPlutôt que d'être un simple tableau de bord administratif, DIVLAB-train fournit aux formateurs les outils dont ils ont besoin pour gérer leurs cours, engager les apprenants et créer des relations durables. En combinant les technologies web modernes avec des tableaux de bord intuitifs, elle permet aux formateurs de se concentrer sur ce qui compte vraiment : enseigner et accroître leur impact.",
-        tags: ["Dashboard", "Formations", "Lives"],
+        description: "DIVLAB Train est une plateforme de formation en ligne pensée pour les formateurs, éducateurs et créateurs de cours. Elle centralise la visioconférence, les inscriptions, les paiements Mobile Money, le suivi de l'audience et des revenus afin de simplifier la gestion et développer l'activité de formation.",
+        tags: ["EdTech", "Mobile Money", "Visioconférence"],
         imageUrl: "/assets/projects/divlabTrain.png",
         url: "https://train.divlabs-tech.com/"
     }, {
         id: 2,
         title: "DIVLAB AI",
         brand: "Machine Learning",
-        description: "Projet d'IA de DIVLAB base sur des modeles LLM.",
-        tags: ["Python", "Jupyter", "Sqlite"],
+        description: "Projet de recherche appliquée DIVLAB autour des modèles de langage, de l'orchestration IA et de la création d'assistants adaptés à des besoins métier.",
+        tags: ["IA", "LLM", "Python"],
         imageUrl: "/assets/projects/divlabAi.png",
         url: "https://github.com/Divlab-softwares/Divlab-AI"
     },
     {
         id: 3,
-        title: "Portfolios moderne",
+        title: "Portfolios modernes",
         brand: "Portfolio",
-        description: "Conception de plusieurs portfolios modernes adaptes aux besoisn des utilisateurs. Accessibles depuis notre repertoire Github",
+        description: "Conception de portfolios professionnels sur mesure pour présenter une expertise, renforcer une marque personnelle et convertir les visiteurs en prises de contact.",
         tags: ["Portfolio", "UX", "UI"],
         imageUrl: "/assets/projects/5.png",
         url: "https://github.com/Divlab-softwares"
@@ -52,7 +52,7 @@ const items = [
         id: 6,
         title: "Site vitrine DIVLAB",
         brand: "Developpement Web",
-        description: "Site concu par les ingenieurs de Divlab afin de faciliter l'acces aux produits et offres principales de DIVLAB.",
+        description: "Site institutionnel conçu pour présenter les expertises, formations et produits DIVLAB, valoriser les réalisations et faciliter la prise de contact.",
         tags: ["React", "Next.js", "Tailwind"],
         imageUrl: "/assets/projects/siteVitrine.png",
         url: "https://divlabs-tech.com"

@@ -23,13 +23,13 @@ const Hero = () => {
                         <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-cyan-300 via-blue-500 to-amber-300" />
 
                         <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold uppercase text-cyan-100">
-                            <Sparkles size={16} /> Laboratoire numerique
+                            <Sparkles size={16} /> Studio de produits digitaux
                         </span>
                         <h1 className="text-center text-5xl font-bold leading-none divlab-text md:text-left md:text-7xl">
                             DIV<span className="text-cyan-300">LAB</span>
                         </h1>
                         <p className="my-5 max-w-xl text-center text-base leading-7 text-cyan-50/85 divlab-text md:text-left md:text-lg">
-                            Sites web, intelligence artificielle, formations et accompagnement technique.<br /> <i className="font-bold">Nous faisons l'impossible avec maitrise.</i>
+                            Applications web, plateformes SaaS et solutions IA conçues pour transformer vos idées et processus métier.<br /> <i className="font-bold">De l'idée au produit digital.</i>
                         </p>
                         <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
                             <a href="#services" className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 font-bold text-[#071421] shadow-[0_16px_45px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-1">
@@ -40,7 +40,7 @@ const Hero = () => {
                             </a>
                         </div>
                         <div className="mt-6 grid w-full grid-cols-3 gap-2 text-center text-xs text-cyan-50/80">
-                            {["Solutions web", "IA utile", "Training"].map((item) => (
+                            {["Applications web", "SaaS & IA", "Formations"].map((item) => (
                                 <span key={item} className="rounded-full border border-white/10 bg-white/8 px-3 py-2">{item}</span>
                             ))}
                         </div>

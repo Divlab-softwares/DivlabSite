@@ -4,9 +4,19 @@ import MagicLoader from "@/app/Components/magic-loader"
 import { Metadata } from "next";
 import { getRankedCourses } from "@/app/Components/lib/db-queries";
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services digitaux et développement sur mesure",
   description:
-    "Découvrez les Services pratiques offerts par DIVLAB dont les formations en data science, machine learning, intelligence artificielle et autres solutions tech adaptées aux étudiants et professionnels., Conception de sites web professionnels , Conception et recherche sur les modeles d'IA ",
+    "Découvrez les services DIVLAB : sites web professionnels, applications métier, plateformes SaaS, automatisation, solutions IA, UI/UX et formations technologiques.",
+  alternates: {
+    canonical: "/Services",
+  },
+  openGraph: {
+    title: "Services digitaux et développement sur mesure | DIVLAB",
+    description:
+      "DIVLAB transforme vos besoins métier en sites web, applications, plateformes SaaS et solutions IA utiles et performantes.",
+    url: "https://divlabs-tech.com/Services",
+    type: "website",
+  },
 };
 
 export default async function ServicesPage() {
