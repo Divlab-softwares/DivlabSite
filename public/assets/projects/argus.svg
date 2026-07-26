@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ARGUS par DIVLAB</title>
+  <desc id="desc">Présentation de l’écosystème camerounais de cybersécurité citoyenne ARGUS</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05090f"/>
+      <stop offset="0.55" stop-color="#0a1720"/>
+      <stop offset="1" stop-color="#082a2b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="52%">
+      <stop offset="0" stop-color="#43f4c8" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#43f4c8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="720" rx="34" fill="url(#background)"/>
+  <rect width="1200" height="720" rx="34" fill="url(#glow)"/>
+  <g opacity=".12" stroke="#80ffe0">
+    <path d="M0 120h1200M0 240h1200M0 360h1200M0 480h1200M0 600h1200"/>
+    <path d="M120 0v720M240 0v720M360 0v720M480 0v720M600 0v720M720 0v720M840 0v720M960 0v720M1080 0v720"/>
+  </g>
+  <circle cx="600" cy="310" r="188" fill="#43f4c8" opacity=".08" filter="url(#softGlow)"/>
+  <path d="M600 125c112 0 211 66 269 185-58 119-157 185-269 185s-211-66-269-185c58-119 157-185 269-185Z" fill="none" stroke="#43f4c8" stroke-width="7"/>
+  <circle cx="600" cy="310" r="104" fill="#08131c" stroke="#43f4c8" stroke-width="7"/>
+  <circle cx="600" cy="310" r="47" fill="#43f4c8"/>
+  <circle cx="583" cy="292" r="13" fill="#d8fff5" opacity=".9"/>
+  <g fill="#43f4c8">
+    <circle cx="333" cy="310" r="6"/>
+    <circle cx="867" cy="310" r="6"/>
+    <circle cx="600" cy="100" r="6"/>
+    <circle cx="600" cy="520" r="6"/>
+  </g>
+  <text x="600" y="594" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="74" font-weight="700" letter-spacing="18">ARGUS</text>
+  <text x="600" y="640" text-anchor="middle" fill="#43f4c8" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">VÉRIFIER LE VRAI · PROTÉGER LE NUMÉRIQUE</text>
+  <text x="600" y="681" text-anchor="middle" fill="#93a8b2" font-family="Arial, sans-serif" font-size="17" letter-spacing="3">UN ÉCOSYSTÈME DE CYBERSÉCURITÉ PAR DIVLAB</text>
+</svg>

@@ -5,6 +5,15 @@ import { motion } from "motion/react";
 
 const items = [
     {
+        id: 10,
+        title: "ARGUS",
+        brand: "Cybersécurité citoyenne & IA",
+        description: "ARGUS est un écosystème de cybersécurité citoyenne conçu par DIVLAB pour renforcer la confiance numérique au Cameroun. Il réunit l'application SENTINELLE, un moteur d'analyse augmenté par l'intelligence artificielle et un centre de commandement afin de détecter les deepfakes, vérifier les documents, analyser les contenus suspects et faciliter leur signalement.",
+        tags: ["Cybersécurité", "Détection deepfake", "IA responsable"],
+        imageUrl: "/assets/projects/argus.svg",
+        url: "https://aishield-presentation.divlabs-tech.com"
+    },
+    {
         id: 1,
         title: "DIVLAB TRAIN",
         brand: "FORMATIONS",
