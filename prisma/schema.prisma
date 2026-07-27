@@ -566,6 +566,13 @@ model ErpTask {
   submittedAt    DateTime?
   validatedAt    DateTime?
   validationNote String?
+  taskType       String    @default("internal") // internal | external_revenue
+  service        String?
+  clientName     String?
+  revenueAmount  Float?
+  currency       String    @default("FCFA")
+  evidenceUrl    String?
+  performedAt    DateTime?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -574,6 +581,7 @@ model ErpTask {
 
   @@index([assignedToId, status])
   @@index([assignedById, createdAt])
+  @@index([taskType, status, performedAt])
 }
 
 model AdminRevenue {

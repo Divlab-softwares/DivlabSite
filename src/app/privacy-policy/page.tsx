@@ -1,149 +1,79 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { LegalPage } from "../Components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Politique de Confidentialité - DIVLAB",
-  description:
-    "Politique de confidentialité pour les services de formation en data science, IA, création de sites web et support informatique proposés par DIVLAB au Cameroun.",
+  title: "Politique de confidentialité",
+  description: "Traitement et protection des données personnelles par DIVLAB.",
 };
 
 export default function PrivacyPolicy() {
-    return (
-        <div className="min-h-screen bg-gray-50 py-16 px-6 md:px-20 lg:px-40 text-gray-800" data-theme="garden">
-
-            <h1 className="text-4xl font-bold mb-6 text-gray-900">
-                Politique de Confidentialité – DIVLAB
-            </h1>
-
-            <p className="mb-8 text-lg text-gray-700">
-                Chez <strong>DIVLAB</strong>, nous accordons une grande importance à la protection
-                de vos données personnelles. Cette politique explique comment vos informations
-                sont collectées, utilisées, stockées et protégées lorsque vous utilisez nos
-                services, formations et solutions basées sur l’intelligence artificielle.
-            </p>
-
-            {/* SECTION */}
-            <Section title="1. Données que nous collectons">
-                <SubTitle>Données que vous fournissez volontairement :</SubTitle>
-                <ul className="list-disc ml-6 mb-4">
-                    <li>Nom, prénom</li>
-                    <li>Adresse email et informations de contact</li>
-                    <li>Données de paiement (traitées via des prestataires sécurisés)</li>
-                    <li>Vos messages, retours ou fichiers envoyés lors d’une assistance</li>
-                </ul>
-
-                <SubTitle>Données collectées automatiquement :</SubTitle>
-                <ul className="list-disc ml-6 mb-4">
-                    <li>Adresse IP</li>
-                    <li>Données de navigation</li>
-                    <li>Type d'appareil, système d'exploitation, navigateur</li>
-                </ul>
-
-                <SubTitle>Cookies et technologies similaires :</SubTitle>
-                <p className="mb-4">
-                    Nous utilisons des cookies pour améliorer l’expérience utilisateur,
-                    analyser l’audience et sécuriser les sessions.
-                </p>
-            </Section>
-
-            <Section title="2. Utilisation des données">
-                <p className="mb-4">Vos informations sont utilisées pour :</p>
-                <ul className="list-disc ml-6">
-                    <li>Créer et gérer votre compte utilisateur</li>
-                    <li>Fournir nos services de formation et d’assistance</li>
-                    <li>Améliorer nos plateformes et produits IA</li>
-                    <li>Assurer la sécurité et prévenir la fraude</li>
-                    <li>Effectuer les paiements via des plateformes sécurisées</li>
-                    <li>Vous envoyer des notifications utiles (paiement, accès, alertes…)</li>
-                </ul>
-            </Section>
-
-            <Section title="3. Partage des données">
-                <p className="mb-4">
-                    Nous ne vendons jamais vos données. Toutefois, certaines informations peuvent
-                    être partagées avec :
-                </p>
-                <ul className="list-disc ml-6">
-                    <li>Nos prestataires techniques (Ex : Supabase, AWS, Stripe…)</li>
-                    <li>Nos outils analytiques (Ex : Google Analytics)</li>
-                    <li>Les autorités compétentes si la loi l’exige</li>
-                </ul>
-            </Section>
-
-            <Section title="4. Stockage et sécurité des données">
-                <p>
-                    Vos données sont stockées dans des environnements sécurisés. Nous appliquons
-                    des mesures de sécurité physiques, techniques et organisationnelles pour
-                    prévenir tout accès non autorisé.
-                </p>
-            </Section>
-
-            <Section title="5. Services tiers utilisés">
-                <p className="mb-4">DIVLAB peut utiliser les services suivants :</p>
-                <ul className="list-disc ml-6">
-                    <li><strong>Supabase</strong> – stockage, authentification, base de données</li>
-                    <li><strong>AWS S3</strong> – stockage des fichiers</li>
-                    <li><strong>Stripe</strong> – paiements sécurisés</li>
-                    <li><strong>Google</strong> – outils analytiques</li>
-                </ul>
-            </Section>
-
-            <Section title="6. Durée de conservation">
-                <p>
-                    Nous conservons vos données uniquement durant la période nécessaire pour
-                    fournir les services ou conformément aux obligations légales.
-                </p>
-            </Section>
-
-            <Section title="7. Vos droits">
-                <p className="mb-4">Vous disposez des droits suivants :</p>
-                <ul className="list-disc ml-6 mb-4">
-                    <li>Droit d’accès à vos données</li>
-                    <li>Droit de rectification</li>
-                    <li>Droit à la suppression (droit à l’oubli)</li>
-                    <li>Droit d’opposition et de limitation</li>
-                    <li>Droit à la portabilité</li>
-                </ul>
-                <p>
-                    Pour exercer vos droits, contactez-nous via l'adresse ci-dessous.
-                </p>
-            </Section>
-
-            <Section title="8. Confidentialité des mineurs">
-                <p>
-                    Nos services ne sont pas destinés aux mineurs de moins de 16 ans.
-                    Nous ne collectons pas volontairement leurs données.
-                </p>
-            </Section>
-
-            <Section title="9. Modifications de cette politique">
-                <p>
-                    DIVLAB peut mettre à jour cette politique si nécessaire.
-                    La date de mise à jour sera indiquée en bas de la page.
-                </p>
-            </Section>
-
-            <Section title="10. Contact">
-                <p className="mb-4">Pour toute question concernant la confidentialité :</p>
-                <p>Email : <strong>divlabsoftware@gmail.com</strong></p>
-                <p>Téléphone : <strong>+237 652509674</strong></p>
-                <p className="mt-6 text-sm text-gray-500">Dernière mise à jour : 2025</p>
-            </Section>
-
-        </div>
-    );
-}
-
-
-/* --- Sub Components --- */
-function Section({ title, children }: any) {
-    return (
-        <section className="mb-10">
-            <h2 className="text-2xl font-semibold mb-2 text-gray-900">{title}</h2>
-            <div className="text-gray-700 leading-relaxed">{children}</div>
-        </section>
-    );
-}
-
-function SubTitle({ children }: any) {
-    return <h3 className="text-lg font-medium mt-4 mb-2">{children}</h3>;
+  return (
+    <LegalPage
+      title="Politique de confidentialité"
+      intro="Cette politique décrit de façon transparente les données traitées par DIVLAB, leurs usages et les choix dont disposent les utilisateurs."
+    >
+      <section>
+        <h2>1. Responsable du traitement</h2>
+        <p>DIVLAB, joignable à divlabsoftware@gmail.com et au +237 652 509 674, détermine les finalités principales des traitements liés à son site, à DIVLAB Training et à ses services.</p>
+      </section>
+      <section>
+        <h2>2. Données collectées</h2>
+        <ul>
+          <li>identité, coordonnées, pays, ville et informations de profil ;</li>
+          <li>données de compte, de connexion, de sécurité et de session ;</li>
+          <li>commandes, références et statuts de paiement, sans conservation par DIVLAB de votre code secret Mobile Money ;</li>
+          <li>formations suivies, accès, présences, interactions pédagogiques et messages ;</li>
+          <li>pour les formateurs : parcours, justificatifs de compétence, pièce d’identité et moyen de versement ;</li>
+          <li>informations techniques nécessaires à la sécurité : adresse IP, navigateur, appareil, dates et journaux d’événements.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>3. Finalités et fondements</h2>
+        <p>Les données servent à créer et sécuriser les comptes, exécuter les commandes, donner accès aux formations, confirmer les paiements, produire les reçus, vérifier les formateurs, assister les utilisateurs, prévenir la fraude, respecter les obligations légales et améliorer le service.</p>
+        <p>Selon le traitement, DIVLAB s’appuie sur l’exécution du contrat, le respect d’une obligation légale, l’intérêt légitime de sécuriser et améliorer la plateforme, ou le consentement lorsque celui-ci est requis.</p>
+      </section>
+      <section>
+        <h2>4. Destinataires et prestataires</h2>
+        <p>L’accès est limité aux personnes autorisées de DIVLAB et aux prestataires nécessaires au service, notamment l’hébergement et la base de données, le stockage de médias, le paiement, l’envoi d’e-mails, la visioconférence et la diffusion vidéo.</p>
+        <p>Les services effectivement observés sur DIVLAB Training incluent notamment Supabase, NotchPay, Resend, JaaS/8x8 et YouTube selon la fonctionnalité utilisée. Chaque prestataire traite uniquement les données nécessaires à sa mission et selon ses propres engagements contractuels.</p>
+        <p>DIVLAB ne vend pas les données personnelles.</p>
+      </section>
+      <section>
+        <h2>5. Transferts et hébergement</h2>
+        <p>Certains prestataires peuvent héberger ou traiter des données hors du Cameroun. DIVLAB sélectionne des prestataires reconnus et limite les informations transmises. Lorsque la loi l’exige, des garanties adaptées doivent encadrer ces transferts.</p>
+      </section>
+      <section>
+        <h2>6. Durées de conservation</h2>
+        <ul>
+          <li>compte actif : pendant la relation avec l’utilisateur, puis le temps nécessaire au traitement des demandes et obligations ;</li>
+          <li>transactions et reçus : pendant la durée nécessaire aux obligations comptables, fiscales, contractuelles et à la gestion des contestations ;</li>
+          <li>dossier formateur refusé ou retiré : suppression ou archivage restreint dès que sa conservation n’est plus nécessaire ;</li>
+          <li>journaux de sécurité : durée proportionnée au diagnostic, à la prévention de la fraude et à la défense des droits.</li>
+        </ul>
+        <p>Une durée précise peut varier si une loi, une contestation ou une obligation de preuve impose une conservation plus longue.</p>
+      </section>
+      <section>
+        <h2>7. Sécurité</h2>
+        <p>DIVLAB applique des contrôles d’accès, une authentification, une vérification des paiements côté serveur, des limitations contre les abus, des journaux techniques et des restrictions sur les documents sensibles. Aucun système ne pouvant garantir un risque nul, les incidents sont analysés et traités selon leur gravité.</p>
+      </section>
+      <section>
+        <h2>8. Vos droits</h2>
+        <p>Vous pouvez demander l’accès, la rectification, la suppression ou la limitation de vos données, vous opposer à certains traitements et retirer un consentement lorsqu’il en constitue le fondement. La portabilité peut être proposée lorsque les conditions techniques et légales sont réunies.</p>
+        <p>Écrivez à divlabsoftware@gmail.com en précisant votre demande. Une preuve d’identité limitée au nécessaire peut être demandée pour éviter la divulgation à un tiers.</p>
+      </section>
+      <section>
+        <h2>9. Mineurs</h2>
+        <p>La création autonome d’un compte et l’achat sont réservés aux personnes ayant la capacité juridique nécessaire. Pour un mineur, l’autorisation et l’accompagnement de son représentant légal sont requis.</p>
+      </section>
+      <section>
+        <h2>10. Cookies</h2>
+        <p>Les cookies nécessaires maintiennent la session, la sécurité et les préférences. Les usages non essentiels sont expliqués dans la <Link href="/politique-cookies">politique relative aux cookies</Link>.</p>
+      </section>
+      <section>
+        <h2>11. Réclamation et évolution</h2>
+        <p>Une demande relative aux données peut suivre la <Link href="/reclamations">procédure de réclamation</Link>. Cette politique peut évoluer pour refléter la loi ou les fonctionnalités. Les changements importants seront signalés de façon appropriée.</p>
+      </section>
+    </LegalPage>
+  );
 }

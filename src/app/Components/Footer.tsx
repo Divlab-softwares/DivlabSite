@@ -35,6 +35,15 @@ const Footer=({ className } : Footerprops)=> {
                 </div>
                 
             </nav>
+            <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
+                <Link href="/centre-de-confiance">Centre de confiance</Link>
+                <Link href="/cgv">CGV</Link>
+                <Link href="/conditions-utilisation">Conditions d’utilisation</Link>
+                <Link href="/politique-remboursement">Remboursements</Link>
+                <Link href="/privacy-policy">Confidentialité</Link>
+                <Link href="/reclamations">Réclamations</Link>
+                <Link href="/mentions-legales">Mentions légales</Link>
+            </nav>
             
         </footer>
      );

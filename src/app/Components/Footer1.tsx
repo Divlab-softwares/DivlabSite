@@ -50,10 +50,16 @@ const Footer1 = ({ className }: Footer1props) => {
                 {/* <a className="link link-hover">Press kit</a> */}
             </nav>
             <nav>
-                <h6 className="footer-title">Legal</h6>
-                <a className="link link-hover" href="/cgv" target="_blank">CGV</a>
-                <a className="link link-hover" href="/privacy-policy" target="_blank">Privacy policy</a>
-                {/* <a className="link link-hover">Cookie policy</a> */}
+                <h6 className="footer-title">Confiance & légal</h6>
+                <a className="link link-hover" href="/centre-de-confiance">Centre de confiance</a>
+                <a className="link link-hover" href="/cgv">Conditions de vente</a>
+                <a className="link link-hover" href="/conditions-utilisation">Conditions d’utilisation</a>
+                <a className="link link-hover" href="/politique-remboursement">Remboursements</a>
+                <a className="link link-hover" href="/privacy-policy">Confidentialité</a>
+                <a className="link link-hover" href="/politique-cookies">Cookies</a>
+                <a className="link link-hover" href="/regles-formateurs">Règles formateurs</a>
+                <a className="link link-hover" href="/reclamations">Réclamations</a>
+                <a className="link link-hover" href="/mentions-legales">Mentions légales</a>
             </nav>
         </footer>
     );

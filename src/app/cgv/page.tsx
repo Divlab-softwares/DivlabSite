@@ -1,187 +1,67 @@
-// Condition generale de vente
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { LegalPage } from "../Components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Conditions generales de vente - CGV",
-  description:
-    "Conditions generales de vente pour les services de formation en data science, IA, création de sites web et support informatique proposés par DIVLAB au Cameroun.",
+  title: "Conditions générales de vente",
+  description: "Conditions applicables aux formations et prestations commandées auprès de DIVLAB.",
 };
-// app/cgv/page.tsx
+
 export default function CGVPage() {
-    return (
-        <div className="max-w-4xl mx-auto px-4 py-16 text-gray-800 leading-relaxed" data-theme="garden">
-
-            <h1 className="text-4xl font-bold mb-10 text-center">Conditions Générales de Vente (CGV)</h1>
-
-            <p className="mb-6 text-sm text-gray-500">
-                Dernière mise à jour : {new Date().getFullYear()}
-            </p>
-
-            {/* Introduction */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">1. Objet</h2>
-                <p>
-                    Les présentes Conditions Générales de Vente (CGV) encadrent la vente
-                    des services proposés par <strong>DIVLAB</strong>, une structure
-                    spécialisée dans la Data Science, l’Intelligence Artificielle,
-                    la création de sites web, le support informatique et
-                    l’accompagnement académique.
-                </p>
-            </section>
-
-            {/* Nature des services */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">2. Nature des services fournis</h2>
-                <p>DIVLAB propose notamment :</p>
-                <ul className="list-disc ml-6 mt-2">
-                    <li>Formations en Data Science, IA, R, Excel, Python, Deep Learning…</li>
-                    <li>Développement de sites web et applications.</li>
-                    <li>Maintenance informatique et optimisation d’équipements.</li>
-                    <li>Création et entraînement de modèles d’apprentissage automatique.</li>
-                    <li>Assistance à projets académiques (mémoire, thèse, mini-projets…).</li>
-                    <li>Accompagnement à la recherche et rédaction scientifique.</li>
-                </ul>
-            </section>
-
-            {/* Commande */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">3. Processus de commande</h2>
-                <p>
-                    Pour passer une commande, le client peut utiliser la plateforme DIVLAB,
-                    contacter l’équipe via les réseaux officiels ou échanger directement
-                    avec un conseiller DIVLAB. Une commande n’est validée qu’après confirmation
-                    écrite (courriel, message ou facture électronique).
-                </p>
-            </section>
-
-            {/* Politique des prix */}
-            <section className="mb-10" id="politique_prix">
-                <h2 className="text-2xl font-bold mb-3">4. Politique tarifaire</h2>
-                <p>
-                    Les prix affichés sur la plateforme ou les supports DIVLAB sont fournis
-                    à titre indicatif et représentent une <strong>base de discussion</strong>.
-                    Les tarifs finaux peuvent varier selon :
-                </p>
-                <ul className="list-disc ml-6 mt-2">
-                    <li>la complexité du projet ;</li>
-                    <li>la durée estimée du travail ;</li>
-                    <li>le niveau d’expertise requis ;</li>
-                    <li>les délais demandés par le client ;</li>
-                    <li>les exigences techniques spécifiques.</li>
-                </ul>
-
-                <p className="mt-4">
-                    Le prix définitif est fixé uniquement après un échange avec le client
-                    et l’établissement d’un <strong>devis personnalisé</strong>. Ce devis
-                    prévaut sur tout prix affiché publiquement.
-                </p>
-
-                <p className="mt-3">
-                    Les promotions, tarifs spéciaux ou réductions sont appliqués à la
-                    discrétion de DIVLAB.
-                </p>
-            </section>
-
-            {/* Paiement */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">5. Modalités de paiement</h2>
-                <p>
-                    Le paiement peut s’effectuer via les moyens suivants :
-                </p>
-                <ul className="list-disc ml-6 mt-2">
-                    <li>Mobile Money (MTN, Orange Money) via les passerelles partenaires.</li>
-                    <li>Carte bancaire via les API sécurisées (ex : NotchPay, Lygos).</li>
-                    <li>Paiement en espèces lorsque applicable.</li>
-                </ul>
-
-                <p className="mt-4">
-                    Aucun service ne débute tant que le paiement n’a pas été validé,
-                    sauf accord exceptionnel mentionné explicitement par DIVLAB.
-                </p>
-            </section>
-
-            {/* Livraison des services */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">6. Livraison des services</h2>
-                <p>
-                    La livraison dépend du type de service : cours PDF, développement,
-                    scripts IA, logiciels, corrections académiques…
-                    Les délais sont communiqués au client avant la validation du devis
-                    et peuvent être ajustés selon les besoins.
-                </p>
-            </section>
-
-            {/* Rétractation */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">7. Droit de rétractation</h2>
-                <p>
-                    Conformément aux usages des prestations numériques et personnalisées,
-                    aucun remboursement n’est possible une fois le service entamé ou le
-                    document livré.
-                    Toutefois, une résolution amiable peut être proposée en cas de
-                    problème majeur.
-                </p>
-            </section>
-
-            {/* Responsabilités */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">8. Responsabilités</h2>
-                <p>
-                    DIVLAB s’engage à fournir des services professionnels et conformes
-                    aux attentes convenues.
-                    Le client est tenu de fournir des informations exactes, complètes
-                    et à jour pour permettre une réalisation optimale du service.
-                </p>
-            </section>
-
-            {/* Confidentialité */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">9. Confidentialité</h2>
-                <p>
-                    DIVLAB garantit la confidentialité des données et documents transmis
-                    dans le cadre d’un projet.
-                    Cette section concerne les engagements liés au projet, tandis que
-                    la Politique de Confidentialité (page séparée) traite de la gestion
-                    des données personnelles.
-                </p>
-            </section>
-
-            {/* Propriété intellectuelle */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">10. Propriété intellectuelle</h2>
-                <p>
-                    Sauf mention contraire dans un contrat spécifique, tous les supports
-                    fournis (scripts, codes, modèles IA, documents, plans…) restent la
-                    propriété intellectuelle de DIVLAB jusqu’au paiement intégral du service.
-                </p>
-            </section>
-
-            {/* Litiges */}
-            <section className="mb-10">
-                <h2 className="text-2xl font-bold mb-3">11. Loi applicable et litiges</h2>
-                <p>
-                    Les présentes CGV sont régies par le droit du Cameroun.
-                    Tout litige non résolu à l’amiable sera porté devant les tribunaux
-                    compétents de Douala.
-                </p>
-            </section>
-
-            {/* Contact */}
-            <section>
-                <h2 className="text-2xl font-bold mb-3">12. Contact</h2>
-                <p>
-                    Pour toute question concernant les présentes CGV :
-                    <br />
-                    <strong>Email :</strong> divlabsoftware@gmail.com
-                    <br />
-                    <strong>Téléphone :</strong> +237 652509674
-                </p>
-            </section>
-
-            <div className="mt-16 text-center text-sm text-gray-500">
-                © {new Date().getFullYear()} DIVLAB — Tous droits réservés.
-            </div>
-
-        </div>
-    );
+  return (
+    <LegalPage
+      title="Conditions générales de vente"
+      intro="Ces conditions expliquent ce que vous achetez, comment le paiement est confirmé et quels recours sont disponibles."
+    >
+      <section>
+        <h2>1. Vendeur, plateforme et formateurs</h2>
+        <p>DIVLAB exploite le site divlabs-tech.com et la plateforme DIVLAB Training depuis le Cameroun. DIVLAB commercialise ses propres prestations et permet également à des formateurs identifiés de proposer des formations.</p>
+        <p>Lorsqu’un formateur tiers anime une formation, son identité et son statut de vérification sont indiqués sur la fiche. DIVLAB reste l’interlocuteur de l’apprenant pour le paiement, l’accès et les réclamations traitées par la plateforme.</p>
+        <p>Contact : divlabsoftware@gmail.com · +237 652 509 674. Les informations d’immatriculation de la structure doivent être ajoutées à la présente page dès leur disponibilité officielle.</p>
+      </section>
+      <section>
+        <h2>2. Informations avant commande</h2>
+        <p>Avant le paiement, le client peut consulter le titre, le programme ou la description, le format, le prix, la devise, le calendrier disponible, l’identité du formateur, les prérequis éventuels et la nature de l’attestation annoncée.</p>
+        <p>Une attestation DIVLAB atteste une participation ou un accomplissement sur la plateforme. Elle ne constitue ni un diplôme d’État ni une certification professionnelle reconnue, sauf mention expresse accompagnée d’un justificatif vérifiable.</p>
+      </section>
+      <section id="politique_prix">
+        <h2>3. Prix</h2>
+        <p>Le prix d’une formation affiché au moment de la commande est ferme pour cette commande. Pour une prestation personnalisée, le devis accepté prévaut sur toute estimation publique. Les frais éventuels sont communiqués avant validation.</p>
+      </section>
+      <section>
+        <h2>4. Commande et paiement</h2>
+        <p>La commande devient définitive après confirmation du paiement par le prestataire de paiement et enregistrement par DIVLAB. L’utilisateur reçoit alors un accès et, pour une formation payante, un reçu PDF téléchargeable dans son espace.</p>
+        <p>Les paiements électroniques sont traités par un prestataire spécialisé. DIVLAB ne demande jamais le code secret Mobile Money de l’utilisateur.</p>
+      </section>
+      <section>
+        <h2>5. Garantie apprenant</h2>
+        <p>Si la formation est annulée par le formateur ou DIVLAB, ou si l’accès acheté n’est pas fourni et qu’aucune solution équivalente n’est acceptée, l’apprenant peut demander un remboursement selon la <Link href="/politique-remboursement">politique de remboursement</Link>.</p>
+        <p>Cette garantie ne couvre pas une simple absence volontaire de l’apprenant, un défaut de matériel ou de connexion qui lui est propre, ni une utilisation contraire aux règles de la plateforme.</p>
+      </section>
+      <section>
+        <h2>6. Accès et obligations du client</h2>
+        <p>Les accès sont personnels et ne peuvent être revendus ou partagés. L’apprenant doit fournir des informations exactes, préserver la confidentialité de son compte et respecter les autres participants ainsi que les droits d’auteur.</p>
+      </section>
+      <section>
+        <h2>7. Annulation et remboursement</h2>
+        <p>Les conditions, délais, exclusions et justificatifs applicables sont détaillés dans la politique de remboursement. Aucune clause des présentes conditions ne réduit les garanties impératives accordées au consommateur par la loi applicable.</p>
+      </section>
+      <section>
+        <h2>8. Propriété intellectuelle</h2>
+        <p>Les supports, vidéos, textes, logiciels et méthodes restent la propriété de leurs titulaires. L’achat donne un droit d’utilisation personnel pour la durée annoncée, et non un droit de reproduction, de diffusion ou de revente.</p>
+      </section>
+      <section>
+        <h2>9. Disponibilité et responsabilité</h2>
+        <p>DIVLAB met en œuvre des moyens raisonnables pour assurer la disponibilité du service. Une maintenance, un incident réseau ou un événement extérieur peut toutefois provoquer une interruption. En cas d’indisponibilité imputable à DIVLAB empêchant la prestation, une reprogrammation, un avoir ou un remboursement peut être proposé selon la situation.</p>
+      </section>
+      <section>
+        <h2>10. Réclamations, droit applicable et litiges</h2>
+        <p>Le client doit d’abord utiliser la <Link href="/reclamations">procédure de réclamation</Link> afin de permettre une résolution amiable. Les présentes conditions sont régies par le droit camerounais, notamment les règles relatives au commerce électronique et à la protection du consommateur. À défaut d’accord amiable, le litige relève des juridictions compétentes.</p>
+      </section>
+      <section>
+        <h2>11. Acceptation et preuve</h2>
+        <p>La validation de la commande implique l’acceptation des conditions présentées avant paiement. Les enregistrements de commande, références de transaction, confirmations du prestataire et journaux d’accès peuvent servir à établir le déroulement de la transaction, sous réserve des règles de preuve applicables.</p>
+      </section>
+    </LegalPage>
+  );
 }
