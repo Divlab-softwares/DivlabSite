@@ -49,12 +49,28 @@ import { Dropdown } from "../Components/Dropdown";
 
 
 // 🔹 Fonction pour récupérer le lien public Supabase
-function getSupabasePublicLink(path: string, bucket: string) {
+function getSupabasePublicLink(path: string | null | undefined, bucket: string) {
     if (!path) return null;
-    if (path.startsWith("https://")) return path; // déjà un lien public
-    // sinon c’est un chemin "uploads/..." -> créer URL publique Supabase
-    const bucketUrl = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_URL + `/storage/v1/object/public/${bucket}/`;
-    return bucketUrl + path;
+    if (path.startsWith("https://") || path.startsWith("http://") || path.startsWith("/")) return path;
+    const configuredUrl =
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_BASIC_URL ||
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_URL ||
+        process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (!configuredUrl) return null;
+
+    try {
+        const apiOrigin = new URL(
+            configuredUrl.replace(".storage.supabase.co", ".supabase.co"),
+        ).origin;
+        const encodedPath = path
+            .split("/")
+            .filter(Boolean)
+            .map(encodeURIComponent)
+            .join("/");
+        return `${apiOrigin}/storage/v1/object/public/${bucket}/${encodedPath}`;
+    } catch {
+        return null;
+    }
 }
 
 type Courses = {
@@ -1018,7 +1034,7 @@ const Services = ({ initialRankedCourses }: Props) => {
     }
 
     return (
-        <article className={`relative flex h-screen flex-col overflow-hidden ${theme === "garden" ? "divlab-light" : "divlab-dark"} divlab-section-shell`} >
+        <article className={`services-page relative flex h-screen flex-col overflow-hidden ${theme === "garden" ? "divlab-light" : "divlab-dark"} divlab-section-shell`} >
             {/* {notif && (
                 <PaymentNotification
                     key={notif.key}
@@ -1060,13 +1076,13 @@ const Services = ({ initialRankedCourses }: Props) => {
             </button>
 
             <FormationNavBar />
-            <div className="divlab-glass mx-2 mt-2 flex w-[calc(100%-1rem)] flex-col items-end gap-2 rounded-2xl p-2 md:h-[7%] md:flex-row md:items-center md:justify-center" data-theme={`${theme}`}>
-                <div className="relative flex h-12 w-full flex-row items-center justify-center gap-1 rounded-2xl bg-white/80 dark:bg-white/20">
+            <div className="services-commandbar divlab-glass mx-2 mt-2 flex w-[calc(100%-1rem)] flex-col items-end gap-2 rounded-2xl p-2 md:h-[7%] md:flex-row md:items-center md:justify-center" data-theme={`${theme}`}>
+                <div className="services-search relative flex h-12 w-full flex-row items-center justify-center gap-1 rounded-xl">
 
-                    <Input onKeyDown={handleKeyDown} type="text" value={searchData} className="h-full w-full rounded-2xl border-none bg-white/80 text-gray-800 outline-none hover:bg-white" onChange={handleChange} placeholder="Vous cherchez une formation ? ..." data-theme={`${theme}`} />
+                    <Input onKeyDown={handleKeyDown} type="text" value={searchData} className="h-full w-full rounded-xl border-none bg-transparent px-4 pr-20 outline-none" onChange={handleChange} placeholder="Rechercher une formation, un service ou une solution..." data-theme={`${theme}`} />
                     <div className="absolute flex flex-row gap-1 right-2 top-1/2 transform -translate-y-1/2">
-                        <button className="transition-all duration-200 hover:bg-red-300 rounded-md p-1" onClick={clearSearch} > <X size={18} /></button>
-                        <button onClick={handleSubmit} className="transition-all duration-200 hover:bg-blue-400 rounded-md p-1"><Search size={18} /></button>
+                        <button aria-label="Effacer la recherche" className="services-icon-button rounded-lg p-2 transition-all duration-200" onClick={clearSearch} > <X size={18} /></button>
+                        <button aria-label="Lancer la recherche" onClick={handleSubmit} className="services-icon-button services-icon-button-primary rounded-lg p-2 transition-all duration-200"><Search size={18} /></button>
                     </div>
 
                     {/* <Button onClick={handleSubmit} type="submit" variant="ServicesSearch" className="h-full" >Rechercher</Button> */}
@@ -1104,7 +1120,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                     </div>
 
                     <div className=" h-full w-10">
-                        <Link href="#formations" className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold shadow-xl"><img src={!session?.user?.image ? UserProfile.src : session.user?.image} alt="" className="w-10 h-10 rounded-full " /></Link>
+                        <Link href="#formations" className="w-full h-full flex items-center justify-start overflow-hidden text-md font-bold shadow-xl"><img src={getSupabasePublicLink(session?.user?.image, "images") || UserProfile.src} alt={session?.user?.name ? `Photo de ${session.user.name}` : "Profil utilisateur"} className="w-10 h-10 rounded-full object-cover" /></Link>
                     </div>
                 </div>
 
@@ -1135,7 +1151,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                         exit={{ x: -20, opacity: 0 }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="text-black w-100 h-50 rounded-xl bg-white/90 flex flex-col gap-5 items-center justify-center fixed right-6 md:top-33 top-50 z-50">
-                        <Button disabled={signOutVal == 2} onClick={() => { setSignOutVal(2); signOut({ redirect: false }); setSign(-2); setSignOutVal(0) }} className="cursor-pointer bg-red-500 hover:bg-red-600">{signOutVal === 2 ? 'Chargement, veuillez patienter...' : 'Se déconnecter'}</Button>
+                        <Button disabled={signOutVal == 2} onClick={() => { setSignOutVal(2); signOut({ redirect: false }); setSign(-2); setSignOutVal(0) }} className="services-secondary-button cursor-pointer">{signOutVal === 2 ? 'Chargement, veuillez patienter...' : 'Se déconnecter'}</Button>
                     </motion.div >
                 )}
             </AnimatePresence>
@@ -1153,7 +1169,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                         <div className={`flex flex-col   ${sideBar ? "md:w-3/4" : "md:w-full w-full"}  transition-all duration-300 h-full flex-wrap md:flex-nowrap  `}>
                             {/* <SidebarTrigger size="sm" className="font-bold w-fit" /> */}
                             <div className="h-full w-full overflow-auto space-y-4 scroll-smooth px-2 pb-8">
-                                <section className="relative mx-auto mb-6 mt-4 max-w-7xl overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-cyan-500/18 via-white/8 to-amber-300/12 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.24)] md:p-8">
+                                {/* <section className="relative mx-auto mb-6 mt-4 max-w-7xl overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-cyan-500/18 via-white/8 to-amber-300/12 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.24)] md:p-8">
                                     <div className="divlab-grid-mask absolute inset-0 opacity-25" />
                                     <div className="relative z-10 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-center">
                                         <div>
@@ -1181,12 +1197,12 @@ const Services = ({ initialRankedCourses }: Props) => {
                                             ))}
                                         </div>
                                     </div>
-                                </section>
+                                </section> */}
                                 <u><Title title="FORMATIONS" className="text-4xl pt-2" id="formations" /></u>
 
                                 {/* Zone des formations en e-book*/}
 
-                                <div className={` ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"}  transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2 shadow-[0_5px_20px_rgba(0,200,255,0.6)]`} data-theme={`${theme}`}>
+                                <div className={`services-simple-card ${changeCourseHeight == 1 ? "min-h-155" : "h-fit"} transition-all duration-300 ease-in-out flex flex-row justify-center p-3 pt-6 rounded-3xl ml-2`} data-theme={`${theme}`}>
 
 
 
@@ -1375,7 +1391,7 @@ const Services = ({ initialRankedCourses }: Props) => {
 
                                 <div id="category" className="h-90">
 
-                                    <div className="flex relative h-full   w-full  rounded-3xl p-2  shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]" >
+                                    <div className="services-simple-card flex relative h-full w-full rounded-3xl p-2" >
 
                                         <Card className="w-full relative h-full rounded-4xl flex flex-col justify-start border-none ">
                                             <CardHeader className="py-2">
@@ -1473,7 +1489,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                                     </div>
 
                                 </div>
-                                <div id="formationslist" ref={listRef} className={`${sideBar ? "md:hidden" : ""}  w-full h-auto  rounded-2xl shadow-[inset_7px_-7px_80px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)]`} data-theme={`${theme}`}>
+                                <div id="formationslist" ref={listRef} className={`services-simple-card ${sideBar ? "md:hidden" : ""} w-full h-auto rounded-2xl`} data-theme={`${theme}`}>
                                     <Collapsible open={openCollapse == 1} onOpenChange={() => setOpenCollapse(0)} className=" ">
 
                                         <CollapsibleTrigger asChild className="">
@@ -1725,7 +1741,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                                     >
                                         <HoverCardTrigger asChild >
                                             <div
-                                                className="flex flex-row relative h-fit  flex-wrap md:flex-nowrap justify-center w-full  rounded-3xl p-4 md:space-x-20 md:ml-2  shadow-[inset_7px_-7px_80px_rgba(0,0,0,0.8),-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2),inset_-7px_7px_20px_rgba(255,255,255,0.3)]"
+                                                className="services-simple-card flex flex-row relative h-fit flex-wrap md:flex-nowrap justify-center w-full rounded-3xl p-4 md:space-x-20 md:ml-2"
                                             >
                                                 <StripesBackground
                                                     position="left"
@@ -1774,7 +1790,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                                 {/* Zone des Solutions web */}
                                 <u><Title title="SOLUTIONS WEB" className="text-4xl pt-2" id="solutions web" /></u>
                                 {Website.map((site, index) => (
-                                    <div className="flex flex-row  justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.4),-3px_5px_20px_rgba(0,200,255,0.2)] " key={site.id} data-theme={`${theme}`}>
+                                    <div className="services-simple-card flex flex-row justify-center rounded-3xl relative p-2 pt-6 my-7 ml-2" key={site.id} data-theme={`${theme}`}>
                                         <Image height={30} width={30} src="/assets/promo.svg" alt="promo" className="absolute w-30 h-30 top-0 right-10 -rotate-10 animate-zoom z-5"></Image>
 
                                         <div className="relative flex flex-row w-full rounded-3xl justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7 shadow-[0_5px_10px_rgba(0,200,255,0.6)]" >
@@ -1873,7 +1889,7 @@ const Services = ({ initialRankedCourses }: Props) => {
 
                                 <u><Title title="INTELLIGENCE ARTIFFICIELLE" className="text-4xl pt-2" id="ia" /></u>
                                 {IA.map((ia, index) => (
-                                    <div className="flex flex-row justify-center rounded-3xl relative p-2 pt-6 ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.7),-3px_5px_20px_rgba(0,200,255,0.2)]  " key={ia.id} data-theme={`${theme}`}>
+                                    <div className="services-simple-card flex flex-row justify-center rounded-3xl relative p-2 pt-6 ml-2" key={ia.id} data-theme={`${theme}`}>
 
                                         <div className="relative flex flex-row w-full justify-between flex-wrap md:flex-nowrap  items-center  p-4 md:space-x-10 space-y-7   rounded-3xl shadow-[0_5px_10px_rgba(0,200,255,0.6)]">
 
@@ -1971,7 +1987,7 @@ const Services = ({ initialRankedCourses }: Props) => {
                                 {/* Zone des Solutions Design et creativite */}
                                 <u><Title title="DESIGN ET CREATIVITE" className="text-4xl pt-2" id="design" /></u>
                                 {design.map((des, index) => (
-                                    <div className="flex flex-row justify-center rounded-3xl relative p-2 pt-6 md:ml-2 shadow-[-8px_15px_20px_rgba(0,0,0,0.4),-3px_5px_20px_rgba(0,200,255,0.2)]  " key={des.id} data-theme={`${theme}`}>
+                                    <div className="services-simple-card flex flex-row justify-center rounded-3xl relative p-2 pt-6 md:ml-2" key={des.id} data-theme={`${theme}`}>
 
                                         <div className="relative flex flex-row w-full justify-between items-center flex-wrap md:flex-nowrap p-4 md:space-x-10 space-y-5 md:space-y-0   rounded-3xl shadow-[0_5px_10px_rgba(0,200,255,0.6)]">
 

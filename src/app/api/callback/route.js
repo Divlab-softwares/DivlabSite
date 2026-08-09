@@ -5,7 +5,7 @@ import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ACCESS_KEY);
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY);
 
 
 async function getPresignedGetUrl(bucket, key, expires = 60 * 10) {
@@ -52,7 +52,7 @@ export async function POST(req) {
         await prisma.payment.update({
             where: { reference: ref },
             data: {
-               // reference: payload.data.reference ?? existing.reference,
+                // reference: payload.data.reference ?? existing.reference,
                 status: payload.data.status,
                 merchantReference: payload.data.merchant_reference ?? existing.merchantReference,
                 trxref: payload.data.reference ?? existing.reference,

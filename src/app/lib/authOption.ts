@@ -24,13 +24,22 @@ declare module "next-auth" {
 }
 declare module "next-auth/jwt" {
     interface JWT {
+        id?: string;
         role?: string;
     }
 }
 
 const useSecureCookies = process.env.NODE_ENV === 'production';
-const cookiePrefix = useSecureCookies ? "__Secure-" : "";
+const cookiePrefix = useSecureCookies ? "__Secure-site-" : "site-";
 const domain = ".divlabs-tech.com"; // Votre domaine commun
+const authSecret =
+    process.env.NEXTAUTH_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.SUPABASE_JWT_SECRET;
+
+if (!authSecret) {
+    throw new Error("NEXTAUTH_SECRET est requis pour chiffrer les sessions.");
+}
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -92,15 +101,22 @@ export const authOptions = {
         },
         async jwt({ token, user }) {
             if (user) {
-                //token.id = user.id;
+                token.id = user.id;
+                token.sub = user.id;
+                token.name = user.name;
+                token.email = user.email;
+                token.picture = user.image;
                 token.role = user.role || "user";
             }
             return token;
         },
         async session({ session, token }) {
-            if (token.role) {
-                //session.user.id = token.id;
-                session.user.role = token.role;
+            if (session.user) {
+                session.user.id = token.id || token.sub;
+                session.user.name = token.name ?? undefined;
+                session.user.email = token.email ?? undefined;
+                session.user.image = token.picture ?? undefined;
+                session.user.role = token.role || "user";
             }
             return session;
         },
@@ -109,11 +125,11 @@ export const authOptions = {
         strategy: "jwt",
     },
     jwt: {
-        secret: process.env.SUPABASE_JWT_SECRET,
+        secret: authSecret,
         maxAge: 60 * 60 * 24 * 30,
     },
-    secret: process.env.SUPABASE_JWT_SECRET,
-    debug: process.env.NODE_ENV === "development", // pour voir les logs détaillés
+    secret: authSecret,
+    debug: process.env.NEXTAUTH_DEBUG === "true",
 } satisfies NextAuthOptions;
 
 

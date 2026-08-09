@@ -328,3 +328,218 @@ body {
     @apply bg-background text-foreground;
   }
 } */
+
+/* Cartes de la page Services : surfaces sobres, sans halos ni degradés. */
+.services-simple-card {
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  background-color: color-mix(in srgb, var(--color-base-100, #ffffff) 94%, transparent);
+  box-shadow: 0 8px 24px rgb(15 23 42 / 0.08);
+}
+
+.services-simple-card *,
+.services-simple-card *::before,
+.services-simple-card *::after {
+  box-shadow: none !important;
+}
+
+.services-simple-card [class*="bg-gradient"],
+.services-simple-card [class*="bg-linear"],
+.services-simple-card [style*="linear-gradient"],
+.services-simple-card .interactive-gradient-card,
+.services-simple-card .interactive-gradient-card::before {
+  background-image: none !important;
+}
+
+.services-simple-card [style*="linear-gradient"] {
+  background-color: #0785ce !important;
+}
+
+.services-simple-card .pointer-events-none {
+  display: none;
+}
+
+.services-simple-card img {
+  border: 0 !important;
+  transform: none !important;
+}
+
+.services-simple-card .interactive-gradient-card {
+  border: 1px solid color-mix(in srgb, currentColor 10%, transparent) !important;
+  background-color: var(--color-base-100, #ffffff) !important;
+}
+
+/* Direction visuelle de /Services, inspiree du bureau DIVLAB TRAIN. */
+.services-page {
+  --services-ink: #071421;
+  --services-panel: #ffffff;
+  --services-panel-soft: #f4f8fb;
+  --services-line: #dce7ee;
+  --services-muted: #617384;
+  --services-accent: #0785ce;
+  --services-accent-strong: #056da9;
+  --services-accent-soft: #e3f4fc;
+  background-color: #edf4f7;
+  color: var(--services-ink);
+}
+
+.services-page.divlab-dark {
+  --services-ink: #ecf8ff;
+  --services-panel: #0d1c27;
+  --services-panel-soft: #112633;
+  --services-line: #23404f;
+  --services-muted: #9db3c0;
+  --services-accent: #25b9e8;
+  --services-accent-strong: #58cef2;
+  --services-accent-soft: #123747;
+  background-color: #071421;
+}
+
+.services-page .services-commandbar {
+  border: 1px solid var(--services-line);
+  background: var(--services-panel);
+  box-shadow: 0 10px 30px rgb(7 20 33 / 0.08);
+}
+
+.services-page .services-search {
+  border: 1px solid var(--services-line);
+  background: var(--services-panel-soft);
+}
+
+.services-page .services-search input {
+  color: var(--services-ink) !important;
+}
+
+.services-page .services-search input::placeholder {
+  color: var(--services-muted);
+}
+
+.services-page .services-icon-button {
+  color: var(--services-muted);
+}
+
+.services-page .services-icon-button:hover {
+  color: var(--services-accent);
+  background-color: var(--services-accent-soft);
+}
+
+.services-page .services-icon-button-primary {
+  color: white;
+  background-color: var(--services-accent);
+}
+
+.services-page .services-icon-button-primary:hover {
+  color: white;
+  background-color: var(--services-accent-strong);
+}
+
+.services-page .services-secondary-button {
+  border: 1px solid var(--services-line);
+  color: var(--services-ink);
+  background-color: var(--services-panel-soft);
+}
+
+.services-page .services-secondary-button:hover {
+  border-color: var(--services-accent);
+  color: var(--services-accent);
+  background-color: var(--services-accent-soft);
+}
+
+.services-page u:has(> h1[id]) {
+  text-decoration: none;
+}
+
+.services-page h1[id] {
+  position: relative;
+  margin: 2.75rem 0 1.25rem;
+  padding: 0 0 0.9rem;
+  color: var(--services-ink);
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+  letter-spacing: -0.035em;
+  text-align: left;
+}
+
+.services-page h1[id]::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background-color: var(--services-accent);
+  content: "";
+}
+
+.services-page .services-simple-card {
+  overflow: hidden;
+  border-color: var(--services-line);
+  border-radius: 1.25rem;
+  background-color: var(--services-panel);
+  box-shadow: 0 12px 34px rgb(7 20 33 / 0.08);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.services-page .services-simple-card:hover {
+  border-color: color-mix(in srgb, var(--services-accent) 42%, var(--services-line));
+  box-shadow: 0 16px 38px rgb(7 20 33 / 0.12);
+}
+
+.services-page .services-simple-card hr {
+  border-color: var(--services-line);
+  opacity: 1;
+}
+
+.services-page .services-simple-card p,
+.services-page .services-simple-card span {
+  text-wrap: pretty;
+}
+
+.services-page .services-simple-card img {
+  background-color: var(--services-panel-soft);
+  object-position: center;
+}
+
+.services-page .services-simple-card [style*="linear-gradient"] {
+  border: 1px solid transparent;
+  background-color: var(--services-accent) !important;
+  color: white !important;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.services-page .services-simple-card [style*="linear-gradient"]:hover {
+  background-color: var(--services-accent-strong) !important;
+  transform: translateY(-1px);
+}
+
+.services-page .services-simple-card button[class*="bg-linear"] {
+  border: 1px solid var(--services-line);
+  background-color: var(--services-panel-soft) !important;
+  color: var(--services-ink) !important;
+}
+
+.services-page .services-simple-card button[class*="bg-linear"]:hover {
+  border-color: var(--services-accent);
+  color: var(--services-accent) !important;
+  background-color: var(--services-accent-soft) !important;
+}
+
+.services-page .badge {
+  border-color: var(--services-line);
+  background-color: var(--services-accent-soft);
+  color: var(--services-accent-strong);
+}
+
+.services-page :is(button, a):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--services-accent) 38%, transparent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .services-page h1[id] {
+    margin-top: 2rem;
+    padding-inline: 0.25rem;
+  }
+
+  .services-page .services-simple-card {
+    margin-inline: 0;
+  }
+}

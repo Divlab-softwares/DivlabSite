@@ -9,7 +9,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { getSupabaseSignedLink } from "../../helpers/getSupabaseSignedLink.ts";
 
 
-// const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ACCESS_KEY);
+// const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY);
 // const BUCKET = process.env.SUPABASE_BUCKET;
 // Vérifier le statut du paiement via sa référence
 

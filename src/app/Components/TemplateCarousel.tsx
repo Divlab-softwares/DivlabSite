@@ -22,7 +22,7 @@ export default function TemplateCarousel({ templates, onSelect }: Props) {
     const [selected, setSelected] = useState<string>("");
 
     const handleSelect = (link: string) => {
-        setSelected((l)=> l == link ? "" : link);
+        setSelected((l) => l == link ? "" : link);
         onSelect(link);
     };
 
@@ -63,9 +63,9 @@ export default function TemplateCarousel({ templates, onSelect }: Props) {
                         <p className="text-center font-semibold mt-3">{t.name}</p>
 
                         {/* Button */}
-                        <div className="mt-3 text-center">
+                        <div className="mt-3 text-center flex flex-col gap-2 ">
                             <Button
-                                className="rounded-lg px-4"
+                                className="rounded-lg px-4 cursor-pointer"
                                 onClick={(e) => {
                                     e.stopPropagation(); // empêche la sélection automatique
                                     window.open(t.link, "_blank");
@@ -73,6 +73,9 @@ export default function TemplateCarousel({ templates, onSelect }: Props) {
                             >
                                 Voir le template
                             </Button>
+                            <span className="text-sm text-gray-500 bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
+                                Utiliser le template
+                            </span>
                         </div>
                     </div>
                 ))}

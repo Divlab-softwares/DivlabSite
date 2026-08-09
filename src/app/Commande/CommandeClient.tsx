@@ -5,6 +5,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import FormationNavBar from "../Components/FormationNavBar";
+import { ClipLoader } from "react-spinners";
 import Footer1 from "../Components/Footer";
 import Title from "../Components/Title";
 import { BorderBeam } from "../Components/lightswind/border-beam";
@@ -170,6 +171,13 @@ const Commande = (props: CommandePageProps) => {
             setCommandInited(true);
 
             addNotification(data.message, data.success ? "success" : "failed", Date.now());
+            if (data.emailSent === false) {
+                addNotification(
+                    "Commande enregistrée, mais la notification par e-mail n'a pas pu être envoyée à Divlab.",
+                    "failed",
+                    Date.now()
+                );
+            }
             // setSuccess(true);
             // setOrderId(data.orderId);
 
@@ -187,7 +195,7 @@ const Commande = (props: CommandePageProps) => {
         }
 
         // Here you would typically handle form submission, e.g., send data to a server
-        console.log({ clientName, clientEmail, clientPhone, clientDesc, chosenTemplate, projectType });
+        // console.log({ clientName, clientEmail, clientPhone, clientDesc, chosenTemplate, projectType });
         // alert("Commande envoyée !");
     };
 
@@ -286,7 +294,7 @@ const Commande = (props: CommandePageProps) => {
                     </div>
 
                     <div className="space-x-3 h-full items-center hidden md:flex px-5 mr-6">
-                        <a href="#abonnement" className="hover:text-info"><span>Abonnement </span></a>
+                        {/* <a href="#abonnement" className="hover:text-info"><span>Abonnement </span></a> */}
                         <div className=" h-1/2 md:h-full rounded-xl flex flex-row items-center justify-end gap-2  px-2">
                             <div className="flex flex-row items-center justify-center h-full  font-medium">
                                 {sessionName || sessionEmail ? (
@@ -367,7 +375,7 @@ const Commande = (props: CommandePageProps) => {
 
             </nav>
             <AnimatePresence>
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="flex flex-row justify-between h-82/100 md:h-85/100 w-full gap-3 ">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="relative flex flex-row justify-between h-82/100 md:h-85/100 w-full gap-3 ">
 
                     <div className="flex flex-col md:w-full w-full transition-all duration-300 h-full flex-wrap md:flex-nowrap">
                         <div className="h-full w-full overflow-hidden space-y-4 scroll-smooth">
@@ -407,85 +415,82 @@ const Commande = (props: CommandePageProps) => {
                                                     <hr />
 
                                                     {/* FORMULAIRE INSÉRÉ ICI */}
-                                                    <CardDescription className="flex flex-col gap-4 pt-4">
-                                                        <div className="flex flex-col gap-2">
-                                                            <p className="flex md:flex-row flex-wrap gap-2 items-center">
-                                                                <span className="font-bold text-xl">Prix: ±{command.prixAp}</span>
-                                                                <Link href="/cgv#politique_prix" target="_blank" className="text-blue-500 text-sm hover:text-blue-600"><u>savoir plus sur les prix chez divlab?</u></Link>
-                                                            </p>
-                                                            <p className="mt-3">{command.delai}</p>
-                                                            <p>{command.content}</p>
-                                                        </div>
-
-                                                        <p>Veuillez remplir ces informations pour initier votre commande : </p>
-
-                                                        <Input type="text" placeholder="Votre nom & prenom" value={clientName || ""} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientName(e.target.value)} className="input input-bordered w-full" required />
-                                                        <Input type="email" placeholder="Votre email" value={clientEmail || ""} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientEmail(e.target.value)} className="input input-bordered w-full" required />
-                                                        <CountrySelect
-                                                            value={clientCountry}
-                                                            onChange={(v: string) => setClientCountry(v)}
-                                                            className="select select-bordered w-full"
-                                                        />
-
-                                                        <Input type="text" placeholder="Téléphone" value={clientPhone} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientPhone(e.target.value)} className="input input-bordered w-full" required />
-                                                        <textarea rows={10} placeholder="Description de la commande ( Optionnel )" value={clientDesc} onChange={(e) => setClientDesc(e.target.value)} className="textarea textarea-bordered w-full"></textarea>
-
-                                                        {isPortfolio && (
-                                                            <TemplateCarousel
-                                                                templates={Templates}
-                                                                onSelect={(value) => setChosenTemplate(value)}
-                                                            />
-
-                                                        )}
-                                                        {commandType == "Website" && (<div>  <p>Proposez votre template <span className="text-gray-500 text-sm">( Optionnel ) </span>:</p>
-                                                            <Input type="text" placeholder="Entrez le lien de votre template" value={proposedTemplate} onChange={(e) => setProposedTemplate(e.target.value)} className="input input-bordered w-full" />
-                                                        </div>)}
-                                                        <ShineButton
-                                                            className={`w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 ${commandInited ? "opacity-60 pointer-events-none" : ""}`}
-                                                            // disable= {downloading}
-                                                            label={`${commandInited ? "Initier une nouvelle commande" : "Initier la commande"} `}
-                                                            size="lg"
-                                                            aria-disabled={commandInited}
-                                                            bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
-                                                            onClick={() => {
-                                                                if (commandInited) return;
-                                                                submitForm({ budget: command.prixAp, projectType: commandType });
-                                                            }}
-                                                        />
-                                                        {/* <Button onClick={() => submitForm({ budget: command.prixAp, projectType: commandType })} className="bg-blue-500 text-white rounded-xl p-3 hover:scale-105 transition">Initier la commande</Button> */}
-
-                                                        {commandInited &&
-
-                                                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="w-full gap-2 flex flex-col">
-                                                                <p className=" mt-2 text-xl font-bold text-green-600">Commande initiée avec succès! </p>
-                                                                <p className="mt-1 text-xl font-bold">Vous allez recevoir un message d'ici quelques minutes sur whatsapp et par mail pour completer votre commande.</p>
-                                                                <p className=" mt-2">Vous pouvez en attendant :  </p>
-
-                                                                <div className="w-full flex md:flex-row flex-col justify-between items-center md:space-x-5 md:space-y-0 space-y-2">
-                                                                    <Link href="#abonnement" className="w-full"> <Button className=" bg-gray-700 text-white rounded-xl p-3 shadow-xl hover:bg-gray-900 hover:shadow-2xl hover:scale-105 transition w-full  "> Voir nos offres d'abonnement ( pour les sites web )</Button></Link>
-                                                                    <Link href={{
-                                                                        pathname: "/Services",
-                                                                        query: {
-                                                                            status: "command innited",
-                                                                        },
-                                                                    }} className="w-full"> <Button className=" bg-slate-600 text-white rounded-xl p-3 shadow-xl hover:shadow-2xl hover:bg-slate-700 hover:scale-105 transition w-full"> Retour aux services</Button></Link>
-                                                                </div>
-
-                                                            </motion.div>
-
-                                                        }
-
-
-                                                    </CardDescription>
                                                 </CardHeader>
 
-                                                <CardContent>
+                                                <CardContent className="flex flex-col gap-4 pt-2" >
+                                                    <div className="flex flex-col gap-2">
+                                                        <span className="flex md:flex-row flex-wrap gap-2 items-center">
+                                                            <span className="font-bold text-xl">Prix: ±{command.prixAp}</span>
+                                                            <Link href="/cgv#politique_prix" target="_blank" className="text-blue-500 text-sm hover:text-blue-600"><u>savoir plus sur les prix chez divlab?</u></Link>
+                                                        </span>
+                                                        <p className="mt-3">{command.delai}</p>
+                                                        <p>{command.content}</p>
+                                                    </div>
 
+                                                    <p>Veuillez remplir ces informations pour initier votre commande : </p>
+
+                                                    <Input type="text" placeholder="Votre nom & prenom" value={clientName || ""} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientName(e.target.value)} className="input input-bordered w-full" required />
+                                                    <Input type="email" placeholder="Votre email" value={clientEmail || ""} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientEmail(e.target.value)} className="input input-bordered w-full" required />
+                                                    <CountrySelect
+                                                        value={clientCountry}
+                                                        onChange={(v: string) => setClientCountry(v)}
+                                                        className="select select-bordered w-full"
+                                                    />
+
+                                                    <Input type="text" placeholder="Téléphone" value={clientPhone} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientPhone(e.target.value)} className="input input-bordered w-full" required />
+                                                    <textarea rows={10} placeholder="Description de la commande ( Optionnel )" value={clientDesc} onChange={(e) => setClientDesc(e.target.value)} className="textarea textarea-bordered w-full"></textarea>
+
+                                                    {isPortfolio && (
+                                                        <TemplateCarousel
+                                                            templates={Templates}
+                                                            onSelect={(value) => setChosenTemplate(value)}
+                                                        />
+
+                                                    )}
+                                                    {commandType == "Website" && (<div>  <p>Proposez votre template <span className="text-gray-500 text-sm">( Optionnel ) </span>:</p>
+                                                        <Input type="text" placeholder="Entrez le lien de votre template" value={proposedTemplate} onChange={(e) => setProposedTemplate(e.target.value)} className="input input-bordered w-full" />
+                                                    </div>)}
+                                                    <ShineButton
+                                                        className={`w-full h-full rounded-xl flex items-center justify-center hover:w-full  shadow-4xl transition-all duration-400 ${commandInited ? "opacity-60 pointer-events-none" : ""}`}
+                                                        // disable= {downloading}
+                                                        label={`${commandInited ? "Initier une nouvelle commande" : "Initier la commande"} `}
+                                                        size="lg"
+                                                        aria-disabled={commandInited}
+                                                        bgColor="linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)"
+                                                        onClick={() => {
+                                                            if (commandInited) return;
+                                                            submitForm({ budget: command.prixAp, projectType: commandType });
+                                                        }}
+                                                    />
+                                                    {/* <Button onClick={() => submitForm({ budget: command.prixAp, projectType: commandType })} className="bg-blue-500 text-white rounded-xl p-3 hover:scale-105 transition">Initier la commande</Button> */}
+
+                                                    {commandInited &&
+
+                                                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="w-full gap-2 flex flex-col">
+                                                            <p className=" mt-2 text-xl font-bold text-green-600">Commande initiée avec succès! </p>
+                                                            <p className="mt-1 text-xl font-bold">Vous allez recevoir un message d'ici quelques minutes sur whatsapp et par mail pour completer votre commande.</p>
+                                                            <p className=" mt-2">Vous pouvez en attendant :  </p>
+
+                                                            <div className="w-full flex md:flex-row flex-col justify-between items-center md:space-x-5 md:space-y-0 space-y-2">
+                                                                {/* <Link href="#abonnement" className="w-full"> <Button className=" bg-gray-700 text-white rounded-xl p-3 shadow-xl hover:bg-gray-900 hover:shadow-2xl hover:scale-105 transition w-full  "> Voir nos offres d'abonnement ( pour les sites web )</Button></Link> */}
+                                                                <Link href="/#realisations" className="text-center w-full bg-gray-700 text-white rounded-xl p-3 shadow-xl hover:bg-gray-900 hover:shadow-2xl hover:scale-105 transition ">Voir nos Projets et realisations</Link>
+                                                                <Link href={{
+                                                                    pathname: "/Services",
+                                                                    query: {
+                                                                        status: "command innited",
+                                                                    },
+                                                                }} className="w-full"> <Button className=" bg-slate-600 text-white rounded-xl p-3 shadow-xl hover:shadow-2xl hover:bg-slate-700 hover:scale-105 transition w-full"> Retour aux services</Button></Link>
+                                                            </div>
+
+                                                        </motion.div>
+
+                                                    }
                                                 </CardContent>
                                             </motion.div>
 
                                             <CardFooter className="flex md:flex-row flex-col space-y-8 md:space-y-0 md:space-x-8 w-full mt-5"></CardFooter>
                                         </Card>
+
                                     </div>
 
                                 </div>
@@ -494,10 +499,17 @@ const Commande = (props: CommandePageProps) => {
 
                         </div>
                     </div>
-
+                    <ClipLoader
+                        color="#36d7b7"
+                        loading={loading}
+                        size={30}
+                        className="fixed bottom-1/2 right-1/2 transform translate-x-1/2 translate-y-1/2 z-50"
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
                 </motion.div>
             </AnimatePresence>
-            <u><Title title="Offres d'abonnement" className="text-4xl pt-5 " id="abonnement" /></u>
+            {/* <u><Title title="Offres d'abonnement" className="text-4xl pt-5 " id="abonnement" /></u>
             <div className="w-full grid md:grid-cols-3 gap-6 py-10 ">
                 {plans.map((plan) => (
                     <Card
@@ -545,7 +557,7 @@ const Commande = (props: CommandePageProps) => {
                         </CardContent>
                     </Card>
                 ))}
-            </div>
+            </div> */}
 
             <Footer1 />
         </div>
