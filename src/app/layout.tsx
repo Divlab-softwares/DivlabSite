@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | DIVLAB",
   },
   description:
-    "Studio digital camerounais, DIVLAB conçoit des sites web, applications métier, plateformes SaaS et solutions IA sur mesure pour l'Afrique francophone.",
+    "Studio digital, DIVLAB conçoit des sites web, applications métier, plateformes SaaS et solutions IA sur mesure pour l'Afrique francophone et le monde.",
   applicationName: "DIVLAB",
   authors: [{ name: "DIVLAB", url: "https://divlabs-tech.com" }],
   creator: "DIVLAB",
@@ -98,7 +98,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- 
+
   return (
     <html lang="fr-CM" >
       <head>
